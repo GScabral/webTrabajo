@@ -1,0 +1,104 @@
+.chats-recientes-container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chats-recientes-container h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: #0077cc;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.chats-recientes-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo de cada chat */
+.chat-preview {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #f9fbfd;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.chat-preview:hover {
+    background: linear-gradient(90deg, #e8f3ff, #f2faff);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 119, 204, 0.1);
+}
+
+/* Imagen de perfil */
+.chat-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e0eaf3;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Texto */
+.chat-preview div {
+    flex: 1;
+    overflow: hidden;
+}
+
+.chat-preview strong {
+    display: block;
+    font-size: 1rem;
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-preview p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Texto "sin mensajes" */
+.chats-recientes-container p {
+    text-align: center;
+    font-size: 1rem;
+    color: #888;
+    margin-top: 2rem;
+}
+
+/* Animación suave de entrada */
+@keyframes fadeInChat {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-preview {
+    animation: fadeInChat 0.3s ease forwards;
+}

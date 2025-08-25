@@ -1,0 +1,59 @@
+.postAdminContainer {
+    padding: 2rem;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.postGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.postCardAdmin {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.postCardAdmin h3 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.postCardAdmin p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.postImage {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+}
+
+.deleteButton {
+    margin-top: auto;
+    background: #ff4d4f;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.deleteButton:hover {
+    background: #d9363e;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}

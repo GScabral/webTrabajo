@@ -1,0 +1,37 @@
+/* App.css o Layout.css */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.dark-mode .sidebar {
+  background-color: #2e2e2e;
+  color: #f0f0f0;
+}
+
+.dark-mode .main-content {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}

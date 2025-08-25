@@ -1,0 +1,92 @@
+.perfil-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.perfil-card {
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff;
+}
+
+.nombre {
+  font-size: 1.6rem;
+  margin-top: 0.6rem;
+}
+
+.contact-btn {
+  margin-top: 1rem;
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.info-detalle {
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.card-section {
+  margin-top: 1.5rem;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.servicios ul {
+  list-style: none;
+  padding: 0;
+}
+
+.servicios li {
+  margin: 6px 0;
+}
+
+.categoria {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.comentarios-section textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+}
+
+.enviar-btn {
+  padding: 8px 14px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comentario-burbuja {
+  background: #e9ecef;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 8px 0;
+}

@@ -1,0 +1,21 @@
+.tool-rating {
+  display: flex;
+  gap: 10px;
+  font-size: 2rem;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.tool {
+  opacity: 0.4;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.tool:hover,
+.tool:focus {
+  transform: scale(1.2);
+}
+
+.tool.filled {
+  opacity: 1;
+}

@@ -1,0 +1,46 @@
+.forgot-password-form {
+    max-width: 350px;
+    margin: 40px auto;
+    padding: 32px 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.forgot-password-form input[type="email"] {
+    padding: 10px 12px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.forgot-password-form input[type="email"]:focus {
+    border: 1.5px solid #007bff;
+}
+
+.forgot-password-form button {
+    padding: 10px 0;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.forgot-password-form button:disabled {
+    background: #b3d1ff;
+    cursor: not-allowed;
+}
+
+.forgot-password-form p {
+    margin: 0;
+    font-size: 0.98rem;
+    text-align: center;
+}

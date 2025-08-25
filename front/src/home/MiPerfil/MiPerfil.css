@@ -1,0 +1,112 @@
+.perfil-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.perfil-titulo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.perfil-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.perfil-imagen {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.perfil-datos p {
+  margin: 6px 0;
+}
+
+.perfil-servicio {
+  margin-top: 1rem;
+  padding: 10px;
+  border-left: 4px solid #007bff;
+  background: #f8f9fa;
+}
+
+.perfil-formulario label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.perfil-formulario input,
+.perfil-formulario textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+}
+
+.perfil-botones {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.guardar { background: #28a745; color: white; }
+.cancelar { background: #dc3545; color: white; }
+.editar { background: #007bff; color: white; }
+.cambiar-pass { background: #ffc107; color: #000; }
+
+.btn:hover { opacity: 0.9; }
+
+.perfil-posts-container {
+  margin-top: 2rem;
+}
+
+.perfil-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.post-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  transform: scale(1.03);
+}
+
+.post-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 150px;
+}

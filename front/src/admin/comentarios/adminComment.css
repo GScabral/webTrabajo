@@ -1,0 +1,88 @@
+/* Grid general */
+.adminCommentGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Columna por usuario */
+.userCommentColumn {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Card de comentario */
+.commentAdmin-card {
+    position: relative;
+    background: white;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Contenido del comentario */
+.commentAdmin-content {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.commentAdmin-date {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* --- MENÚ --- */
+.menuWrapper-Coment {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+/* Botón de los 3 puntitos */
+.menuButton-Coment {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #333;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.menuButton-Coment:hover {
+    color: #000;
+}
+
+/* Dropdown que aparece al hacer click */
+.menuDropdown-Coment {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    padding: 0.3rem 0.5rem;
+    z-index: 20;
+}
+
+/* Botón dentro del dropdown */
+.menuDropdown-Coment button {
+    background: transparent;
+    border: none;
+    color: #d33;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    width: 100%;
+    text-align: left;
+}
+
+.menuDropdown-Coment button:hover {
+    background: #f8d7da;
+}

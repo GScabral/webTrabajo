@@ -1,0 +1,152 @@
+/* Contenedor principal */
+.login-wrapper {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Columna izquierda - formulario */
+.login-left {
+    flex: 1;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Columna derecha - imagen */
+.login-right {
+    flex: 1;
+    background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Capa oscura y texto encima */
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.login-overlay h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.login-overlay p {
+    font-size: 1.1rem;
+    max-width: 400px;
+}
+
+/* Tarjeta de login con efecto glass */
+.login-container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título */
+.login-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: white;
+    letter-spacing: 1px;
+}
+
+/* Formulario */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Inputs */
+.login-input {
+    padding: 0.85rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.login-input:focus {
+    background: white;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+/* Errores */
+.error-message {
+    color: #ff4d4f;
+    font-size: 0.85rem;
+    margin-top: -0.3rem;
+}
+
+/* Botón principal */
+.form-button {
+    padding: 0.9rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background: linear-gradient(90deg, #4f46e5, #3b82f6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-button:hover {
+    background: linear-gradient(90deg, #4338ca, #2563eb);
+    transform: scale(1.02);
+}
+
+.invalid-button {
+    background: #a0aec0;
+    cursor: not-allowed;
+}
+
+/* Enlace de recuperación */
+.forgot-password-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.forgot-password-link a {
+    text-decoration: none;
+    color: white;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+}
+
+.forgot-password-link a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}

@@ -1,0 +1,6 @@
+CREATE TABLE active_tokens (
+    id SERIAL PRIMARY KEY,
+    token TEXT NOT NULL,
+    userId INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    expiresAt TIMESTAMP NOT NULL
+);
