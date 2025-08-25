@@ -14,8 +14,8 @@ export const SocketProvider = ({ infoUser, children }) => {
     // 👇 Poner la URL del backend directo
     const backendUrl =
       import.meta.env.MODE === "development"
-        ? "http://localhost:3001" // 👉 cuando estás en tu máquina
-        : "https://webtrabajo.onrender.com"; // 👉 cuando subís a Render
+        ? "https://webtrabajo.onrender.com" // 👉 cuando estás en tu máquina
+        : "http://localhost:3001"; // 👉 cuando subís a Render
 
     const newSocket = io(backendUrl, {
       transports: ["websocket"],
