@@ -6,9 +6,12 @@ import { io } from "socket.io-client";
 import EmojiPicker from "emoji-picker-react";
 import "./Chat.css";
 
-const socket = io("http://localhost:3001", {
-  withCredentials: true,
-});
+const socket = io(
+  import.meta.env.PROD
+    ? "https://webtrabajo.onrender.com"
+    : "http://localhost:3001",
+  { withCredentials: true }
+);
 
 const Chat = () => {
   const dispatch = useDispatch();
