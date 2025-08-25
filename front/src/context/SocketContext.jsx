@@ -11,7 +11,10 @@ export const SocketProvider = ({ infoUser, children }) => {
     useEffect(() => {
         if (!infoUser?.id) return;
 
-        const newSocket = io("http://localhost:3001", {
+        // 👇 Usar variable de entorno en vez de localhost
+        const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
+        const newSocket = io(backendUrl, {
             transports: ["websocket"],
         });
 
@@ -29,7 +32,6 @@ export const SocketProvider = ({ infoUser, children }) => {
             newSocket.disconnect();
         };
     }, [infoUser]);
-
 
     return (
         <SocketContext.Provider value={{ socket, onlineUsers }}>
