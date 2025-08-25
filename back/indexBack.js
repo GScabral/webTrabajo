@@ -11,11 +11,13 @@ let onlineUsers = new Map();
 // Configurar WebSocket con Socket.io
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3006",
+        origin: [
+            "http://localhost:3006",
+            "https://webtrabajo-1.onrender.com"
+        ],
         credentials: true,
     }
 });
-
 // WebSocket: eventos
 io.on("connection", (socket) => {
     // console.log("🔌 Usuario conectado:", socket.id);
