@@ -1,11 +1,11 @@
-import axios from "axios";
+import API from "../../Api/axios";
 
 
 export const getAllPost = () => async (dispatch) => {
     dispatch({ type: "GET_ALLPOST_REQUEST" });
 
     try {
-        const response = await axios.get("http://localhost:3001/posts/getAllPost")
+        const response = await API.get("/posts/getAllPost")
         dispatch({
             type: "GET_ALLPOST_SUCCESS",
             payload: response.data
@@ -20,7 +20,7 @@ export const getAllPost = () => async (dispatch) => {
 export const createPost = (postData) => async (dispatch) => {
     dispatch({ type: 'CREATE_POST_REQUEST' });
     try {
-        const response = await axios.post('http://localhost:3001/posts/postear', postData);
+        const response = await API.post('/posts/postear', postData);
         dispatch({
             type: 'CREATE_POST_SUCCESS',
             payload: response.data.post
@@ -37,7 +37,7 @@ export const getCommentsByPost = (postId) => async (dispatch) => {
     dispatch({ type: 'GET_COMMENTS_REQUEST' });
 
     try {
-        const response = await axios.get(`http://localhost:3001/posts/post/${postId}`);
+        const response = await API.get(`/posts/post/${postId}`);
         dispatch({
             type: 'GET_COMMENTS_SUCCESS',
             payload: response.data
@@ -55,7 +55,7 @@ export const getByPostUser = (userId) => async (dispatch) => {
 
     console.log(userId)
     try {
-        const response = await axios.get(`http://localhost:3001/posts/getAllPostUser/${userId}`);
+        const response = await API.get(`/posts/getAllPostUser/${userId}`);
         dispatch({
             type: 'GET_POSTBYUSER_SUCCESS',
             payload: response.data
@@ -82,7 +82,7 @@ export const getPostById = (postId) => async (dispatch) => {
         });
     }
     try {
-        const response = await axios.get(`http://localhost:3001/posts/postById/${postId}`);
+        const response = await API.get(`/posts/postById/${postId}`);
         dispatch({
             type: 'GET_POST_SUCCESS',
             payload: response.data
@@ -99,7 +99,7 @@ export const getPostById = (postId) => async (dispatch) => {
 export const createComment = (commentData) => async (dispatch) => {
     dispatch({ type: 'CREATE_COMMENT_REQUEST' });
     try {
-        const response = await axios.post('http://localhost:3001/posts/comentar', commentData);
+        const response = await API.post('/posts/comentar', commentData);
         dispatch({
             type: 'CREATE_COMMENT_SUCCESS',
             payload: response.data
@@ -120,8 +120,8 @@ export const deletePost = (postId) => async (dispatch, getState) => {
         const token = localStorage.getItem("token");
         console.log(token)
         console.log(postId)
-        const response = await axios.delete(
-            `http://localhost:3001/posts/delete/${postId}`,
+        const response = await API.delete(
+            `/posts/delete/${postId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -149,7 +149,7 @@ export const reportarPost = ({ post_id, user_id, motivo }) => async (dispatch) =
 
     console.log(post_id, motivo, user_id)
     try {
-        const response = await axios.post("http://localhost:3001/posts/reportPost", {
+        const response = await API.post("/posts/reportPost", {
             post_id,
             user_id,
             motivo

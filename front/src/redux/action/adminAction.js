@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import API from "../../Api/axios";
 
 
 
@@ -9,8 +9,8 @@ export const getAdminCommetn = () => async (dispatch) => {
     try {
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
         console.log(token)
-        const response = await axios.get(
-            "http://localhost:3001/admin/getAllComments",
+        const response = await API.get(
+            "/admin/getAllComments",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export const getAllUserAdmin = () => async (dispatch) => {
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
 
 
-        const response = await axios.get("http://localhost:3001/admin/getAllUserAdmin", {
+        const response = await API.get("/admin/getAllUserAdmin", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -62,7 +62,7 @@ export const getAllReport = () => async (dispatch) => {
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
 
 
-        const response = await axios.get("http://localhost:3001/admin/getAllReport", {
+        const response = await API.get("/admin/getAllReport", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -89,8 +89,8 @@ export const banUser = (userId, bloqueado_hasta) => async (dispatch) => {
 
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
 
-        const response = await axios.patch(
-            `http://localhost:3001/admin/blockUser/${userId}`,
+        const response = await API.patch(
+            `/admin/blockUser/${userId}`,
             { bloqueado_hasta }, // body
             {
                 headers: {
@@ -118,8 +118,8 @@ export const UnBanUser = (userId) => async (dispatch) => {
 
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
 
-        const response = await axios.patch(
-            `http://localhost:3001/admin/unblockUser/${userId}`,
+        const response = await API.patch(
+            `/admin/unblockUser/${userId}`,
         );
 
         dispatch({
@@ -142,7 +142,7 @@ export const deleteComment = (commentId) => async (dispatch) => {
 
         const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
 
-        const response = await axios.delete(`http://localhost:3001/admin/deleteComment/${commentId}`);
+        const response = await API.delete(`/admin/deleteComment/${commentId}`);
 
         dispatch({
             type: "DELETECOMMENT_SUCESS",
@@ -161,7 +161,7 @@ export const statsAdmin = () => async (dispatch) => {
     try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get("http://localhost:3001/admin/getStats", {
+        const response = await API.get("/admin/getStats", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -185,7 +185,7 @@ export const getReportByPost = (postId) => async (dispatch) => {
 
     try {
         const token = localStorage.getItem("token");
-        const { data } = await axios.get(`http://localhost:3001/admin/getReportByPost/${postId}`,{
+        const { data } = await API.get(`/admin/getReportByPost/${postId}`,{
             headers: {
                 Authorization: `Bearer ${token}`,
             },

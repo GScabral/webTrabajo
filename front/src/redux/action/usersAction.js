@@ -1,10 +1,9 @@
-import axios from "axios";
-
+import API from "../../Api/axios";
 
 export const getAllUser = () => async (dispatch) => {
     dispatch({ type: "GET_ALL_USERS_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/user/getAllUser`);
+        const response = await API.get(`/user/getAllUser`);
 
 
         dispatch({
@@ -21,7 +20,7 @@ export const getAllUser = () => async (dispatch) => {
 export const getAllService = () => async (dispatch) => {
     dispatch({ type: "GET_ALL_SERVICIO_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/servicio/allService`);
+        const response = await API.get(`/servicio/allService`);
         dispatch({
             type: "GET_ALL_SERVICIO_SUCCESS",
             payload: response.data,
@@ -42,7 +41,7 @@ export const getUserById = (id) => async (dispatch) => {
     dispatch({ type: "GETBYID_USER_REQUEST" })
 
     try {
-        const response = await axios.get(`http://localhost:3001/user/userById/${id}`);
+        const response = await API.get(`/user/userById/${id}`);
         dispatch({
             type: "GETBYID_USER_SUCCESS",
             payload: response.data,
@@ -61,7 +60,7 @@ export const loginUserById = (id) => async (dispatch) => {
     dispatch({ type: "LOGINBYID_USER_REQUEST" })
 
     try {
-        const response = await axios.get(`http://localhost:3001/user/userById/${id}`);
+        const response = await API.get(`/user/userById/${id}`);
         dispatch({
             type: "LOGINBYID_USER_SUCCESS",
             payload: response.data,
@@ -77,7 +76,7 @@ export const loginUserById = (id) => async (dispatch) => {
 export const registerUser = (userData) => (dispatch) => {
     dispatch({ type: "REGISTER_USER_REQUEST" });
     try {
-        const response = axios.post(`http://localhost:3001/user/register`, userData);
+        const response = API.post(`/user/register`, userData);
         dispatch({
             type: "REGISTER_USER_SUCCESS",
             payload: response.data,
@@ -93,7 +92,7 @@ export const registerUser = (userData) => (dispatch) => {
 export const loginUser = (userData) => {
     return async function (dispatch) {
         try {
-            const response = await axios.post(`http://localhost:3001/user/login`, userData);
+            const response = await API.post(`/user/login`, userData);
 
 
             localStorage.setItem("token", response.data.token);
@@ -117,8 +116,8 @@ export const logout = () => async (dispatch) => {
         const token = localStorage.getItem('token');
         console.log("📦 Token encontrado en logoutAction:", token);
         // Enviar token al backend para invalidarlo
-        await axios.post(
-            'http://localhost:3001/user/logout',
+        await API.post(
+            '/user/logout',
             {},
             {
                 headers: {
@@ -143,7 +142,7 @@ export const logout = () => async (dispatch) => {
 export const addLike = ({ user_id, post_id }) => async (dispatch) => {
     dispatch({ type: "ADD_LIKE_REQUEST" });
     try {
-        const response = await axios.post(`http://localhost:3001/user/like`, {
+        const response = await API.post(`/user/like`, {
             user_id,
             post_id
         });
@@ -165,7 +164,7 @@ export const addLike = ({ user_id, post_id }) => async (dispatch) => {
 export const removeLike = ({ user_id, post_id }) => async (dispatch) => {
     dispatch({ type: "REMOVE_LIKE_REQUEST" });
     try {
-        const response = await axios.delete(`http://localhost:3001/user/like`, {
+        const response = await API.delete(`/user/like`, {
             data: { user_id, post_id }
         });
         dispatch({
@@ -186,7 +185,7 @@ export const removeLike = ({ user_id, post_id }) => async (dispatch) => {
 export const getLikesByPost = (postId) => async (dispatch) => {
     dispatch({ type: "GET_LIKES_BY_POST_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/user/like/${postId}`);
+        const response = await API.get(`/user/like/${postId}`);
         dispatch({
             type: "GET_LIKES_BY_POST_SUCCESS",
             payload: { postId, totalLikes: response.data.totalLikes },
@@ -205,7 +204,7 @@ export const getLikesByPost = (postId) => async (dispatch) => {
 export const checkUserLike = (userId, postId) => async (dispatch) => {
     dispatch({ type: "CHECK_USER_LIKE_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/user/like/check/${userId}/${postId}`);
+        const response = await API.get(`/user/like/check/${userId}/${postId}`);
         dispatch({
             type: "CHECK_USER_LIKE_SUCCESS",
             payload: response.data.hasLiked,
@@ -226,8 +225,8 @@ export const updateUser = (userId, data) => async (dispatch) => {
     dispatch({ type: "UPDATE_USER_REQUEST" });
 
     try {
-        const response = await axios.put(
-            `http://localhost:3001/user/usuario/${userId}`,
+        const response = await API.put(
+            `/user/usuario/${userId}`,
             data,
             {
                 headers: {
@@ -260,8 +259,8 @@ export const changePassword = (oldPassword, newPassword) => async (dispatch, get
         console.log("📦 Datos enviados:", { oldPassword, newPassword });
         console.log("🔐 Token que se enviará:", token);
 
-        const response = await axios.patch(
-            'http://localhost:3001/user/change-password',
+        const response = await API.patch(
+            '/user/change-password',
             {
                 oldPassword,
                 newPassword
@@ -295,7 +294,7 @@ export const resetPassword = (email, token, newPassword) => async (dispatch) => 
     dispatch({ type: "RESET_PASSWORD_REQUEST" });
     console.log("se manda:", token)
     try {
-        const response = await axios.patch('http://localhost:3001/user/reset-password', {
+        const response = await API.patch('/user/reset-password', {
             email,
             token,
             newPassword
@@ -319,7 +318,7 @@ export const requestPasswordReset = (email) => async (dispatch) => {
     dispatch({ type: "REQUEST_PASSWORD_RESET_START" });
 
     try {
-        const response = await axios.post('http://localhost:3001/user/request-password-reset', { email });
+        const response = await API.post('/user/request-password-reset', { email });
 
         dispatch({
             type: "REQUEST_PASSWORD_RESET_SUCCESS",

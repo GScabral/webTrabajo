@@ -1,11 +1,12 @@
 import axios from "axios";
+import API from "../../Api/axios";
 
 // Enviar mensaje
 export const sendMensaje = (data) => async (dispatch) => {
     dispatch({ type: "POST_MENSAJE_REQUEST" });
     console.log(data)
     try {
-        const response = await axios.post("http://localhost:3001/mensaje/sendMensaje", data);
+        const response = await API.post("/mensaje/sendMensaje", data);
         dispatch({
             type: "SEND_MENSAJE_SUCCESS",
             payload: response.data
@@ -22,7 +23,7 @@ export const sendMensaje = (data) => async (dispatch) => {
 export const getChatsRecientes = (userId) => async (dispatch) => {
     dispatch({ type: "GET_CHATS_RECIENTES_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/mensaje/chatsRecientes/${userId}`);
+        const response = await API.get(`/mensaje/chatsRecientes/${userId}`);
         dispatch({
             type: "GET_CHATS_RECIENTES_SUCCESS",
             payload: response.data
@@ -39,7 +40,7 @@ export const getChatsRecientes = (userId) => async (dispatch) => {
 export const getConversacion = (userId1, userId2) => async (dispatch) => {
     dispatch({ type: "GET_CONVERSACION_REQUEST" });
     try {
-        const response = await axios.get(`http://localhost:3001/mensaje/conversacion/${userId1}/${userId2}`);
+        const response = await API.get(`/mensaje/conversacion/${userId1}/${userId2}`);
         dispatch({
             type: "GET_CONVERSACION_SUCCESS",
             payload: response.data
@@ -57,7 +58,7 @@ export const getConversacion = (userId1, userId2) => async (dispatch) => {
 export const marcarConversacionLeida = (userId, chatWithId) => async (dispatch) => {
     dispatch({ type: "MARCAR_MENSAJE_LEIDO_REQUEST" });
     try {
-        await axios.patch("http://localhost:3001/mensaje/marcarConversacionLeida", {
+        await API.patch("/mensaje/marcarConversacionLeida", {
             userId,
             chatWithId
         });
