@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getConversacion, sendMensaje,marcarConversacionLeida } from "../../redux/action/mensajesAction";
+import { getConversacion, sendMensaje, marcarConversacionLeida } from "../../redux/action/mensajesAction";
 import { io } from "socket.io-client";
 import EmojiPicker from "emoji-picker-react";
 import "./Chat.css";
@@ -59,8 +59,13 @@ const Chat = () => {
     });
   };
 
-  dispatch(marcarConversacionLeida(infoUser.id, id));
+  useEffect(() => {
+    if (infoUser?.id && id) {
+      dispatch(marcarConversacionLeida(infoUser.id, id));
+    }
+  }, [dispatch, infoUser, id]);
 
+  
   const handleEnviarUbicacion = () => {
     if (!navigator.geolocation) {
       alert("Tu navegador no soporta geolocalización.");
