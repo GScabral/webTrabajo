@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Landing from "./home/Landing/Landing";
 import Home from "./home/Home";
 import Login from "./home/Login/Login";
-import Register from "./home/Register/register";
+import Register from "./home/Register/Register";
 import Perfil from "./home/Perfil/Perfil";
 import DetailPost from "./home/post/viewPost";
 import Chat from "./home/chat/Chat";
