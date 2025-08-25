@@ -67,9 +67,7 @@ io.on("connection", (socket) => {
 });
 
 // Base de datos + iniciar servidor
-conn.sync({ force: true }).then(async () => {
-    await initSuperAdmin();
-    server.listen(3001, () => {
-        console.log("🚀 Server + WebSocket corriendo en puerto 3001");
-    });
+const PORT = process.env.PORT || 3001;
+server.listen(PORT, () => {
+    console.log(`🚀 Server + WebSocket corriendo en puerto ${PORT}`);
 });
