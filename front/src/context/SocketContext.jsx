@@ -5,37 +5,41 @@ import { io } from "socket.io-client";
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ infoUser, children }) => {
-    const [socket, setSocket] = useState(null);
-    const [onlineUsers, setOnlineUsers] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
-    useEffect(() => {
-        if (!infoUser?.id) return;
+  useEffect(() => {
+    if (!infoUser?.id) return;
 
-        // 👇 Usar variable de entorno en vez de localhost
-        const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+    // 👇 Poner la URL del backend directo
+    const backendUrl =
+      import.meta.env.MODE === "development"
+        ? "http://localhost:3001" // 👉 cuando estás en tu máquina
+        : "https://webtrabajo.onrender.com"; // 👉 cuando subís a Render
 
-        const newSocket = io(backendUrl, {
-            transports: ["websocket"],
-        });
+    const newSocket = io(backendUrl, {
+      transports: ["websocket"],
+      withCredentials: true,
+    });
 
-        setSocket(newSocket);
+    setSocket(newSocket);
 
-        newSocket.on("connect", () => {
-            newSocket.emit("User-connected", infoUser.id);
-        });
+    newSocket.on("connect", () => {
+      newSocket.emit("User-connected", infoUser.id);
+    });
 
-        newSocket.on("update-online-users", (usuariosOnline) => {
-            setOnlineUsers(usuariosOnline);
-        });
+    newSocket.on("update-online-users", (usuariosOnline) => {
+      setOnlineUsers(usuariosOnline);
+    });
 
-        return () => {
-            newSocket.disconnect();
-        };
-    }, [infoUser]);
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [infoUser]);
 
-    return (
-        <SocketContext.Provider value={{ socket, onlineUsers }}>
-            {children}
-        </SocketContext.Provider>
-    );
+  return (
+    <SocketContext.Provider value={{ socket, onlineUsers }}>
+      {children}
+    </SocketContext.Provider>
+  );
 };
