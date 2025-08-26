@@ -36,7 +36,6 @@ const Home = () => {
     };
 
 
-    console.log(allUser)
 
     const motivosReportes = [
         "Contenido inapropiado",
@@ -129,6 +128,7 @@ const Home = () => {
     }, [allUser]);
 
 
+    const tipoUnicas = ['Todas', ...new Set(allService.map(c => c.categoria))];
     const categoriasUnicas = ['Todas', ...new Set(allService.map(c => c.nombre))];
     const ubicacionesUnicas = ['Todas', ...new Set((Array.isArray(allUser) ? allUser : []).map(u => u.ubicacion).filter(Boolean))];
 
@@ -163,6 +163,12 @@ const Home = () => {
                     <label>Filtrar provincia: </label>
                     <select value={ubicacionSeleccionada} onChange={(e) => setUbicacionSeleccionada(e.target.value)}>
                         {ubicacionesUnicas.map((cat, i) => (
+                            <option key={i} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                    <label>Filtrar para: </label>
+                    <select value={tipoUnicas} onChange={(e) => setUbicacionSeleccionada(e.target.value)}>
+                        {tipoUnicas.map((cat, i) => (
                             <option key={i} value={cat}>{cat}</option>
                         ))}
                     </select>

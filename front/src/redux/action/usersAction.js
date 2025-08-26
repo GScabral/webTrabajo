@@ -125,7 +125,6 @@ export const logout = () => async (dispatch) => {
                 }
             }
         );
-        console.log("✅ Petición logout enviada correctamente");
 
         // Eliminar token en frontend
         localStorage.removeItem('token');

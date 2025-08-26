@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { registerUser, getAllService } from "../../redux/action/usersAction.js";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import './register.css';
 
 const Register = () => {
   const dispatch = useDispatch();
+
   const allService = useSelector((state) => state.userState.servicios);
   const [successMessage, setSuccessMessage] = useState("");
   const initialForm = {
@@ -209,6 +211,10 @@ const Register = () => {
         <button className="form-button" type="submit">
           Registrar
         </button>
+
+        <Link to="/login" className="form-button link-button">
+          Ya tengo una cuenta
+        </Link>
       </form>
     </div>
   );

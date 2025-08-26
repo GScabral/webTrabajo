@@ -11,7 +11,6 @@ const useLogout = () => {
     const infoUser = useSelector((state) => state.userState.infoLogin);
 
     const logout = async () => {
-            console.log("📦 Token en localStorage ANTES del logout:", localStorage.getItem("token"));
 
         // Avisar al servidor vía socket
         if (socket && infoUser?.id) {
