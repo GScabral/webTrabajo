@@ -2,8 +2,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { getAllUser, addLike, removeLike, getLikesByPost, checkUserLike, getAllService } from "../redux/action/usersAction";
-import { getAllPost, getCommentsByPost, deletePost, reportarPost } from "../redux/action/postAction";
+import {
+    getAllUser, addLike, removeLike, getLikesByPost,
+    checkUserLike, getAllService
+} from "../redux/action/usersAction";
+import {
+    getAllPost, getCommentsByPost, deletePost, reportarPost
+} from "../redux/action/postAction";
 import { SocketContext } from "../context/SocketContext";
 import useComments from "./post/comentarios/comentarios";
 import PostForm from "./post/Postear";
@@ -14,17 +19,23 @@ const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { user: allUser, loading, infoLogin: infoUser, likesByPost, userLikesStatus, servicios: allService } = useSelector((state) => state.userState);
+    const {
+        user: allUser, loading, infoLogin: infoUser,
+        likesByPost, userLikesStatus, servicios: allService
+    } = useSelector((state) => state.userState);
+
     const { allPost, allComments } = useSelector((state) => state.postState);
     const { onlineUsers } = useContext(SocketContext);
-
 
     const [darkMode, setDarkMode] = useState(false);
     const { showPostForm } = useOutletContext();
     const [selectedPostId, setSelectedPostId] = useState(null);
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todas');
-    const [categoriaSeleccionadaPost, setCategoriaSeleccionadaPost] = useState('Todas');
-    const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState('Todas');
+
+    // Estados de filtros
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
+    const [servicioSeleccionado, setServicioSeleccionado] = useState("Todas");
+    const [categoriaSeleccionadaPost, setCategoriaSeleccionadaPost] = useState("Todas");
+    const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState("Todas");
 
     const [likes, setLikes] = useState({});
     const [userLikes, setUserLikes] = useState({});
@@ -35,8 +46,6 @@ const Home = () => {
         setOpenMenuPostId(openMenuPostId === postId ? null : postId);
     };
 
-
-
     const motivosReportes = [
         "Contenido inapropiado",
         "Lenguaje ofensivo",
@@ -46,7 +55,6 @@ const Home = () => {
     ];
 
     // Función para manejar el reporte
-
     const handleReport = (postId, motivo) => {
         dispatch(reportarPost({
             post_id: postId,
@@ -55,6 +63,7 @@ const Home = () => {
         }));
         setReportMenuPostId(null);
     };
+
     const {
         commentContent,
         setCommentContent,
@@ -123,14 +132,10 @@ const Home = () => {
         }
     };
 
-    useEffect(() => {
-
-    }, [allUser]);
-
-
-    const tipoUnicas = ['Todas', ...new Set(allService.map(c => c.categoria))];
-    const categoriasUnicas = ['Todas', ...new Set(allService.map(c => c.nombre))];
-    const ubicacionesUnicas = ['Todas', ...new Set((Array.isArray(allUser) ? allUser : []).map(u => u.ubicacion).filter(Boolean))];
+    // 📌 Listas únicas para los select
+    const categoriasUnicas = ["Todas", ...new Set(allService.map(s => s.categoria).filter(Boolean))];
+    const serviciosUnicos = ["Todas", ...new Set(allService.map(s => s.nombre).filter(Boolean))];
+    const ubicacionesUnicas = ["Todas", ...new Set((Array.isArray(allUser) ? allUser : []).map(u => u.ubicacion).filter(Boolean))];
 
     if (loading) {
         return (
@@ -143,7 +148,6 @@ const Home = () => {
 
     return (
         <div className={`home-layout ${darkMode ? "dark-mode" : ""}`}>
-
             <main className="main-content">
                 <header className="home-header">
                     <h2>¡Hola, <span className="user-name">{infoUser?.nombre}</span>!</h2>
@@ -152,33 +156,36 @@ const Home = () => {
                     </button>
                 </header>
 
-                {/* Filtro de categorías */}
+                {/* Filtro de profesionales */}
                 <div className="filtro-categoria">
-                    <label>Filtrar profesionales: </label>
+                    <label>Filtrar por categoría: </label>
                     <select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
                         {categoriasUnicas.map((cat, i) => (
                             <option key={i} value={cat}>{cat}</option>
                         ))}
                     </select>
-                    <label>Filtrar provincia: </label>
-                    <select value={ubicacionSeleccionada} onChange={(e) => setUbicacionSeleccionada(e.target.value)}>
-                        {ubicacionesUnicas.map((cat, i) => (
-                            <option key={i} value={cat}>{cat}</option>
+
+                    <label>Filtrar por servicio: </label>
+                    <select value={servicioSeleccionado} onChange={(e) => setServicioSeleccionado(e.target.value)}>
+                        {serviciosUnicos.map((serv, i) => (
+                            <option key={i} value={serv}>{serv}</option>
                         ))}
                     </select>
-                    <label>Filtrar para: </label>
-                    <select value={tipoUnicas} onChange={(e) => setUbicacionSeleccionada(e.target.value)}>
-                        {tipoUnicas.map((cat, i) => (
-                            <option key={i} value={cat}>{cat}</option>
+
+                    <label>Filtrar provincia: </label>
+                    <select value={ubicacionSeleccionada} onChange={(e) => setUbicacionSeleccionada(e.target.value)}>
+                        {ubicacionesUnicas.map((ubi, i) => (
+                            <option key={i} value={ubi}>{ubi}</option>
                         ))}
                     </select>
                 </div>
-
 
                 {/* Publicar post */}
                 {infoUser.tipo === "trabajador" && showPostForm && (
                     <PostForm userId={infoUser?.id} />
                 )}
+
+                {/* Profesionales */}
                 <div className="profesionales-section">
                     <h3 className="profesionales-title">👥 Profesionales destacados</h3>
                     <div className="scroll-container-wrapper">
@@ -188,7 +195,12 @@ const Home = () => {
                                 allUser
                                     .filter(user => user.tipo === "trabajador")
                                     .filter(user => ubicacionSeleccionada === "Todas" || user.ubicacion === ubicacionSeleccionada)
-                                    .filter(user => categoriaSeleccionada === "Todas" || user.Trabajador?.Servicios?.[0]?.nombre === categoriaSeleccionada)
+                                    .filter(user => categoriaSeleccionada === "Todas" ||
+                                        user.Trabajador?.Servicios?.some(serv => serv.categoria === categoriaSeleccionada)
+                                    )
+                                    .filter(user => servicioSeleccionado === "Todas" ||
+                                        user.Trabajador?.Servicios?.some(serv => serv.nombre === servicioSeleccionado)
+                                    )
                                     .slice(0, 6)
                                     .map((trabajador) => (
                                         <div key={trabajador.id} className="card-profile">
@@ -224,6 +236,7 @@ const Home = () => {
                         <button className="scroll-button right" onClick={() => scrollProfesionales("right")}>→</button>
                     </div>
                 </div>
+
                 {/* Muro de publicaciones */}
                 <section className="foro-section">
                     <div className="filtro-categoria">
@@ -260,7 +273,6 @@ const Home = () => {
                                                             🚩 Reportar
                                                         </button>
 
-                                                        {/* Mostrar menú de motivos si el usuario clicó en "Reportar" */}
                                                         {reportMenuPostId === post.id && (
                                                             <div className="report-options">
                                                                 <p>Selecciona un motivo:</p>
