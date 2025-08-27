@@ -11,7 +11,6 @@ const ChatsRecientes = () => {
     const chats = useSelector((state) => state.mensajeState.chatsRecientes);
 
 
-    console.log(infoUser)
 
     useEffect(() => {
         if (infoUser?.id) {

@@ -86,3 +86,78 @@
 .logout:hover {
   background-color: rgba(255, 82, 82, 0.2);
 }
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    width: 100%;
+    min-height: auto;
+    padding: 0.5rem 0.8rem;
+    border-top: 1px solid #e0e0e0;
+    border-right: none;
+    background: #fff;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .sidebar-header {
+    display: none; /* ocultamos foto y nombre en móvil */
+  }
+
+  .sidebar-menu {
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .sidebar-item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.3rem;
+    font-size: 0.7rem;
+    border-radius: 8px;
+  }
+
+  .sidebar-icon {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .sidebar-badge {
+    top: 5px;
+    right: 12px;
+    font-size: 0.55rem;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .logout {
+    margin-top: 0;
+  }
+}
+
+/* 💻 Pantallas medianas (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar-container {
+    width: 200px;
+    padding: 1rem;
+  }
+
+  .sidebar-item {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+/* 🖥️ Desktop grande (1025px en adelante) */
+@media (min-width: 1025px) {
+  .sidebar-container {
+    width: 240px;
+  }
+}
