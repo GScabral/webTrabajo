@@ -46,6 +46,8 @@ const Home = () => {
         setOpenMenuPostId(openMenuPostId === postId ? null : postId);
     };
 
+    console.log("aca info:",infoUser)
+
     const motivosReportes = [
         "Contenido inapropiado",
         "Lenguaje ofensivo",

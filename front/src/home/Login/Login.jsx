@@ -35,20 +35,29 @@ const Login = () => {
         event.preventDefault();
         setIsSubmitted(true);
 
-        if (!isValid) return;
+        // Validación directa antes de seguir
+        if (!state.email || !state.password) {
+            setError({
+                email: !state.email ? "El correo es requerido" : "",
+                password: !state.password ? "La contraseña es requerida" : "",
+            });
+            return;
+        }
 
         try {
             const response = await dispatch(loginUser(state));
+
             if (response?.data?.token) {
-                const userId = response.data.idUser;
+                const userId = response.data.idUser || response.data.id; // según tu backend
                 await dispatch(loginUserById(userId));
                 navigate("/home");
+            } else {
+                setLoginError("Credenciales inválidas");
             }
         } catch (err) {
-            setLoginError(err.message);
+            setLoginError(err.response?.data?.error || "Error al iniciar sesión");
         }
     };
-
     return (
         <div className="login-wrapper">
             {/* Columna izquierda: formulario */}

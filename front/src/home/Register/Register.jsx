@@ -1,67 +1,95 @@
 import React, { useState, useEffect } from "react";
 import { registerUser, getAllService } from "../../redux/action/usersAction.js";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import './register.css';
+import { Link, useNavigate } from "react-router-dom";
+import "./register.css";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const allService = useSelector((state) => state.userState.servicios);
   const [successMessage, setSuccessMessage] = useState("");
+
   const initialForm = {
     email: "",
     password: "",
     nombre: "",
     tipo: "cliente",
-    foto_perfil: "",
+    foto_perfil: null,
+    foto_preview: null,
     ubicacion: "",
     telefono: "",
     descripcion: "",
     tarifa_minima: "",
     tarifa_maxima: "",
     disponibilidad: "",
-    servicioIds: []
+    servicioIds: [],
   };
 
   const [form, setForm] = useState(initialForm);
+
+  useEffect(() => {
+    dispatch(getAllService()); // carga los servicios disponibles
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    dispatch(getAllService()); // Asegura que `allService` esté cargado desde Redux
-  }, [dispatch]);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm((prev) => ({
+          ...prev,
+          foto_perfil: file, // archivo real
+          foto_preview: reader.result, // base64 para vista previa
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const response = await dispatch(registerUser(form));
+    // 🔹 Armamos FormData porque tenemos archivo
+    const formData = new FormData();
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+    formData.append("nombre", form.nombre);
+    formData.append("tipo", form.tipo);
+    formData.append("ubicacion", form.ubicacion);
+    formData.append("telefono", form.telefono);
+    formData.append("descripcion", form.descripcion);
+    formData.append("tarifa_minima", form.tarifa_minima);
+    formData.append("tarifa_maxima", form.tarifa_maxima);
+    formData.append("disponibilidad", form.disponibilidad);
 
-    // Si la acción fue exitosa (esto depende de tu lógica en Redux)
-    if (!response?.error) {
-      setSuccessMessage("✅ Registrado con éxito");
-      setForm(initialForm);
-      setTimeout(() => setSuccessMessage(""), 4000); // Quita el mensaje después de 4 seg
-    } else {
-      alert("❌ Hubo un error al registrarse: " + response.error);
+    if (form.foto_perfil) {
+      formData.append("imagen", form.foto_perfil);
+    }
+
+    form.servicioIds.forEach((id) => {
+      formData.append("servicioIds[]", id);
+    });
+
+    try {
+      const response = await dispatch(registerUser(formData));
+      if (!response?.error) {
+        setSuccessMessage("✅ Registrado con éxito");
+        setForm(initialForm);
+        setTimeout(() => setSuccessMessage(""), 4000);
+        navigate("/login");
+      } else {
+        alert("❌ Hubo un error al registrarse: " + response.error);
+      }
+    } catch (err) {
+      console.error("Error en el registro:", err);
     }
   };
-
-const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setForm((prev) => ({ ...prev, foto_perfil: file }));
-  }
-};
-
-  const handleServicioChange = (e) => {
-    const ids = e.target.value.split(",").map((id) => id.trim());
-    setForm({ ...form, servicioIds: ids });
-  };
-
-
 
   return (
     <div className="register-wrapper">
@@ -118,8 +146,12 @@ const handleFileChange = (e) => {
           accept="image/*"
           onChange={handleFileChange}
         />
-        {form.foto_perfil && (
-          <img src={form.foto_perfil} alt="Vista previa" className="preview-image" />
+        {form.foto_preview && (
+          <img
+            src={form.foto_preview}
+            alt="Vista previa"
+            className="preview-image"
+          />
         )}
 
         <input
@@ -182,11 +214,14 @@ const handleFileChange = (e) => {
                     <input
                       type="checkbox"
                       value={servicio.id}
-                      checked={form.servicioIds.includes(servicio.id.toString())}
+                      checked={form.servicioIds.includes(
+                        servicio.id.toString()
+                      )}
                       onChange={(e) => {
                         const id = e.target.value;
                         setForm((prevForm) => {
-                          const alreadySelected = prevForm.servicioIds.includes(id);
+                          const alreadySelected =
+                            prevForm.servicioIds.includes(id);
                           return {
                             ...prevForm,
                             servicioIds: alreadySelected
