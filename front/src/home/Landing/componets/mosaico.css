@@ -1,0 +1,22 @@
+.mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+}
+
+.mosaic-cell {
+    overflow: hidden;
+    border-radius: 12px;
+    background: #eee;
+    /* para ver si el div existe */
+}
+
+.mosaic-cell img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
