@@ -49,16 +49,12 @@ const Register = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm((prev) => ({ ...prev, foto_perfil: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setForm((prev) => ({ ...prev, foto_perfil: file }));
+  }
+};
 
   const handleServicioChange = (e) => {
     const ids = e.target.value.split(",").map((id) => id.trim());
