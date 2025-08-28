@@ -73,36 +73,23 @@ export const loginUserById = (id) => async (dispatch) => {
     }
 }
 
-export const registerUser = (userData) => async (dispatch) => {
+export const registerUser = (userData) => (dispatch) => {
     dispatch({ type: "REGISTER_USER_REQUEST" });
 
+    console.log(userData)
     try {
-        const formData = new FormData();
-        Object.keys(userData).forEach((key) => {
-            if (key === "foto_perfil" && userData[key] instanceof File) {
-                formData.append("imagen", userData[key]); // el archivo
-            } else {
-                formData.append(key, userData[key]);
-            }
-        });
-
-        const response = await API.post(`/user/register`, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-
+        const response = API.post(`/user/register`, userData);
         dispatch({
             type: "REGISTER_USER_SUCCESS",
             payload: response.data,
-        });
-        return response.data;
+        })
     } catch (error) {
         dispatch({
             type: "REGISTER_USER_FAIL",
-            payload: error.response?.data?.mensage || "Error en registro",
-        });
-        return { error: true };
+            payload: error.response.data.mensage
+        })
     }
-};
+}
 
 export const loginUser = (userData) => {
     return async function (dispatch) {
