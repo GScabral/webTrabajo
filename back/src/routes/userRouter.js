@@ -57,7 +57,10 @@ router.post('/register', upload.single('imagen'), async (req, res) => {
         const foto_perfil = req.file?.path || "";
         req.body.foto_perfil = foto_perfil;
 
+        console.log(foto_perfil)
+
         const register = await registeredUser(req.body);
+        console.log(register)
 
         if (register && register.error) {
             res.status(404).json({ error: register.message });

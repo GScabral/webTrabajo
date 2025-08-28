@@ -6,7 +6,6 @@ import ComoFunciona from './componets/ComoFuncuina';
 import Servicios from './componets/ServiciosL';
 import Contacto from './componets/Contacto';
 import Footer from './componets/Footer';
-import ImageMosaic from './componets/mosaico';
 
 const Landing = () => {
     return (
@@ -14,7 +13,6 @@ const Landing = () => {
             <Header />
             <main>
                 <HeroSection />
-                <ImageMosaic />  {/* Aquí insertas el mosaico dinámico */}
                 <ComoFunciona />
                 <Servicios />
                 <Contacto />

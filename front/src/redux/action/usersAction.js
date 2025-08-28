@@ -75,6 +75,8 @@ export const loginUserById = (id) => async (dispatch) => {
 
 export const registerUser = (userData) => (dispatch) => {
     dispatch({ type: "REGISTER_USER_REQUEST" });
+
+    console.log(userData)
     try {
         const response = API.post(`/user/register`, userData);
         dispatch({

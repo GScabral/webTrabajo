@@ -1,22 +1,34 @@
-import React from "react";
-import { FiHome, FiUser, FiMessageSquare, FiLogOut, FiUsers,FiBarChart } from "react-icons/fi";
+import React, { useEffect } from "react";
+import { FiHome, FiUser, FiMessageSquare, FiLogOut, FiUsers, FiBarChart } from "react-icons/fi";
 import { FaRegComments } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { MdPostAdd } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useLogout from "../logOut/LogOut";
 import "./Sidebar.css";
 
 const Sidebar = ({ user, togglePostForm }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const logout = useLogout();
     const noLeidos = useSelector((state) => state.mensajeState.noLeidos);
+
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [togglePostForm]);
+
+    useEffect(()=>{
+       if(location.pathname != "/home"){
+        navigate("/home")
+       }
+    },[togglePostForm])
 
     if (!user) return null;
 
     const menuItems = [
-        { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/Home") },
+        { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/home") },
         { icon: <FiUser />, label: "Mi Perfil", onClick: () => navigate(`/MiPerfil/${user.id}`) }
     ];
 
