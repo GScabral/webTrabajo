@@ -138,7 +138,7 @@ const Register = () => {
           <input
             className="form-input"
             type="file"
-            name="foto_perfil"
+            name="imagen"   // 🔑 que coincida con el backend
             accept="image/*"
             onChange={handleFileChange}
           />
@@ -222,8 +222,8 @@ const Register = () => {
                               ...prevForm,
                               servicioIds: alreadySelected
                                 ? prevForm.servicioIds.filter(
-                                    (sId) => sId !== id
-                                  )
+                                  (sId) => sId !== id
+                                )
                                 : [...prevForm.servicioIds, id],
                             };
                           });
