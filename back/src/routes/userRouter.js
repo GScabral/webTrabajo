@@ -51,7 +51,7 @@ router.post('/logout', authenticate, logout);
 
 //✅ 
 
-router.post('/register', upload.single('foto_perfil'), async (req, res) => {
+router.post('/register', upload.single('imagen'), async (req, res) => {
     try {
         // Asegura que la imagen esté disponible en req.file
         const foto_perfil = req.file?.path || "";
