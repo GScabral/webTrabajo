@@ -12,6 +12,7 @@ import {
 import { SocketContext } from "../context/SocketContext";
 import useComments from "./post/comentarios/comentarios";
 import PostForm from "./post/Postear";
+import { useDarkMode } from "../context/darkMode";
 import "./Home.css";
 
 // 🏠 COMPONENTE PRINCIPAL
@@ -27,7 +28,7 @@ const Home = () => {
     const { allPost, allComments } = useSelector((state) => state.postState);
     const { onlineUsers } = useContext(SocketContext);
 
-    const [darkMode, setDarkMode] = useState(false);
+    const { darkMode, toggleDarkMode } = useDarkMode();
     const { showPostForm } = useOutletContext();
     const [selectedPostId, setSelectedPostId] = useState(null);
 
@@ -46,7 +47,6 @@ const Home = () => {
         setOpenMenuPostId(openMenuPostId === postId ? null : postId);
     };
 
-    console.log("aca info:",infoUser)
 
     const motivosReportes = [
         "Contenido inapropiado",
@@ -73,7 +73,6 @@ const Home = () => {
         handleCommentSubmit
     } = useComments();
 
-    const toggleDarkMode = () => setDarkMode(!darkMode);
 
     useEffect(() => {
         dispatch(getAllUser());

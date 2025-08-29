@@ -4,7 +4,74 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
+}
+
+body {
+  background: #f9f9f9;
+  color: #454242;
+}
+
+/* Modo oscuro */
+.dark-mode {
+  background: #454242;
+  color: #f5f5f5;
+}
+
+/* Ejemplo para tarjetas */
+.dark-mode .card-profile,
+.dark-mode .post-card {
+  background: #3c3939;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.dark-mode .profesionales-section {
+  background: #3c3939;
+}
+
+.dark-mode .like-btn,
+.dark-mode .comments-toggle-btn,
+.dark-mode .comment-form {
+  background: #3c3939;
+  color: #f5f5f5;
+}
+
+.dark-mode select {
+  background: #3c3939;
+  color: #f5f5f5;
+  border: #121212;
+}
+
+
+
+/*sidebar*/
+.dark-mode {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+/* Sidebar en darkMode */
+.sidebar-container.dark-mode {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+/* Botones en darkMode */
+.sidebar-container.dark-mode .sidebar-item {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+}
+
+.sidebar-container.dark-mode .sidebar-item:hover {
+  background-color: #333;
+}
+
+
+/* Mi perfil*/
+.dark-mode .perfil-card{
+  background-color:#2a2a2a ;
 }

@@ -41,11 +41,18 @@ const Perfil = () => {
   return (
     <div className="perfil-wrapper">
       <div className="perfil-card">
-        
+
         {/* Encabezado con imagen y datos */}
         <div className="perfil-header">
-          <img src={usuario.foto_perfil} alt={usuario.nombre} className="avatar" />
-          <h2 className="nombre">{usuario.nombre}</h2>
+          {usuario.foto_perfil && usuario.foto_perfil.trim() !== "" ? (
+            <img src={usuario.foto_perfil} alt={usuario.nombre} className="avatar" />
+          ) : (
+            <img
+              src="https://res.cloudinary.com/doauxswrl/image/upload/v1756478176/download_j9pkwx.png"
+              alt="avatar por defecto"
+              className="avatar"
+            />
+          )}          <h2 className="nombre">{usuario.nombre}</h2>
           <p className="ubicacion">📍 {usuario.ubicacion}</p>
           <button className="contact-btn">📨 Contactar</button>
         </div>

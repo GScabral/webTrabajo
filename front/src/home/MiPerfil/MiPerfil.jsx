@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserById ,updateUser, changePassword } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
+import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
 import { useParams } from "react-router-dom";
 
@@ -10,6 +11,7 @@ const MiPerfil = () => {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.userState.infoLogin);
   const { id } = useParams();
+  const { darkMode } = useDarkMode();
 
   const postByUser = useSelector((state) => state.postState.postByUser);
 
@@ -92,7 +94,7 @@ const MiPerfil = () => {
 };
 
   return (
-    <div className="perfil-container">
+    <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
       <h1 className="perfil-titulo">👤 Mi Perfil</h1>
 
       {infoUser ? (

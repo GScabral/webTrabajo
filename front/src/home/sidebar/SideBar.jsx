@@ -5,6 +5,7 @@ import { MdOutlinePostAdd } from "react-icons/md";
 import { MdPostAdd } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDarkMode } from "../../context/darkMode";
 import useLogout from "../logOut/LogOut";
 import "./Sidebar.css";
 
@@ -13,17 +14,18 @@ const Sidebar = ({ user, togglePostForm }) => {
     const location = useLocation();
     const logout = useLogout();
     const noLeidos = useSelector((state) => state.mensajeState.noLeidos);
+    const { darkMode } = useDarkMode();
 
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [togglePostForm]);
 
-    useEffect(()=>{
-       if(location.pathname != "/home"){
-        navigate("/home")
-       }
-    },[togglePostForm])
+    useEffect(() => {
+        if (location.pathname != "/home") {
+            navigate("/home")
+        }
+    }, [togglePostForm])
 
     if (!user) return null;
 
@@ -89,7 +91,7 @@ const Sidebar = ({ user, togglePostForm }) => {
     }
 
     return (
-        <aside className="sidebar-container">
+        <aside className={`sidebar-container ${darkMode ? "dark-mode" : ""}`}>
             <div className="sidebar-header">
                 <img src={user.foto_perfil} alt="perfil" className="sidebar-avatar" />
                 <h3 className="sidebar-name">{user.nombre}</h3>

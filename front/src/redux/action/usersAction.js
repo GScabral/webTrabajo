@@ -76,7 +76,7 @@ export const loginUserById = (id) => async (dispatch) => {
 export const registerUser = (userData) => (dispatch) => {
     dispatch({ type: "REGISTER_USER_REQUEST" });
 
-    console.log(userData)
+    
     try {
         const response = API.post(`/user/register`, userData);
         dispatch({
@@ -117,7 +117,7 @@ export const loginUser = (userData) => {
 export const logout = () => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
-        console.log("📦 Token encontrado en logoutAction:", token);
+       
         // Enviar token al backend para invalidarlo
         await API.post(
             '/user/logout',
@@ -258,8 +258,7 @@ export const changePassword = (oldPassword, newPassword) => async (dispatch, get
     try {
         const token = getState().userState.token; // ⬅️ Ajusta esto según tu estructura, parece ser userState
 
-        console.log("📦 Datos enviados:", { oldPassword, newPassword });
-        console.log("🔐 Token que se enviará:", token);
+        
 
         const response = await API.patch(
             '/user/change-password',

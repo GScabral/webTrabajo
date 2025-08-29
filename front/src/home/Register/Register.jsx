@@ -30,7 +30,7 @@ const Register = () => {
   const [form, setForm] = useState(initialForm);
 
   useEffect(() => {
-    dispatch(getAllService()); // carga los servicios disponibles
+    dispatch(getAllService());
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -44,8 +44,8 @@ const Register = () => {
       reader.onloadend = () => {
         setForm((prev) => ({
           ...prev,
-          foto_perfil: file, // archivo real
-          foto_preview: reader.result, // base64 para vista previa
+          foto_perfil: file,
+          foto_preview: reader.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -55,18 +55,12 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // 🔹 Armamos FormData porque tenemos archivo
     const formData = new FormData();
-    formData.append("email", form.email);
-    formData.append("password", form.password);
-    formData.append("nombre", form.nombre);
-    formData.append("tipo", form.tipo);
-    formData.append("ubicacion", form.ubicacion);
-    formData.append("telefono", form.telefono);
-    formData.append("descripcion", form.descripcion);
-    formData.append("tarifa_minima", form.tarifa_minima);
-    formData.append("tarifa_maxima", form.tarifa_maxima);
-    formData.append("disponibilidad", form.disponibilidad);
+    Object.keys(form).forEach((key) => {
+      if (key !== "servicioIds" && key !== "foto_preview") {
+        formData.append(key, form[key]);
+      }
+    });
 
     if (form.foto_perfil) {
       formData.append("imagen", form.foto_perfil);
@@ -92,161 +86,177 @@ const Register = () => {
   };
 
   return (
-    <div className="register-wrapper">
-      <form className="form-register" onSubmit={handleRegister}>
-        <h1 className="form-title">Registrarse</h1>
+    <div className="auth-container">
+      {/* Columna izquierda con el formulario */}
+      <div className="auth-left">
+        <form className="form-register" onSubmit={handleRegister}>
+          <h1 className="form-title">Registrarse</h1>
 
-        {successMessage && (
-          <div className="success-message">{successMessage}</div>
-        )}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
 
-        <input
-          className="form-input"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          className="form-input"
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          className="form-input"
-          name="nombre"
-          placeholder="Nombre"
-          value={form.nombre}
-          onChange={handleChange}
-          required
-        />
-
-        <select
-          className="form-input"
-          name="tipo"
-          value={form.tipo}
-          onChange={handleChange}
-          required
-        >
-          <option value="cliente">Cliente</option>
-          <option value="trabajador">Trabajador</option>
-        </select>
-
-        <input
-          className="form-input"
-          type="file"
-          name="foto_perfil"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        {form.foto_preview && (
-          <img
-            src={form.foto_preview}
-            alt="Vista previa"
-            className="preview-image"
+          <input
+            className="form-input"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
           />
-        )}
 
-        <input
-          className="form-input"
-          name="ubicacion"
-          placeholder="Ubicación"
-          value={form.ubicacion}
-          onChange={handleChange}
-        />
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          className="form-input"
-          name="telefono"
-          placeholder="Teléfono"
-          value={form.telefono}
-          onChange={handleChange}
-        />
+          <input
+            className="form-input"
+            name="nombre"
+            placeholder="Nombre"
+            value={form.nombre}
+            onChange={handleChange}
+            required
+          />
 
-        {form.tipo === "trabajador" && (
-          <>
-            <textarea
-              className="form-input"
-              name="descripcion"
-              placeholder="Descripción"
-              value={form.descripcion}
-              onChange={handleChange}
+          <select
+            className="form-input"
+            name="tipo"
+            value={form.tipo}
+            onChange={handleChange}
+            required
+          >
+            <option value="cliente">Cliente</option>
+            <option value="trabajador">Trabajador</option>
+          </select>
+
+          <input
+            className="form-input"
+            type="file"
+            name="foto_perfil"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          {form.foto_preview && (
+            <img
+              src={form.foto_preview}
+              alt="Vista previa"
+              className="preview-image"
             />
+          )}
 
-            <input
-              className="form-input"
-              name="tarifa_minima"
-              placeholder="Tarifa mínima"
-              type="number"
-              value={form.tarifa_minima}
-              onChange={handleChange}
-            />
+          <input
+            className="form-input"
+            name="ubicacion"
+            placeholder="Ubicación"
+            value={form.ubicacion}
+            onChange={handleChange}
+          />
 
-            <input
-              className="form-input"
-              name="tarifa_maxima"
-              placeholder="Tarifa máxima"
-              type="number"
-              value={form.tarifa_maxima}
-              onChange={handleChange}
-            />
+          <input
+            className="form-input"
+            name="telefono"
+            placeholder="Teléfono"
+            value={form.telefono}
+            onChange={handleChange}
+          />
 
-            <input
-              className="form-input"
-              name="disponibilidad"
-              placeholder="Disponibilidad"
-              value={form.disponibilidad}
-              onChange={handleChange}
-            />
+          {form.tipo === "trabajador" && (
+            <>
+              <textarea
+                className="form-input"
+                name="descripcion"
+                placeholder="Descripción"
+                value={form.descripcion}
+                onChange={handleChange}
+              />
 
-            <div className="checkbox-group">
-              <label className="checkbox-label">Servicios ofrecidos:</label>
-              {allService?.map((servicio) => (
-                <div key={servicio.id} className="checkbox-item">
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={servicio.id}
-                      checked={form.servicioIds.includes(
-                        servicio.id.toString()
-                      )}
-                      onChange={(e) => {
-                        const id = e.target.value;
-                        setForm((prevForm) => {
-                          const alreadySelected =
-                            prevForm.servicioIds.includes(id);
-                          return {
-                            ...prevForm,
-                            servicioIds: alreadySelected
-                              ? prevForm.servicioIds.filter((sId) => sId !== id)
-                              : [...prevForm.servicioIds, id],
-                          };
-                        });
-                      }}
-                    />
-                    {servicio.nombre}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+              <input
+                className="form-input"
+                name="tarifa_minima"
+                placeholder="Tarifa mínima"
+                type="number"
+                value={form.tarifa_minima}
+                onChange={handleChange}
+              />
 
-        <button className="form-button" type="submit">
-          Registrar
-        </button>
+              <input
+                className="form-input"
+                name="tarifa_maxima"
+                placeholder="Tarifa máxima"
+                type="number"
+                value={form.tarifa_maxima}
+                onChange={handleChange}
+              />
 
-        <Link to="/login" className="form-button link-button">
-          Ya tengo una cuenta
-        </Link>
-      </form>
+              <input
+                className="form-input"
+                name="disponibilidad"
+                placeholder="Disponibilidad"
+                value={form.disponibilidad}
+                onChange={handleChange}
+              />
+
+              <div className="checkbox-group">
+                <label className="checkbox-label">Servicios ofrecidos:</label>
+                {allService?.map((servicio) => (
+                  <div key={servicio.id} className="checkbox-item">
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={servicio.id}
+                        checked={form.servicioIds.includes(
+                          servicio.id.toString()
+                        )}
+                        onChange={(e) => {
+                          const id = e.target.value;
+                          setForm((prevForm) => {
+                            const alreadySelected =
+                              prevForm.servicioIds.includes(id);
+                            return {
+                              ...prevForm,
+                              servicioIds: alreadySelected
+                                ? prevForm.servicioIds.filter(
+                                    (sId) => sId !== id
+                                  )
+                                : [...prevForm.servicioIds, id],
+                            };
+                          });
+                        }}
+                      />
+                      {servicio.nombre}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          <button className="form-button" type="submit">
+            Registrar
+          </button>
+
+          <Link to="/login" className="form-button link-button">
+            Ya tengo una cuenta
+          </Link>
+        </form>
+      </div>
+
+      {/* Columna derecha con imagen y texto */}
+      <div className="auth-right">
+        <div className="welcome-text">
+          <h2>Bienvenido a Nuestra Plataforma</h2>
+          <p>
+            Conecta con profesionales y encuentra el servicio que necesitas,
+            rápido y seguro.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
