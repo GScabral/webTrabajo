@@ -68,6 +68,12 @@ io.on("connection", (socket) => {
 
 // Base de datos + iniciar servidor
 const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
+
+conn.sync({ alter: true }).then(async () => {
+  // 👇 Crear admin al iniciar si no existe
+  await initSuperAdmin();
+
+  server.listen(PORT, () => {
     console.log(`🚀 Server + WebSocket corriendo en puerto ${PORT}`);
+  });
 });
