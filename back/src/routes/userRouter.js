@@ -51,7 +51,7 @@ router.post('/logout', authenticate, logout);
 
 //✅ 
 
-router.post('/register', upload.single('imagen'), async (req, res) => {
+router.post('/register', upload.single('foto_perfil'), async (req, res) => {
     try {
         // Asegura que la imagen esté disponible en req.file
         const foto_perfil = req.file?.path || "";
@@ -155,7 +155,7 @@ router.get('/userById/:id', async (req, res) => {
 });
 
 // Actualizar usuario
-router.put('/usuario/:id', upload.single('imagen'), async (req, res) => {
+router.put('/usuario/:id', upload.single('foto_perfil'), async (req, res) => {
     const userId = req.params.id;
     const data = req.body;
 

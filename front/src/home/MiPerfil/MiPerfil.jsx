@@ -47,7 +47,7 @@ const MiPerfil = () => {
     if (email !== infoUser.email) formData.append("email", email);
     if (ubicacion !== infoUser.ubicacion) formData.append("ubicacion", ubicacion);
     if (telefono !== infoUser.telefono) formData.append("telefono", telefono);
-    if (fotoArchivo) formData.append("imagen", fotoArchivo); // nombre debe coincidir con upload.single('imagen')
+    if (fotoArchivo) formData.append("foto_perfil", fotoArchivo); // nombre debe coincidir con upload.single('imagen')
 
     if (infoUser.tipo === "trabajador") {
       if (descripcion !== infoUser.Trabajador.descripcion)
