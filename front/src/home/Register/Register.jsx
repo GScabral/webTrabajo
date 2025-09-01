@@ -11,7 +11,8 @@ const Register = () => {
   const allService = useSelector((state) => state.userState.servicios);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const initialForm = {
+
+  const [form, setForm] = useState({
     email: "",
     password: "",
     nombre: "",
@@ -25,9 +26,7 @@ const Register = () => {
     tarifa_maxima: "",
     disponibilidad: "",
     servicioIds: [],
-  };
-
-  const [form, setForm] = useState(initialForm);
+  });
 
   useEffect(() => {
     dispatch(getAllService());
@@ -74,7 +73,21 @@ const Register = () => {
       const response = await dispatch(registerUser(formData));
       if (!response?.error) {
         setSuccessMessage("✅ Registrado con éxito");
-        setForm(initialForm);
+        setForm({
+          email: "",
+          password: "",
+          nombre: "",
+          tipo: "cliente",
+          foto_perfil: null,
+          foto_preview: null,
+          ubicacion: "",
+          telefono: "",
+          descripcion: "",
+          tarifa_minima: "",
+          tarifa_maxima: "",
+          disponibilidad: "",
+          servicioIds: [],
+        });
         setTimeout(() => setSuccessMessage(""), 4000);
         navigate("/login");
       } else {
@@ -138,7 +151,7 @@ const Register = () => {
           <input
             className="form-input"
             type="file"
-            name="imagen"   // 🔑 que coincida con el backend
+            name="foto_perfil"   // 🔑 que coincida con el backend
             accept="image/*"
             onChange={handleFileChange}
           />
