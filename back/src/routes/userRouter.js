@@ -174,7 +174,6 @@ router.put('/usuario/:id', upload.single('foto_perfil'), async (req, res) => {
         data.foto_perfil = req.file.path;
     }
 
-    console.log("data en back:", data);
 
     const result = await updateUser(userId, data);
 

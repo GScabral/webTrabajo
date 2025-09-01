@@ -9,7 +9,7 @@ const sendPasswordResetEmail = async (email, token) => {
         }
     });
 
-const resetLink = `http://localhost:3006/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
+const resetLink = `https://webtrabajo.onrender.com:3006/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
 
     const mailOptions = {
         from: `"Soporte - MiAplicación" <${process.env.EMAIL_USER}>`,

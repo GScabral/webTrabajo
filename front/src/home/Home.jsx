@@ -67,6 +67,7 @@ const Home = () => {
         setReportMenuPostId(null);
     };
 
+
     const {
         commentContent,
         setCommentContent,
@@ -217,7 +218,7 @@ const Home = () => {
                                             <p className="calificacion">⭐ {trabajador.Trabajador.promedio_valoracion}</p>
                                             <button
                                                 className="form-button"
-                                                onClick={() => navigate(`/perfil/${trabajador.id}`)}
+                                                onClick={() => navigate(`perfil/${trabajador.id}`)}
                                             >
                                                 Ver perfil
                                             </button>
