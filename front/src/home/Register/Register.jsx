@@ -56,13 +56,13 @@ const Register = () => {
 
     const formData = new FormData();
     Object.keys(form).forEach((key) => {
-      if (key !== "servicioIds" && key !== "foto_preview") {
+      if (key !== "servicioIds" && key !== "foto_preview" && key !== "foto_perfil") {
         formData.append(key, form[key]);
       }
     });
 
     if (form.foto_perfil) {
-      formData.append("foto_perfil", form.foto_perfil);
+      formData.append("foto_perfil", form.foto_perfil); // ahora solo una vez
     }
 
     form.servicioIds.forEach((id) => {
