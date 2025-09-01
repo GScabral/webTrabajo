@@ -97,7 +97,6 @@ export const loginUser = (userData) => {
         try {
             const response = await API.post(`/user/login`, userData);
 
-            console.log(response)
 
             localStorage.setItem("token", response.data.token);
 

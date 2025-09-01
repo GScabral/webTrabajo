@@ -62,7 +62,7 @@ const Register = () => {
     });
 
     if (form.foto_perfil) {
-      formData.append("imagen", form.foto_perfil);
+      formData.append("foto_perfil", form.foto_perfil);
     }
 
     form.servicioIds.forEach((id) => {
