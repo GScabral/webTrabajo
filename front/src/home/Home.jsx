@@ -48,6 +48,8 @@ const Home = () => {
     };
 
 
+console.log(allUser)
+
     const motivosReportes = [
         "Contenido inapropiado",
         "Lenguaje ofensivo",

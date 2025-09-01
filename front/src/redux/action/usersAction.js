@@ -73,24 +73,27 @@ export const loginUserById = (id) => async (dispatch) => {
     }
 }
 
-export const registerUser = (userData) => (dispatch) => {
+export const registerUser = (userData) => async (dispatch) => {
     dispatch({ type: "REGISTER_USER_REQUEST" });
 
-    console.log(userData)
-    
     try {
-        const response = API.post(`/user/register`, userData);
+        const response = await API.post("/user/register", userData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+
         dispatch({
             type: "REGISTER_USER_SUCCESS",
             payload: response.data,
-        })
+        });
+        return response.data; // 🔹 importante devolverlo
     } catch (error) {
         dispatch({
             type: "REGISTER_USER_FAIL",
-            payload: error.response.data.mensage
-        })
+            payload: error.response?.data?.message || error.message,
+        });
+        return { error: error.response?.data?.message || error.message };
     }
-}
+};
 
 export const loginUser = (userData) => {
     return async function (dispatch) {
@@ -117,7 +120,7 @@ export const loginUser = (userData) => {
 export const logout = () => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
-       
+
         // Enviar token al backend para invalidarlo
         await API.post(
             '/user/logout',
@@ -258,7 +261,7 @@ export const changePassword = (oldPassword, newPassword) => async (dispatch, get
     try {
         const token = getState().userState.token; // ⬅️ Ajusta esto según tu estructura, parece ser userState
 
-        
+
 
         const response = await API.patch(
             '/user/change-password',

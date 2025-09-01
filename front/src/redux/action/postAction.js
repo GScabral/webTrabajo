@@ -19,7 +19,6 @@ export const getAllPost = () => async (dispatch) => {
 
 export const createPost = (postData) => async (dispatch) => {
     dispatch({ type: 'CREATE_POST_REQUEST' });
-    console.log(postData)
     try {
         const response = await API.post('/posts/postear', postData);
         dispatch({
