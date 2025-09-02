@@ -67,6 +67,7 @@ const Home = () => {
         setReportMenuPostId(null);
     };
 
+    console.log("infouser:",infoUser)
 
     const {
         commentContent,
