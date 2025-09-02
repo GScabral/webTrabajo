@@ -41,7 +41,6 @@ function App() {
           }
         >
           <Route path="home" element={<Home />} />
-          <Route path="perfil/:id" element={<Perfil />} />
           <Route path="postDetail/:id" element={<DetailPost />} />
           <Route path="chat/:id" element={<Chat />} />
           <Route path="chatReciente" element={<ChatsRecientes />} />
@@ -52,6 +51,14 @@ function App() {
           <Route path="stats" element={<StatsAdmin />} />
           <Route path="reportes" element={<Reports />} />
         </Route>
+        <Route
+          path="perfil/:id"
+          element={
+            <PrivateRoute>
+              <Perfil />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </DarkModeProvider>
   );

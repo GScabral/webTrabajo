@@ -113,31 +113,31 @@ export const banUser = (userId, bloqueado_hasta) => async (dispatch) => {
 export const UnBanUser = (userId) => async (dispatch) => {
     dispatch({ type: "UNBAN_USER_REQUEST" });
 
-
     try {
-
-        const token = localStorage.getItem("token"); // lo guardas al iniciar sesión
+        const token = localStorage.getItem("token"); // se guarda al iniciar sesión
 
         const response = await API.patch(
             `/admin/unblockUser/${userId}`,
+            {}, // cuerpo vacío, ya que no envías datos
             {
                 headers: {
-                    Authorization: `Bearer ${token}`, // headers en el tercer parámetro
+                    Authorization: `Bearer ${token}`, // headers van aquí
                 },
             }
         );
 
         dispatch({
             type: "UNBAN_USER_SUCESS",
-            payload: response.data.mensaje, // tu backend devuelve "mensaje"
+            payload: response.data.mensaje, // backend devuelve "mensaje"
         });
     } catch (error) {
         dispatch({
             type: "UNBAN_USER_FAIL",
-            payload: error.response?.data?.error || "Error al bloquear usuario",
+            payload: error.response?.data?.error || "Error al desbloquear usuario",
         });
     }
 };
+
 
 
 export const deleteComment = (commentId) => async (dispatch) => {

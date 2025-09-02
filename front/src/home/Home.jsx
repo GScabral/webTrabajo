@@ -216,12 +216,12 @@ const Home = () => {
                                             <p className="profesion">{trabajador.Trabajador?.Servicios?.[0]?.nombre}</p>
                                             <p className="ubicacion">📍 {trabajador.ubicacion}</p>
                                             <p className="calificacion">⭐ {trabajador.Trabajador.promedio_valoracion}</p>
-                                            <button
+                                            <Link
+                                                to={`/perfil/${trabajador.id}`}
                                                 className="form-button"
-                                                onClick={() => navigate(`perfil/${trabajador.id}`)}
                                             >
                                                 Ver perfil
-                                            </button>
+                                            </Link>
                                             <button
                                                 className="form-button"
                                                 onClick={() => navigate(`/chat/${trabajador.id}`)}
