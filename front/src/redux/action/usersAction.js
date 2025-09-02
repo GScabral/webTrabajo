@@ -100,7 +100,7 @@ export const loginUser = (userData) => {
         try {
             const response = await API.post(`/user/login`, userData);
 
-
+            // Guardar el token en localStorage (no sessionStorage)
             localStorage.setItem("token", response.data.token);
 
             dispatch({
