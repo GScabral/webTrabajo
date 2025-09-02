@@ -120,6 +120,11 @@ export const UnBanUser = (userId) => async (dispatch) => {
 
         const response = await API.patch(
             `/admin/unblockUser/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`, // headers en el tercer parámetro
+                },
+            }
         );
 
         dispatch({
@@ -185,7 +190,7 @@ export const getReportByPost = (postId) => async (dispatch) => {
 
     try {
         const token = localStorage.getItem("token");
-        const { data } = await API.get(`/admin/getReportByPost/${postId}`,{
+        const { data } = await API.get(`/admin/getReportByPost/${postId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
