@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/action/usersAction"; // tu acción de logout
+import { logout } from "../../../redux/action/usersAction";
 import "./BanModal.css";
 
 const BanModal = ({ user }) => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(logoutUser());
+        dispatch(logout());
     };
 
     // convertir fecha ISO a algo legible
