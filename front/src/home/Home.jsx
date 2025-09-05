@@ -38,6 +38,9 @@ const Home = () => {
     const [categoriaSeleccionadaPost, setCategoriaSeleccionadaPost] = useState("Todas");
     const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState("Todas");
 
+    const [hoveredPostId, setHoveredPostId] = useState(null);
+    const [hoverTimer, setHoverTimer] = useState(null);
+
     const [likes, setLikes] = useState({});
     const [userLikes, setUserLikes] = useState({});
     const [openMenuPostId, setOpenMenuPostId] = useState(null);
@@ -67,7 +70,7 @@ const Home = () => {
         setReportMenuPostId(null);
     };
 
-    console.log("infouser:",infoUser)
+    console.log("infouser:", infoUser)
 
     const {
         commentContent,
@@ -301,7 +304,28 @@ const Home = () => {
                                     <p className="post-author">Autor: {post.User.nombre}</p>
                                     <p>{post.contenido}</p>
                                     <Link to={`/postDetail/${post.id}`}>
-                                        {post.imagen_url && <img src={post.imagen_url} alt={post.titulo} className="post-img" />}
+                                        {post.imagen_url && (
+                                            <>
+                                                <img
+                                                    src={post.imagen_url}
+                                                    alt={post.titulo}
+                                                    className="post-img"
+                                                    onMouseEnter={() => {
+                                                        const timer = setTimeout(() => setHoveredPostId(post.id), 1000); // espera 1s
+                                                        setHoverTimer(timer);
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        clearTimeout(hoverTimer);
+                                                    }}
+                                                />
+
+                                                {hoveredPostId === post.id && (
+                                                    <div className="image-modal" onMouseLeave={() => setHoveredPostId(null)}>
+                                                        <img src={post.imagen_url} alt={post.titulo} />
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
                                     </Link>
                                     <p className="fecha-post">Publicado el: {new Date(post.fecha_creacion).toLocaleDateString()}</p>
                                     <div className="post-footer">

@@ -22,13 +22,27 @@
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
 .form-title {
   text-align: center;
   color: white;
   margin-bottom: 1rem;
+}
+
+.preview-image {
+  display: block;
+  max-width: 120px;
+  /* limita el ancho */
+  max-height: 120px;
+  /* limita el alto */
+  object-fit: cover;
+  /* recorta sin deformar */
+  border-radius: 8px;
+  margin: 0.5rem auto;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Inputs */
@@ -74,7 +88,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .welcome-text {
