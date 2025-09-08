@@ -70,8 +70,7 @@ const Perfil = () => {
               <p><strong>Descripción:</strong> {trabajador.descripcion}</p>
               <p><strong>Tarifa:</strong> ${trabajador.tarifa_minima} - ${trabajador.tarifa_maxima}</p>
               <p><strong>Disponibilidad:</strong> {trabajador.disponibilidad}</p>
-              <p><strong>Valoración:</strong> ⭐ {trabajador.promedio_valoracion || "Sin valoraciones"}</p>
-            </>
+              <p><strong>Valoración:</strong> ⭐ {trabajador.promedio_valoracion ? Number(trabajador.promedio_valoracion).toFixed(2) : "Sin valoraciones"}</p>            </>
           )}
         </div>
 

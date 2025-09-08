@@ -20,7 +20,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-name {
@@ -86,6 +86,47 @@
 .logout:hover {
   background-color: rgba(255, 82, 82, 0.2);
 }
+
+
+.notif-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.notif-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.notif-item.unread {
+  background-color: #f0f8ff;
+  font-weight: bold;
+}
+
+.notif-item.read {
+  background-color: #fff;
+}
+
+.notif-item:hover {
+  background-color: #f9f9f9;
+}
+
+.notif-empty {
+  padding: 15px;
+  text-align: center;
+  color: #888;
+}
+
 @media (max-width: 768px) {
   .sidebar-container {
     position: fixed;
@@ -106,7 +147,8 @@
   }
 
   .sidebar-header {
-    display: none; /* ocultamos foto y nombre en móvil */
+    display: none;
+    /* ocultamos foto y nombre en móvil */
   }
 
   .sidebar-menu {

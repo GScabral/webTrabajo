@@ -53,6 +53,7 @@ if (models) {
         Like,
         ActiveToken,
         Report,
+        Notification
     } = models;
 
     // Relaciones User -> Trabajador y Cliente
@@ -119,6 +120,11 @@ if (models) {
 
     Report.belongsTo(models.User, { foreignKey: 'user_id' });
     Report.belongsTo(models.Post, { foreignKey: 'post_id' });
+
+    Notification.belongsTo(models.User, { as: "recipient", foreignKey: "recipient_id" });
+    Notification.belongsTo(models.User, { as: "actor", foreignKey: "actor_id" });
+
+
 }
 
 module.exports = {

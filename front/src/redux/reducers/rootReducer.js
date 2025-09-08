@@ -4,6 +4,7 @@ import userReducer from "./userReducer"
 import postReducer from "./postReducer"
 import trabajadorReducer from "./trabajadorReducer"
 import mensajeReducer from "./mensajeReducer"
+import notificationReducer from './notificationReducer';
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     postState:postReducer,
     trabajoState:trabajadorReducer,
     mensajeState:mensajeReducer,
+    notificationState:notificationReducer,
 })
 
 

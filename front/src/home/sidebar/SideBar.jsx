@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { FiHome, FiUser, FiMessageSquare, FiLogOut, FiUsers, FiBarChart } from "react-icons/fi";
+import React, { useEffect, useState, useRef } from "react";
+import { FiHome, FiUser, FiMessageSquare, FiLogOut, FiUsers, FiBarChart, FiBell } from "react-icons/fi";
 import { FaRegComments } from "react-icons/fa";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { MdPostAdd } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useDarkMode } from "../../context/darkMode";
+import { getNotifications, markAsRead } from "../../redux/action/notificationAction";
 import useLogout from "../logOut/LogOut";
 import "./Sidebar.css";
 
@@ -16,6 +17,27 @@ const Sidebar = ({ user, togglePostForm }) => {
     const noLeidos = useSelector((state) => state.mensajeState.noLeidos);
     const { darkMode } = useDarkMode();
 
+    const [openNotif, setOpenNotif] = useState(false)
+    const notifRef = useRef(null)
+
+    const dispatch = useDispatch();
+    const notifications = useSelector((state) => state.notificationState.list)
+
+    useEffect(() => {
+        function handleClickOutSide(event) {
+            if (notifRef.current && !notifRef.current.contains(event.target)) {
+                setOpenNotif(false)
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutSide);
+        return () => document.removeEventListener("mousedown", handleClickOutSide)
+    }, [])
+
+    useEffect(() => {
+        if (user?.id) {
+            dispatch(getNotifications(user.id));
+        }
+    }, [user, dispatch]);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -108,6 +130,40 @@ const Sidebar = ({ user, togglePostForm }) => {
                         )}
                     </button>
                 ))}
+                <div ref={notifRef} className="relative">
+                    <button
+                        onClick={() => setOpenNotif(!openNotif)}
+                        className="sidebar-item"
+                    >
+                        <span className="sidebar-icon"><FiBell /></span>
+                        Notificaciones
+                        {notifications.filter(n => !n.read_at).length > 0 && (
+                            <span className="sidebar-badge">
+                                {notifications.filter(n => !n.read_at).length}
+                            </span>
+                        )}
+                    </button>
+
+                    {/* Dropdown */}
+                    {openNotif && (
+                        <div className="notif-dropdown">
+                            {notifications.length === 0 ? (
+                                <p className="notif-empty">No tienes notificaciones</p>
+                            ) : (
+                                notifications.map((n) => (
+                                    <div
+                                        key={n.id}
+                                        className={`notif-item ${n.read_at ? "read" : "unread"}`}
+                                        onClick={() => dispatch(markAsRead(n.id))}
+                                    >
+                                        <p>{n.type === "mention" ? "Te mencionaron" : n.type}</p>
+                                        {n.meta?.snippet && <small>{n.meta.snippet}</small>}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    )}
+                </div>
                 <button onClick={logout} className="sidebar-item logout">
                     <span className="sidebar-icon"><FiLogOut /></span>
                     Cerrar sesión
