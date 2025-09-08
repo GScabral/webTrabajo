@@ -1,5 +1,5 @@
 // services/notificationService.js
-const { Notification } = require("../models");
+const { Notification } = require("../../db");
 
 // ✅ Crear una notificación genérica
 async function createNotification({ recipientId, actorId, postId, commentId, type, meta = {} }) {
