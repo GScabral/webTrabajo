@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById } from "../../redux/action/postAction";
 import useComments from "./comentarios/comentarios";
 import { useParams } from "react-router-dom";
+import { MentionsInput, Mention } from "react-mentions";
+import { getUserById } from "../../redux/action/usersAction";
+import { Link } from "react-router-dom";
 import "./viewPost.css";
 
 const DetailPost = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const infoPost = useSelector((state) => state.postState.infoPost);
-    const { infoLogin: infoUser } = useSelector((state) => state.userState);
+    const infoUser = useSelector(state => state.userState.userById);
 
     const {
         commentContent,
@@ -18,13 +21,42 @@ const DetailPost = () => {
         handleCommentSubmit,
     } = useComments();
 
+    // 🔹 Estado local para usuarios mencionables
+    const [usuariosMencionables, setUsuariosMencionables] = useState([]);
+
+    // Traer post
     useEffect(() => {
         if (id) {
             dispatch(getPostById(id));
         }
     }, [dispatch, id]);
 
+    // Cuando se carguen los comentarios, obtener usuarios únicos
+    useEffect(() => {
+        const cargarUsuarios = async () => {
+            if (infoPost?.Comments?.length > 0) {
+                const uniqueUserIds = [...new Set(infoPost.Comments.map((c) => c.user_id))];
+                const promises = uniqueUserIds.map((uid) => dispatch(getUserById(uid)));
+                const results = await Promise.all(promises);
+
+                const usuarios = results.map((res) => ({
+                    id: res.id,
+                    nombre: res.nombre,
+                }));
+
+                setUsuariosMencionables(usuarios);
+
+            }
+        };
+        cargarUsuarios();
+    }, [infoPost, dispatch]);
+
     if (!infoPost) return <p className="loading">⏳ Cargando publicación...</p>;
+
+
+    // Función para resaltar menciones en comentarios
+    const highlightMentions = (text) =>
+        text.replace(/@([\wÁÉÍÓÚÑáéíóúñ\s]+)/g, '<span class="mention">@$1</span>');
 
     return (
         <div className="post-detail-container">
@@ -57,13 +89,22 @@ const DetailPost = () => {
                     <div className="comments-list">
                         {infoPost.Comments.map((comment) => (
                             <div key={comment.id} className="comment-bubble">
-                                <div className="comment-avatar">
-                                    {comment.usuario?.nombre
-                                        ? comment.usuario.nombre[0].toUpperCase()
-                                        : "U"}
-                                </div>
+                                <Link to={`/perfil/${comment.user_id}`}>
+                                    <div className="comment-avatar">
+
+                                        {infoUser.usuario?.nombre
+                                            ? infoUser.usuario.nombre[0].toUpperCase()
+                                            : "U"}
+                                    </div>
+                                </Link>
                                 <div className="comment-body">
-                                    <p className="comment-content">{comment.contenido}</p>
+                                    {/* Menciones resaltadas */}
+                                    <p
+                                        className="comment-content"
+                                        dangerouslySetInnerHTML={{
+                                            __html: highlightMentions(comment.contenido),
+                                        }}
+                                    />
                                     <span className="comment-date">
                                         {new Date(comment.fecha).toLocaleString()}
                                     </span>
@@ -75,14 +116,25 @@ const DetailPost = () => {
                     <p className="no-comments">Sé el primero en comentar 🚀</p>
                 )}
 
-                {/* Formulario de nuevo comentario */}
+                {/* Formulario de nuevo comentario con @ */}
                 <div className="comment-form">
-                    <textarea
-                        placeholder="Escribe tu comentario..."
+                    <MentionsInput
                         value={commentContent}
                         onChange={(e) => setCommentContent(e.target.value)}
-                        rows={2}
-                    />
+                        placeholder="Escribe tu comentario y usa @ para mencionar..."
+                        className="mentions-input"
+                    >
+                        <Mention
+                            trigger="@"
+                            data={usuariosMencionables.map((u) => ({
+                                id: u.id,
+                                display: u.nombre,
+                            }))}
+                            markup="@__display__"
+                            displayTransform={(id, display) => `@${display}`}   // 🔹 FIX
+                        />
+                    </MentionsInput>
+
                     <button
                         onClick={() => handleCommentSubmit(infoPost.id, infoUser.id)}
                         disabled={commentSubmitting}

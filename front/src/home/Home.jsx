@@ -13,6 +13,7 @@ import { SocketContext } from "../context/SocketContext";
 import useComments from "./post/comentarios/comentarios";
 import PostForm from "./post/Postear";
 import { useDarkMode } from "../context/darkMode";
+
 import "./Home.css";
 
 // 🏠 COMPONENTE PRINCIPAL
@@ -70,7 +71,6 @@ const Home = () => {
         setReportMenuPostId(null);
     };
 
-    console.log("infouser:", infoUser)
 
     const {
         commentContent,

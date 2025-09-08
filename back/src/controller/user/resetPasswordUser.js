@@ -6,9 +6,7 @@ const { Op } = require('sequelize');
 // Supongamos que el modelo User tiene un campo 'reset_token' y 'reset_token_expiration'
 const resetPasswordUser = async (email, token, newPassword) => {
 
-    console.log("cambio:", email)
-    console.log("cambio:", token)
-    console.log("cambio:", newPassword)
+
     try {
         // Busca el usuario por email y token válido
         const user = await User.findOne({

@@ -41,7 +41,7 @@ function App() {
           }
         >
           <Route path="home" element={<Home />} />
-          <Route path="postDetail/:id" element={<DetailPost />} />
+          {/* <Route path="postDetail/:id" element={<DetailPost />} /> */}
           <Route path="chat/:id" element={<Chat />} />
           <Route path="chatReciente" element={<ChatsRecientes />} />
           <Route path="MiPerfil/:id" element={<MiPerfil />} />
@@ -56,6 +56,14 @@ function App() {
           element={
             <PrivateRoute>
               <Perfil />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="postDetail/:id"
+          element={
+            <PrivateRoute>
+              <DetailPost />
             </PrivateRoute>
           }
         />

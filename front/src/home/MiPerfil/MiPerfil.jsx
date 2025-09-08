@@ -33,6 +33,7 @@ const MiPerfil = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
 
+
   useEffect(() => {
     if (id) {
       dispatch(getByPostUser(id));

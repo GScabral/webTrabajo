@@ -32,6 +32,21 @@
     color: white;
 }
 
+.mentions-input {
+    width: 100%;
+    min-height: 60px;
+    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.mention {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .post-hero-title {
     font-size: 2rem;
     margin-bottom: 0.3rem;

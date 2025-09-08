@@ -38,19 +38,22 @@ export const getAllService = () => async (dispatch) => {
 
 
 export const getUserById = (id) => async (dispatch) => {
-    dispatch({ type: "GETBYID_USER_REQUEST" })
+    dispatch({ type: "GETBYID_USER_REQUEST" });
 
     try {
         const response = await API.get(`/user/userById/${id}`);
         dispatch({
             type: "GETBYID_USER_SUCCESS",
             payload: response.data,
-        })
+        });
+        
+        return response.data; // 🔹 AHORA devuelve el usuario
     } catch (error) {
         dispatch({
             type: "GETBYID_USER_FAILURE",
             payload: error.message,
-        })
+        });
+        throw error; // 🔹 importante si querés capturar el error en tu componente
     }
 }
 
