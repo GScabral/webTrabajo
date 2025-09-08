@@ -12,10 +12,11 @@ const Perfil = () => {
   const usuario = useSelector(state => state.userState.userById);
   const loading = useSelector(state => state.userState.loading);
   const calificaciones = useSelector(state => state.trabajoState.calificaciones || []);
+  const infoLogin = useSelector(state => state.userState.infoLogin);
 
   const [comentario, setComentario] = useState("");
-  const [puntuacion, setPuntuacion] = useState(5);
-  const [cliente_id] = useState(1); // Reemplazar con el ID real del cliente logueado
+  const [puntuacion, setPuntuacion] = useState(0);
+  console.log(usuario)
 
   useEffect(() => {
     dispatch(getUserById(id));
@@ -28,13 +29,15 @@ const Perfil = () => {
       puntuacion,
       comentario,
       trabajador_id: id,
-      cliente_id
+      cliente_id: infoLogin.id
     }));
     setComentario("");
     setPuntuacion(5);
   };
 
   if (loading || !usuario) return <p className="loading">Cargando perfil...</p>;
+
+  console.log(calificaciones)
 
   const trabajador = usuario.Trabajador;
 
@@ -105,14 +108,16 @@ const Perfil = () => {
         {calificaciones.length > 0 && (
           <div className="reseñas card-section">
             <h3>🗨️ Reseñas de clientes</h3>
-            {calificaciones.map(c => (
-              <div key={c.id} className="comentario-burbuja">
-                <div className="comentario-top">
-                  <strong>⭐ {c.puntuacion}</strong>
+            {calificaciones
+              .filter(c => c && typeof c.puntuacion !== "undefined")
+              .map(c => (
+                <div key={c.id} className="comentario-burbuja">
+                  <div className="comentario-top">
+                    <strong>⭐ {c.puntuacion}</strong>
+                  </div>
+                  <p>{c.comentario}</p>
                 </div>
-                <p>{c.comentario}</p>
-              </div>
-            ))}
+              ))}
           </div>
         )}
       </div>
