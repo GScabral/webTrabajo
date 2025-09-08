@@ -3,7 +3,7 @@ const {
     getNotifications, 
     markAsRead, 
     markAllAsRead 
-} = require("../controller/notificationController");
+} = require("../controller/notification/notificationController");
 
 const authenticate = require("../middleware/authenticate");
 
