@@ -5,7 +5,7 @@ const {
     markAllAsRead 
 } = require("../controller/notification/notificationController");
 
-const authenticate = require("../middleware/authenticate");
+const authenticate = require("../middleware/authenticate")
 
 const router = Router();
 
