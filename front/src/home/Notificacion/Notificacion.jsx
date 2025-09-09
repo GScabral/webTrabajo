@@ -6,6 +6,18 @@ const NotificationList = ({ userId }) => {
     const dispatch = useDispatch();
     const notifications = useSelector((state) => state.notificationState.list);
 
+    const formatNotification = (n) => {
+        switch (n.type) {
+            case "like_post":
+                return `Alguien le dio like a tu publicación #${n.post_id}`;
+            case "comment_post":
+                return `Alguien comentó en tu publicación #${n.post_id}`;
+            case "reply_comment":
+                return `Alguien respondió a tu comentario #${n.comment_id}`;
+            default:
+                return "Tienes una nueva notificación";
+        }
+    };
 
     console.log(notifications)
 
