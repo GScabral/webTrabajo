@@ -6,6 +6,9 @@ const NotificationList = ({ userId }) => {
     const dispatch = useDispatch();
     const notifications = useSelector((state) => state.notificationState.list);
 
+
+    console.log(notifications)
+
     useEffect(() => {
         if (userId) dispatch(getNotifications(userId));
     }, [userId, dispatch]);
