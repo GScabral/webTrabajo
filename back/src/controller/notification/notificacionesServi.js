@@ -56,10 +56,6 @@ async function notifyCommentOnPost({ postUserId, actorId, postId, commentId }) {
 async function getNotificationsByUser(userId, limit = 20) {
     return await Notification.findAll({
         where: { recipient_id: userId },
-        include: [
-            { model: User, as: "actor", attributes: ["id", "nombre", "foto_perfil"] },
-            { model: Post, as: "post", attributes: ["id", "titulo"] }
-        ],
         order: [["created_at", "DESC"]],
         limit,
     });
