@@ -23,6 +23,9 @@ const Sidebar = ({ user, togglePostForm }) => {
     const dispatch = useDispatch();
     const notifications = useSelector((state) => state.notificationState.list)
 
+
+    console.log("SideBarNotif:",notifications)
+
     useEffect(() => {
         function handleClickOutSide(event) {
             if (notifRef.current && !notifRef.current.contains(event.target)) {
