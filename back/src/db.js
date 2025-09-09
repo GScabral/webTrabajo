@@ -123,7 +123,8 @@ if (models) {
 
     Notification.belongsTo(models.User, { as: "recipient", foreignKey: "recipient_id" });
     Notification.belongsTo(models.User, { as: "actor", foreignKey: "actor_id" });
-
+    Notification.belongsTo(models.Post, { as: "post", foreignKey: "post_id" });
+    Notification.belongsTo(models.Comment, { as: "comment", foreignKey: "comment_id" });
 
 }
 
