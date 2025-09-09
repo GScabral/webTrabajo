@@ -89,39 +89,121 @@
 
 .notif-dropdown {
   position: absolute;
-  top: 120%;
-  /* un poco más abajo para probar */
-  left: 0;
-  width: 250px;
-  background: yellow;
-  /* TEMP: prueba para ver si aparece */
+  top: 0;
+  left: 100%;
+  margin-left: 10px;
+  width: 300px;
+  background: #fff;
+  color: #333;
   z-index: 2000;
-  /* más alto para que no quede tapado */
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
-.notif-item {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-
-.notif-item.unread {
-  background-color: #f0f8ff;
+/* Header */
+.notif-header {
   font-weight: bold;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  background: #f9fafb;
+  border-radius: 12px 12px 0 0;
 }
 
-.notif-item.read {
-  background-color: #fff;
+/* Cada ítem */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .notif-item:hover {
-  background-color: #f9f9f9;
+  background: #f5f7fa;
 }
 
-.notif-empty {
-  padding: 15px;
-  text-align: center;
+/* Icono */
+.notif-icon {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #1877f2;
+  /* Azul estilo Facebook */
+  margin-top: 2px;
+}
+
+/* Texto */
+.notif-content {
+  flex: 1;
+}
+
+.notif-text {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notif-time {
+  font-size: 12px;
   color: #888;
+}
+
+/* Footer */
+.notif-footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 13px;
+  color: #1877f2;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+}
+
+.notif-footer:hover {
+  background: #f0f2f5;
+}
+
+/* Estado vacío */
+.notif-empty {
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}
+
+/* Badge del botón */
+.notif-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {

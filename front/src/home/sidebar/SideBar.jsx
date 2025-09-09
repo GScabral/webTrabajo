@@ -146,34 +146,50 @@ const Sidebar = ({ user, togglePostForm }) => {
                     </button>
                 ))}
                 <div ref={notifRef} className="relative">
-                    <button onClick={() => setOpenNotif(!openNotif)} className="sidebar-item">
-                        {openNotif && <p style={{ color: "red" }}>DEBUG: Dropdown abierto</p>}
-                        <span className="sidebar-icon">
-                            <FiBell />
-                        </span>
-                        Notificaciones
-                        {notifications.filter((n) => !n.read_at).length > 0 && (
-                            <span className="sidebar-badge">{notifications.filter((n) => !n.read_at).length}</span>
+                    <button onClick={() => setOpenNotif(!openNotif)} className="notif-button">
+                        🔔 Notificaciones
+                        {notifications.length > 0 && (
+                            <span className="notif-badge">{notifications.length}</span>
                         )}
                     </button>
 
-                    {/* Dropdown */}
                     {openNotif && (
                         <div className="notif-dropdown">
-                            {notifications.length === 0 ? (
-                                <p className="notif-empty">No tienes notificaciones</p>
-                            ) : (
+                            <div className="notif-header">Notificaciones</div>
+
+                            {notifications.length > 0 ? (
                                 notifications.map((n) => (
-                                    <div
-                                        key={n.id}
-                                        className={`notif-item ${n.read_at ? "read" : "unread"}`}
-                                        onClick={() => dispatch(markAsRead(n.id))}
-                                    >
-                                        <p>{formatNotification(n)}</p>
-                                        <small>{new Date(n.created_at).toLocaleString()}</small>
+                                    <div key={n.id} className="notif-item">
+                                        <div className="notif-icon">
+                                            {n.type === "like"
+                                                ? "👍"
+                                                : n.type === "comment"
+                                                    ? "💬"
+                                                    : "🔔"}
+                                        </div>
+                                        <div className="notif-content">
+                                            <p className="notif-text">
+                                                {n.type === "like" && (
+                                                    <>Alguien dio like a tu publicación #{n.post_id}</>
+                                                )}
+                                                {n.type === "comment" && (
+                                                    <>Alguien comentó en tu publicación #{n.post_id}</>
+                                                )}
+                                                {n.type !== "like" && n.type !== "comment" && (
+                                                    <>Tienes una nueva notificación</>
+                                                )}
+                                            </p>
+                                            <span className="notif-time">
+                                                {new Date(n.createdAt).toLocaleString()}
+                                            </span>
+                                        </div>
                                     </div>
                                 ))
+                            ) : (
+                                <div className="notif-empty">No tienes notificaciones</div>
                             )}
+
+                            <div className="notif-footer">Ver todas</div>
                         </div>
                     )}
                 </div>
