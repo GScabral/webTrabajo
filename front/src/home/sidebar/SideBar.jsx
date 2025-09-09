@@ -10,6 +10,19 @@ import { getNotifications, markAsRead } from "../../redux/action/notificationAct
 import useLogout from "../logOut/LogOut";
 import "./Sidebar.css";
 
+const formatNotification = (n) => {
+    switch (n.type) {
+        case "like_post":
+            return `Alguien le dio like a tu publicación #${n.post_id}`;
+        case "comment_post":
+            return `Alguien comentó en tu publicación #${n.post_id}`;
+        case "reply_comment":
+            return `Alguien respondió a tu comentario #${n.comment_id}`;
+        default:
+            return "Tienes una nueva notificación";
+    }
+};
+
 const Sidebar = ({ user, togglePostForm }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,7 +37,7 @@ const Sidebar = ({ user, togglePostForm }) => {
     const notifications = useSelector((state) => state.notificationState.list)
 
 
-    console.log("SideBarNotif:",notifications)
+    console.log("SideBarNotif:", notifications)
 
     useEffect(() => {
         function handleClickOutSide(event) {
@@ -134,17 +147,14 @@ const Sidebar = ({ user, togglePostForm }) => {
                     </button>
                 ))}
                 <div ref={notifRef} className="relative">
-                    <button
-                        onClick={() => setOpenNotif(!openNotif)}
-                        className="sidebar-item"
-                    >
+                    <button onClick={() => setOpenNotif(!openNotif)} className="sidebar-item">
                         {openNotif && <p style={{ color: "red" }}>DEBUG: Dropdown abierto</p>}
-                        <span className="sidebar-icon"><FiBell /></span>
+                        <span className="sidebar-icon">
+                            <FiBell />
+                        </span>
                         Notificaciones
-                        {notifications.filter(n => !n.read_at).length > 0 && (
-                            <span className="sidebar-badge">
-                                {notifications.filter(n => !n.read_at).length}
-                            </span>
+                        {notifications.filter((n) => !n.read_at).length > 0 && (
+                            <span className="sidebar-badge">{notifications.filter((n) => !n.read_at).length}</span>
                         )}
                     </button>
 
@@ -160,8 +170,8 @@ const Sidebar = ({ user, togglePostForm }) => {
                                         className={`notif-item ${n.read_at ? "read" : "unread"}`}
                                         onClick={() => dispatch(markAsRead(n.id))}
                                     >
-                                        <p>{n.type === "mention" ? "Te mencionaron" : n.type}</p>
-                                        {n.meta?.snippet && <small>{n.meta.snippet}</small>}
+                                        <p>{formatNotification(n)}</p>
+                                        <small>{new Date(n.created_at).toLocaleString()}</small>
                                     </div>
                                 ))
                             )}
