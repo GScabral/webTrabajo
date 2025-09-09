@@ -19,10 +19,12 @@ const NotificationList = ({ userId }) => {
             {notifications.map((n) => (
                 <div
                     key={n.id}
-                    style={{ background: n.read_at ? "#eee" : "#fff" }}
+                    style={{ background: n.read_at ? "#eee" : "#fff", cursor: "pointer", padding: "8px", margin: "4px 0" }}
                     onClick={() => dispatch(markAsRead(n.id))}
                 >
-                    {n.type} - {n.meta?.snippet}
+                    {formatNotification(n)}
+                    <br />
+                    <small>{new Date(n.created_at).toLocaleString()}</small>
                 </div>
             ))}
         </div>
