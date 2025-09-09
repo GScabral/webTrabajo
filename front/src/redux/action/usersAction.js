@@ -46,7 +46,7 @@ export const getUserById = (id) => async (dispatch) => {
             type: "GETBYID_USER_SUCCESS",
             payload: response.data,
         });
-        
+
         return response.data; // 🔹 AHORA devuelve el usuario
     } catch (error) {
         dispatch({
@@ -158,7 +158,7 @@ export const addLike = ({ user_id, post_id }) => async (dispatch) => {
             type: "ADD_LIKE_SUCCESS",
             payload: response.data,
         });
-        return { payload: response.data };
+        return response.data;
     } catch (error) {
         dispatch({
             type: "ADD_LIKE_FAIL",

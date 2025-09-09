@@ -135,6 +135,7 @@ const Sidebar = ({ user, togglePostForm }) => {
                         onClick={() => setOpenNotif(!openNotif)}
                         className="sidebar-item"
                     >
+                        {openNotif && <p style={{ color: "red" }}>DEBUG: Dropdown abierto</p>}
                         <span className="sidebar-icon"><FiBell /></span>
                         Notificaciones
                         {notifications.filter(n => !n.read_at).length > 0 && (

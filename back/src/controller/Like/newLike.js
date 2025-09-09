@@ -1,4 +1,5 @@
 const { Like, Post, User } = require('../../db');
+const notificationService = require("../notification/notificacionesServi"); // 👈 importa tu servicio de notificaciones
 
 /**
  * 🔥 Dar Like
@@ -13,6 +14,18 @@ const addLike = async (user_id, post_id) => {
     }
 
     const newLike = await Like.create({ user_id, post_id });
+
+    // 📢 Notificar al dueño del post
+    const post = await Post.findByPk(post_id);
+    if (post && post.user_id !== user_id) {
+        await notificationService.createNotification({
+            recipientId: post.user_id,   // dueño del post
+            actorId: user_id,            // quien dio like
+            postId: post_id,
+            type: "like_post"
+        });
+    }
+
     return newLike;
 };
 

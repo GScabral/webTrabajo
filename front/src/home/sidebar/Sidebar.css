@@ -87,19 +87,16 @@
   background-color: rgba(255, 82, 82, 0.2);
 }
 
-
 .notif-dropdown {
   position: absolute;
-  top: 100%;
+  top: 120%;
+  /* un poco más abajo para probar */
   left: 0;
   width: 250px;
-  max-height: 300px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  background: yellow;
+  /* TEMP: prueba para ver si aparece */
+  z-index: 2000;
+  /* más alto para que no quede tapado */
 }
 
 .notif-item {

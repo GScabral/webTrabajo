@@ -7,14 +7,18 @@ const useComments = () => {
     const [commentContent, setCommentContent] = useState('');
     const [commentSubmitting, setCommentSubmitting] = useState(false);
 
-    const handleCommentSubmit = async (postId, userId) => {
+    /**
+     * 📢 Manejar envío de comentario
+     */
+    const handleCommentSubmit = async (postId, userId, parentCommentId = null) => {
         if (!commentContent.trim()) return;
         setCommentSubmitting(true);
         try {
             await dispatch(createComment({
                 contenido: commentContent,
                 post_id: postId,
-                user_id: userId
+                user_id: userId,
+                parent_comment_id: parentCommentId // 👈 soporta respuestas
             }));
             setCommentContent('');
             await dispatch(getCommentsByPost(postId));
