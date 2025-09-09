@@ -4,7 +4,7 @@ import { getNotifications, markAsRead } from "../redux/actions/notificationActio
 
 const NotificationList = ({ userId }) => {
     const dispatch = useDispatch();
-    const notifications = useSelector((state) => state.notifications.list);
+    const notifications = useSelector((state) => state.notificationState.list);
 
     useEffect(() => {
         if (userId) dispatch(getNotifications(userId));
