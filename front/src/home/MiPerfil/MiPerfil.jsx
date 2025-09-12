@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserById ,updateUser, changePassword } from "../../redux/action/usersAction"
+import { getUserById ,updateUser, changePassword ,getLikesByUser} from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 const MiPerfil = () => {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.userState.infoLogin);
+  const likeUser = useSelector((state) => state.userState.likeUser);
   const { id } = useParams();
   const { darkMode } = useDarkMode();
 
@@ -92,6 +93,12 @@ const MiPerfil = () => {
     alert("❌ Error al cambiar la contraseña.");
   }
 };
+
+useEffect(()=>{
+  dispatch(getLikesByUser(id))
+},[dispatch])
+
+console.log("likesUser:")
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>

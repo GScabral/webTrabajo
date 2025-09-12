@@ -79,9 +79,32 @@ const checkUserLike = async (userId, postId) => {
     return !!like;
 };
 
+/**
+ * traer los like de los usuarios para mostrar en el perfiil
+ */
+const getLikeByUser = async (userId) => {
+    const likes = await Like.findAll({
+        where: { user_id: userId },
+        include: [{ 
+            model: Post, 
+            attributes: ['id', 'contenido', 'imagen_url', 'titulo'] 
+        }]
+    });
+
+    if (!likes || likes.length === 0) {
+        return { message: "Este usuario no ha dado likes todavía", likes: [] };
+    }
+
+    return {
+        totalLikes: likes.length,
+        likes
+    };
+};
+
 module.exports = {
     addLike,
     removeLike,
     getLikesByPost,
-    checkUserLike
+    checkUserLike,
+    getLikeByUser
 };

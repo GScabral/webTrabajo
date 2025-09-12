@@ -44,7 +44,7 @@ function App() {
           {/* <Route path="postDetail/:id" element={<DetailPost />} /> */}
           <Route path="chat/:id" element={<Chat />} />
           <Route path="chatReciente" element={<ChatsRecientes />} />
-          <Route path="MiPerfil/:id" element={<MiPerfil />} />
+          {/* <Route path="MiPerfil/:id" element={<MiPerfil />} /> */}
           <Route path="adminComment" element={<AdminComment />} />
           <Route path="controlUser" element={<ControlUserAll />} />
           <Route path="postadmin" element={<PostAdmin />} />
@@ -64,6 +64,14 @@ function App() {
           element={
             <PrivateRoute>
               <DetailPost />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="MiPerfil/:id"
+          element={
+            <PrivateRoute>
+              <MiPerfil />
             </PrivateRoute>
           }
         />

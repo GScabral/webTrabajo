@@ -175,93 +175,77 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    align-items: start;
+    align-items: stretch; /* 🔑 todas las cards misma altura */
 }
 
 .post-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 1.2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
     min-height: 420px;
-    /* altura mínima para equilibrio */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .post-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .post-card h4 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: #1f2937;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 
 .post-card h5 {
     font-size: 0.9rem;
     font-weight: 500;
     color: #5a67d8;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .post-author {
     font-size: 0.85rem;
     color: #6b7280;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
 }
 
+.post-card .img-wrapper {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;   /* ✅ evita que la imagen agrandada se salga */
+  margin-bottom: 1rem;
+}
+
+/* 📸 Imagen */
 .post-card img.post-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin: 0.5rem 0 0.8rem 0;
-    transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.image-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
+/* ✨ Efecto hover solo sobre la imagen */
+.post-card .img-wrapper:hover img.post-img {
+  transform: scale(1.08); /* ✅ se agranda sin mover nada */
 }
-
-.image-modal img {
-    max-width: 80%;
-    max-height: 80%;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease-in-out;
-}
-
-.image-modal img:hover {
-    transform: scale(1.05);
-}
-
-
 .fecha-post {
     font-size: 0.8rem;
     color: #9ca3af;
     margin-top: auto;
-    margin-bottom: 0.8rem;
 }
 
 .post-footer {
     display: flex;
     justify-content: space-between;
     gap: 0.8rem;
-    margin-top: auto;
+    margin-top: 1rem;
 }
 
 .like-btn,
@@ -389,20 +373,24 @@
 }
 
 .card-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: 220px;
-    background-color: #ffffff;
-    border-radius: 1rem;
+    min-height: 320px; /* 🔑 misma altura */
+    background: white;
+    border-radius: 16px;
     padding: 1.2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
     position: relative;
     flex-shrink: 0;
 }
 
 .card-profile:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
 .card-profile img {
@@ -410,18 +398,19 @@
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 0.8rem;
-    border: 2px solid #5a67d8;
+    margin: 0 auto 0.8rem auto;
+    border: 3px solid #5a67d8;
 }
 
 .card-profile h4 {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 0.2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #1f2937;
 }
 
 .card-profile .profesion {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #5a67d8;
     margin-bottom: 0.3rem;
 }
@@ -429,21 +418,19 @@
 .card-profile .ubicacion,
 .card-profile .calificacion {
     font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 0.3rem;
+    color: #6b7280;
+    margin-bottom: 0.2rem;
 }
 
 .card-profile .form-button {
-    width: 100%;
-    padding: 0.4rem;
-    margin-top: 0.3rem;
-    border: none;
-    border-radius: 6px;
+    margin-top: auto; /* 🔑 botón siempre abajo */
+    padding: 0.5rem;
+    border-radius: 10px;
     background-color: #5a67d8;
     color: white;
-    cursor: pointer;
     font-size: 0.9rem;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .card-profile .form-button:hover {
@@ -460,11 +447,11 @@
 }
 
 .status-indicator.online {
-    background-color: #00d166;
+    background-color: #10b981;
 }
 
 .status-indicator.offline {
-    background-color: #999;
+    background-color: #9ca3af;
 }
 
 /* 🔍 FILTROS */
@@ -479,71 +466,7 @@
     border: 1px solid #ccc;
 }
 
-
-
-
-.post-options {
-    position: relative;
-    display: inline-block;
-}
-
-.menu-button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.menu-dropdown {
-    position: absolute;
-    top: 25px;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
-    z-index: 10;
-}
-
-.menu-dropdown button {
-    background: none;
-    border: none;
-    padding: 8px 12px;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-}
-
-.menu-dropdown button:hover {
-    background: #f0f0f0;
-}
-
-.report-options {
-    margin-top: 5px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    background: #fafafa;
-    border-radius: 8px;
-}
-
-.report-option-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 6px;
-    margin-bottom: 4px;
-    border: none;
-    background: #fff;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
-
-.report-option-btn:hover {
-    background: #f2f2f2;
-}
-
+/* 📱 RESPONSIVE */
 @media (max-width: 480px) {
     .home-header h2 {
         font-size: 1.2rem;

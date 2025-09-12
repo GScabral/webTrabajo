@@ -11,7 +11,7 @@ const updateUser = require('../controller/user/updateUser')
 const sendPasswordResetEmail = require("../utils/resetPasswordEmail")
 const logout = require("../controller/user/logOutUser")
 const getAllUser=require("../controller/user/allUser")
-const { addLike, removeLike, getLikesByPost, checkUserLike } = require("../controller/Like/newLike")
+const { addLike, removeLike, getLikesByPost, checkUserLike,get, getLikeByUser } = require("../controller/Like/newLike")
 const upload = require("../upload")
 const authMiddleware = require("../middleware/midelware")
 const authenticate = require("../middleware/authenticate")
@@ -266,6 +266,19 @@ router.get('/like/check/:userId/:postId', async (req, res) => {
     }
 });
 
+router.get('/likebyuser/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        if (!userId) {
+            return res.status(400).json({ error: "Falta el parámetro postId." });
+        }
+        const result = await getLikeByUser(userId);
+        res.json(result);
+    } catch (err) {
+        console.error("Error al obtener likes:", err);
+        res.status(500).json({ error: err.message || "Error interno del servidor." });
+    }
+});
 
 
 

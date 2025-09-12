@@ -207,6 +207,25 @@ export const getLikesByPost = (postId) => async (dispatch) => {
         return { error: error.message };
     }
 };
+export const getLikesByUser = (userId) => async (dispatch) => {
+    dispatch({ type: "GET_LIKES_BY_USER_REQUEST" });
+    try {
+        const response = await API.get(`/user/likebyuser/${userId}`);
+        console.log(response.data)
+        dispatch({
+            type: "GET_LIKES_BY_USER_SUCCESS",
+            payload: response.data
+        });
+        
+        return { payload: response.data };
+    } catch (error) {
+        dispatch({
+            type: "GET_LIKES_BY_USER_FAIL",
+            payload: error.response?.data?.error || error.message,
+        });
+        return { error: error.message };
+    }
+};
 
 // 🔥 Verificar si un usuario ha dado like
 export const checkUserLike = (userId, postId) => async (dispatch) => {

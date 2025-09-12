@@ -219,8 +219,11 @@ const Home = () => {
                                             <h4>{trabajador.nombre}</h4>
                                             <p className="profesion">{trabajador.Trabajador?.Servicios?.[0]?.nombre}</p>
                                             <p className="ubicacion">📍 {trabajador.ubicacion}</p>
-                                            <p className="calificacion">⭐ {trabajador.Trabajador.promedio_valoracion}</p>
-                                            <Link
+                                            <p className="calificacion">
+                                                ⭐ {trabajador.Trabajador.promedio_valoracion
+                                                    ? Number(trabajador.Trabajador.promedio_valoracion).toFixed(2)
+                                                    : "Sin valoración"}
+                                            </p>                                            <Link
                                                 to={`/perfil/${trabajador.id}`}
                                                 className="form-button"
                                             >
