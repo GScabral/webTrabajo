@@ -211,7 +211,7 @@ export const getLikesByUser = (userId) => async (dispatch) => {
     dispatch({ type: "GET_LIKES_BY_USER_REQUEST" });
     try {
         const response = await API.get(`/user/likebyuser/${userId}`);
-        console.log(response.data)
+        console.log("en la action:",response.data)
         dispatch({
             type: "GET_LIKES_BY_USER_SUCCESS",
             payload: response.data

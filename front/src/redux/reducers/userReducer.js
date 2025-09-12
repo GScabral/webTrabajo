@@ -12,7 +12,7 @@ const initialState = {
     // ❤️ Estados para Likes
     likesByPost: {},       // { postId: totalLikes }
     userLikesStatus: {},   // { postId: true/false }
-    likeUser: {},
+    likesUser: {},
 };
 
 const userReducer = (state = initialState, action) => {
@@ -89,11 +89,11 @@ const userReducer = (state = initialState, action) => {
             return { ...state, loading: false, message: action.payload };
 
 
-        case "GET_LIKES_BY_USER_REQUEST":
+        case "GET_LIKES_BY_USER_SUCCESS":
             return {
                 ...state,
                 loading: false,
-                likeUser: action.payload
+                likesUser: action.payload
             }
         // ❤️ LIKES
         case 'ADD_LIKE_REQUEST':

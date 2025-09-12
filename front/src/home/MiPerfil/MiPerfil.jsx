@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserById ,updateUser, changePassword ,getLikesByUser} from "../../redux/action/usersAction"
+import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 const MiPerfil = () => {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.userState.infoLogin);
-  const likeUser = useSelector((state) => state.userState.likeUser);
+  const likeUser = useSelector((state) => state.userState.likesUser);
   const { id } = useParams();
   const { darkMode } = useDarkMode();
 
@@ -73,32 +73,32 @@ const MiPerfil = () => {
   };
 
   const handleChangePassword = async () => {
-  if (!oldPassword || !newPassword || !confirmPassword) {
-    return alert("⚠️ Completa todos los campos.");
-  }
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      return alert("⚠️ Completa todos los campos.");
+    }
 
-  if (newPassword !== confirmPassword) {
-    return alert("❌ Las contraseñas nuevas no coinciden.");
-  }
+    if (newPassword !== confirmPassword) {
+      return alert("❌ Las contraseñas nuevas no coinciden.");
+    }
 
-  try {
-    await dispatch(changePassword(oldPassword, newPassword));
-    alert("✅ Contraseña actualizada correctamente.");
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setMostrarCambioPassword(false);
-  } catch (error) {
-    console.error(error);
-    alert("❌ Error al cambiar la contraseña.");
-  }
-};
+    try {
+      await dispatch(changePassword(oldPassword, newPassword));
+      alert("✅ Contraseña actualizada correctamente.");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setMostrarCambioPassword(false);
+    } catch (error) {
+      console.error(error);
+      alert("❌ Error al cambiar la contraseña.");
+    }
+  };
 
-useEffect(()=>{
-  dispatch(getLikesByUser(id))
-},[dispatch])
+  useEffect(() => {
+    dispatch(getLikesByUser(id))
+  }, [dispatch])
 
-console.log("likesUser:")
+  console.log("likesUser:")
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
@@ -230,7 +230,7 @@ console.log("likesUser:")
               </div>
             </div>
           ) : (
-              <div className="perfil-datos">
+            <div className="perfil-datos">
               <p><strong>📧 Email:</strong> {infoUser.email}</p>
               <p><strong>👥 Tipo:</strong> {infoUser.tipo}</p>
               <p><strong>📍 Ubicación:</strong> {infoUser.ubicacion}</p>
@@ -322,6 +322,15 @@ console.log("likesUser:")
           </div>
         </div>
       )}
+      <div className="MyLikes">
+        {likeUser.map((like) => (
+          <div key={like.id} className="mostrarLikes">
+            <p>{like.Post.titulo}</p>
+            <p>{like.Post.contenido}</p>
+            <img src={like.Post.imagen_url} alt={like.Post.titulo} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
