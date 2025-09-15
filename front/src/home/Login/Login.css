@@ -65,6 +65,7 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -149,4 +150,65 @@
 .forgot-password-link a:hover {
     opacity: 1;
     text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+    .login-container {
+        padding: 2rem;
+    }
+
+    .login-title {
+        font-size: 1.7rem;
+    }
+
+    .login-overlay h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .login-left,
+    .login-right {
+        flex: none;
+        width: 100%;
+        min-height: 50vh;
+    }
+
+    .login-overlay {
+        padding: 1.5rem;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-title {
+        font-size: 1.4rem;
+    }
+
+    .login-input {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+    }
+
+    .form-button {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    .login-overlay h2 {
+        font-size: 1.3rem;
+    }
+
+    .login-overlay p {
+        font-size: 0.95rem;
+    }
 }

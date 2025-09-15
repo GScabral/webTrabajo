@@ -182,3 +182,82 @@
   margin-top: 8px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.09);
 }
+
+
+@media (max-width: 992px) {
+  .perfil-container {
+    padding: 15px;
+  }
+
+  .perfil-titulo {
+    font-size: 1.7rem;
+  }
+
+  .perfil-header {
+    gap: 10px;
+  }
+
+  .perfil-imagen {
+    width: 75px;
+    height: 75px;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .perfil-datos {
+    text-align: center;
+  }
+
+  .perfil-botones {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .perfil-posts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .mostrarLikes {
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-titulo {
+    font-size: 1.4rem;
+  }
+
+  .perfil-container {
+    margin: 1rem auto;
+    padding: 10px;
+  }
+
+  .perfil-imagen {
+    width: 65px;
+    height: 65px;
+  }
+
+  .perfil-posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mostrarLikes {
+    width: 100%;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+}
