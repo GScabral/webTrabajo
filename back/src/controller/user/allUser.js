@@ -1,4 +1,4 @@
-const {User,Trabajador, Servicio}= require('../../db')
+const { User, Trabajador, Servicio,Calificacion } = require('../../db')
 
 
 const getAllUser = async () => {
@@ -11,6 +11,10 @@ const getAllUser = async () => {
                         {
                             model: Servicio,
                             through: { attributes: [] }, // no incluir la tabla intermedia
+                        },
+                        {
+                            model: Calificacion, // 🔑 aquí traes las calificaciones
+                            attributes: ['puntuacion', 'fecha'] // solo lo necesario
                         }
                     ]
                 }

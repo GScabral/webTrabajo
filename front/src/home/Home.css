@@ -23,6 +23,74 @@
     transition: background 0.3s;
 }
 
+/* 🏆 Sección Top 5 */
+.top5-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--card-bg, #fff);
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.top5-section h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--primary-color, #333);
+    text-align: center;
+}
+
+.top5-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.top5-section .top-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--list-bg, #f9f9f9);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.6rem;
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.top5-section .top-item:hover {
+    background: var(--list-hover, #ececec);
+    transform: translateX(4px);
+}
+
+.top5-section .top-item strong {
+    font-size: 1.1rem;
+    color: var(--highlight, #ff9800);
+    margin-right: 0.5rem;
+}
+
+.top5-section .top-item span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* 🌙 Soporte modo oscuro */
+.dark-mode .top5-section {
+    background: #1e1e1e;
+}
+
+.dark-mode .top5-section h3 {
+    color: #ffcc66;
+}
+
+.dark-mode .top5-section .top-item {
+    background: #2a2a2a;
+    color: #eee;
+}
+
+.dark-mode .top5-section .top-item:hover {
+    background: #333;
+}
+
 .toggle-dark-button:hover {
     background-color: #5a67d8;
 }
@@ -175,7 +243,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    align-items: stretch; /* 🔑 todas las cards misma altura */
+    align-items: stretch;
+    /* 🔑 todas las cards misma altura */
 }
 
 .post-card {
@@ -216,25 +285,28 @@
 }
 
 .post-card .img-wrapper {
-  width: 100%;
-  height: 180px;
-  border-radius: 12px;
-  overflow: hidden;   /* ✅ evita que la imagen agrandada se salga */
-  margin-bottom: 1rem;
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    /* ✅ evita que la imagen agrandada se salga */
+    margin-bottom: 1rem;
 }
 
 /* 📸 Imagen */
 .post-card img.post-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
 
 /* ✨ Efecto hover solo sobre la imagen */
 .post-card .img-wrapper:hover img.post-img {
-  transform: scale(1.08); /* ✅ se agranda sin mover nada */
+    transform: scale(1.08);
+    /* ✅ se agranda sin mover nada */
 }
+
 .fecha-post {
     font-size: 0.8rem;
     color: #9ca3af;
@@ -377,7 +449,8 @@
     flex-direction: column;
     justify-content: space-between;
     min-width: 220px;
-    min-height: 320px; /* 🔑 misma altura */
+    min-height: 320px;
+    /* 🔑 misma altura */
     background: white;
     border-radius: 16px;
     padding: 1.2rem;
@@ -423,7 +496,8 @@
 }
 
 .card-profile .form-button {
-    margin-top: auto; /* 🔑 botón siempre abajo */
+    margin-top: auto;
+    /* 🔑 botón siempre abajo */
     padding: 0.5rem;
     border-radius: 10px;
     background-color: #5a67d8;

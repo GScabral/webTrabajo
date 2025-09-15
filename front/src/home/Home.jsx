@@ -52,7 +52,24 @@ const Home = () => {
     };
 
 
-    console.log(allUser)
+
+    const top5Trabajadores = Array.isArray(allUser)
+        ? allUser
+            .filter(user => user.tipo === "trabajador")
+            .sort((a, b) => {
+                const promA = Number(a.Trabajador?.promedio_valoracion || 0);
+                const promB = Number(b.Trabajador?.promedio_valoracion || 0);
+                const votosA = Number(a.Trabajador?.numero_valoraciones || 0);
+                const votosB = Number(b.Trabajador?.numero_valoraciones || 0);
+
+                // Primero por promedio de valoración
+                if (promB !== promA) return promB - promA;
+                // Si hay empate, ordenar por cantidad de votos
+                return votosB - votosA;
+            })
+            .slice(0, 5)
+        : [];
+
 
     const motivosReportes = [
         "Contenido inapropiado",
@@ -192,7 +209,18 @@ const Home = () => {
                 {infoUser.tipo === "trabajador" && showPostForm && (
                     <PostForm userId={infoUser?.id} />
                 )}
-
+                <div className="top5-section">
+                    <h3>🏆 Mejores calificados del mes</h3>
+                    <ul>
+                        {top5Trabajadores.map((trabajador, index) => (
+                            <li key={trabajador.id} className="top-item">
+                                <strong>#{index + 1}</strong> {trabajador.nombre}
+                                — ⭐ {Number(trabajador.Trabajador.promedio_valoracion).toFixed(2)}
+                                ({trabajador.Trabajador.numero_valoraciones} votos)
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 {/* Profesionales */}
                 <div className="profesionales-section">
                     <h3 className="profesionales-title">👥 Profesionales destacados</h3>
