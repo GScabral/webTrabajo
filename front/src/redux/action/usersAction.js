@@ -208,6 +208,7 @@ export const getLikesByPost = (postId) => async (dispatch) => {
     }
 };
 export const getLikesByUser = (userId) => async (dispatch) => {
+    console.log("useridPost:",userId)
     dispatch({ type: "GET_LIKES_BY_USER_REQUEST" });
     try {
         const response = await API.get(`/user/likebyuser/${userId}`);

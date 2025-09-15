@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserById ,updateUser, changePassword ,getLikesByUser} from "../../redux/action/usersAction"
+import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
@@ -34,6 +34,11 @@ const MiPerfil = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
 
+  useEffect(() => {
+    if (id) {
+      dispatch(getLikesByUser(id))
+    }
+  }, [dispatch, id])
 
   useEffect(() => {
     if (id) {
@@ -73,32 +78,30 @@ const MiPerfil = () => {
   };
 
   const handleChangePassword = async () => {
-  if (!oldPassword || !newPassword || !confirmPassword) {
-    return alert("⚠️ Completa todos los campos.");
-  }
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      return alert("⚠️ Completa todos los campos.");
+    }
 
-  if (newPassword !== confirmPassword) {
-    return alert("❌ Las contraseñas nuevas no coinciden.");
-  }
+    if (newPassword !== confirmPassword) {
+      return alert("❌ Las contraseñas nuevas no coinciden.");
+    }
 
-  try {
-    await dispatch(changePassword(oldPassword, newPassword));
-    alert("✅ Contraseña actualizada correctamente.");
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setMostrarCambioPassword(false);
-  } catch (error) {
-    console.error(error);
-    alert("❌ Error al cambiar la contraseña.");
-  }
-};
+    try {
+      await dispatch(changePassword(oldPassword, newPassword));
+      alert("✅ Contraseña actualizada correctamente.");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setMostrarCambioPassword(false);
+    } catch (error) {
+      console.error(error);
+      alert("❌ Error al cambiar la contraseña.");
+    }
+  };
 
-useEffect(()=>{
-  dispatch(getLikesByUser(id))
-},[dispatch,id])
 
-console.log("likesUser:",likeUser)
+
+  console.log("likesUser:", likeUser)
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
@@ -230,7 +233,7 @@ console.log("likesUser:",likeUser)
               </div>
             </div>
           ) : (
-              <div className="perfil-datos">
+            <div className="perfil-datos">
               <p><strong>📧 Email:</strong> {infoUser.email}</p>
               <p><strong>👥 Tipo:</strong> {infoUser.tipo}</p>
               <p><strong>📍 Ubicación:</strong> {infoUser.ubicacion}</p>
@@ -323,12 +326,12 @@ console.log("likesUser:",likeUser)
         </div>
       )}
       <div className="MyLikes">
-        {likeUser.map((likes)=>(
+        {likeUser.map((likes) => (
           <div key={likes.id} className="mostrarLikes">
-      <p>{likes.Post.titulo}</p>
-      <p>{likes.Post.contenido}</p>
-      <img src={likes.Post.imagen_url} alt={likes.Post.titulo} />
-    </div>
+            <p>{likes.Post.titulo}</p>
+            <p>{likes.Post.contenido}</p>
+            <img src={likes.Post.imagen_url} alt={likes.Post.titulo} />
+          </div>
         ))}
       </div>
     </div>
