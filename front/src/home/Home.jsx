@@ -52,6 +52,7 @@ const Home = () => {
     };
 
 
+    console.log(allUser)
 
     const motivosReportes = [
         "Contenido inapropiado",
@@ -223,7 +224,8 @@ const Home = () => {
                                                 ⭐ {trabajador.Trabajador.promedio_valoracion
                                                     ? Number(trabajador.Trabajador.promedio_valoracion).toFixed(2)
                                                     : "Sin valoración"}
-                                            </p>                                            <Link
+                                            </p>
+                                            <Link
                                                 to={`/perfil/${trabajador.id}`}
                                                 className="form-button"
                                             >
