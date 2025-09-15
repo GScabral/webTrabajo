@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 const MiPerfil = () => {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.userState.infoLogin);
-  const likeUser = useSelector((state) => state.userState.likeUser);
+  const likeUser = useSelector((state) => state.userState.likeByUser);
   const { id } = useParams();
   const { darkMode } = useDarkMode();
 
@@ -101,7 +101,6 @@ const MiPerfil = () => {
 
 
 
-  console.log("likesUser:", likeUser)
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
@@ -325,6 +324,7 @@ const MiPerfil = () => {
           </div>
         </div>
       )}
+      <h1 className="titulo">ULTIMOS LIKE</h1>
       <div className="MyLikes">
         {likeUser.map((likes) => (
           <div key={likes.id} className="mostrarLikes">

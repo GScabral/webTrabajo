@@ -208,16 +208,16 @@ export const getLikesByPost = (postId) => async (dispatch) => {
     }
 };
 export const getLikesByUser = (userId) => async (dispatch) => {
-    console.log("useridPost:",userId)
+
     dispatch({ type: "GET_LIKES_BY_USER_REQUEST" });
     try {
         const response = await API.get(`/user/likebyuser/${userId}`);
-        console.log("en la action:",response.data)
+
         dispatch({
             type: "GET_LIKES_BY_USER_SUCCESS",
-            payload: response.data
+            payload: Array.isArray(response.data.likes) ? response.data.likes : [],
         });
-        
+
         return { payload: response.data };
     } catch (error) {
         dispatch({
