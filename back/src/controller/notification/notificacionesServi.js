@@ -54,24 +54,28 @@ async function notifyCommentOnPost({ postUserId, actorId, postId, commentId }) {
 
 // ✅ Obtener notificaciones de un usuario
 async function getNotificationsByUser(userId, limit = 20) {
-    return await Notification.findAll({
-        where: { recipient_id: userId },
-        include: [
-            {
-                model: User,
-                as: "actor",
-                attributes: ["id", "nombre", "foto_perfil"], // solo lo que necesites
-            },
-            {
-                model: Post,
-                attributes: ["id","imagen_url"]
-            }
-        ],
-        order: [["created_at", "DESC"]],
-        limit,
-    });
+    try {
+        return await Notification.findAll({
+            where: { recipient_id: userId },
+            include: [
+                {
+                    model: User,
+                    as: "actor",
+                    attributes: ["id", "nombre", "foto_perfil"],
+                },
+                {
+                    model: Post,
+                    attributes: ["id", "imagen_url"],
+                },
+            ],
+            order: [["created_at", "DESC"]],
+            limit,
+        });
+    } catch (err) {
+        console.error("❌ Error en getNotificationsByUser:", err);
+        throw err;
+    }
 }
-
 // ✅ Marcar una notificación como leída
 async function markAsRead(notificationId, userId) {
     const notif = await Notification.findOne({
