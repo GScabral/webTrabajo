@@ -64,7 +64,7 @@ async function getNotificationsByUser(userId, limit = 20) {
             },
             {
                 model: Post,
-                attributes: ["imagen_url"]
+                attributes: ["id","imagen_url"]
             }
         ],
         order: [["created_at", "DESC"]],
