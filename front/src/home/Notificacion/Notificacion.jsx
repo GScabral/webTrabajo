@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getNotifications, markAsRead } from "../redux/actions/notificationActions";
+import { getNotifications, markAsRead } from "../../redux/action/notificationAction";
 
 const NotificationList = ({ userId }) => {
     const dispatch = useDispatch();

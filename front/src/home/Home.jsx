@@ -223,7 +223,7 @@ const Home = () => {
                 </div>
                 {/* Profesionales */}
                 <div className="profesionales-section">
-                    <h3 className="profesionales-title">👥 Profesionales destacados</h3>
+                    <h3 className="profesionales-title">👥 Profesionales </h3>
                     <div className="scroll-container-wrapper">
                         <button className="scroll-button left" onClick={() => scrollProfesionales("left")}>←</button>
                         <div className="scroll-container" id="profesionales-scroll">
