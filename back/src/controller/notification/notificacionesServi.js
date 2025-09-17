@@ -1,5 +1,5 @@
 // services/notificationService.js
-const { Notification,User } = require("../../db");
+const { Notification, User, Post } = require("../../db");
 
 // ✅ Crear una notificación genérica
 async function createNotification({ recipientId, actorId, postId, commentId, type, meta = {} }) {
@@ -62,6 +62,10 @@ async function getNotificationsByUser(userId, limit = 20) {
                 as: "actor",
                 attributes: ["id", "nombre", "foto_perfil"], // solo lo que necesites
             },
+            {
+                model: Post,
+                attributes: ["imagen_url"]
+            }
         ],
         order: [["created_at", "DESC"]],
         limit,
