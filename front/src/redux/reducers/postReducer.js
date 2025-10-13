@@ -3,12 +3,14 @@ const initialState = {
     allComments: [],
     infoPost: [],
     postByUser: [],
-    report:[],
+    report: [],
     loading: false,
     error: null
 };
 
 const postReducer = (state = initialState, action) => {
+    console.log("🌀 Reducer ejecutado:", action.type);
+
     switch (action.type) {
         case "GET_ALLPOST_REQUEST":
         case "GET_COMMENTS_REQUEST":

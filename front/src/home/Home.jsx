@@ -126,15 +126,19 @@ const Home = () => {
         setUserLikes(prev => ({ ...prev, [postId]: hasLiked }));
     };
 
-    const handleLikeToggle = async (postId) => {
-        const hasLiked = userLikes[postId]; // 👈 usamos nuestro estado local
+    const handleLikeToggle = async (postId, e) => {
+        e.preventDefault(); // evita recarga
+        e.stopPropagation(); // evita que se dispare otro evento (por ejemplo, Link)
+
+        const hasLiked = userLikes[postId];
         if (hasLiked) {
             await dispatch(removeLike({ user_id: infoUser.id, post_id: postId }));
         } else {
             await dispatch(addLike({ user_id: infoUser.id, post_id: postId }));
         }
-        await loadLikes(postId);         // 🔄 refresca contador
-        await checkLikeStatus(postId);   // 🔄 refresca estado de usuario
+
+        await loadLikes(postId);
+        await checkLikeStatus(postId);
     };
 
     const handleVerComentarios = (postId) => {
@@ -170,6 +174,9 @@ const Home = () => {
             </div>
         );
     }
+
+    console.log("🔄 Home renderizado");
+
 
     return (
         <div className={`home-layout ${darkMode ? "dark-mode" : ""}`}>
@@ -363,8 +370,9 @@ const Home = () => {
                                     <p className="fecha-post">Publicado el: {new Date(post.fecha_creacion).toLocaleDateString()}</p>
                                     <div className="post-footer">
                                         <button
+                                            type="button"
                                             className={`like-btn ${userLikes[post.id] ? 'liked' : ''}`}
-                                            onClick={() => handleLikeToggle(post.id)}
+                                            onClick={(e) => handleLikeToggle(post.id, e)}
                                         >
                                             {userLikes[post.id] ? '💖 Quitar Like' : '🤍 Me gusta'} ({likes[post.id] || 0})
                                         </button>
