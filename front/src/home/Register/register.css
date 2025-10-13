@@ -1,8 +1,10 @@
 .auth-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh; /* cambia height por min-height */
   width: 100%;
+  align-items: stretch; /* opcional, mejora la alineación */
 }
+
 
 /* Columna izquierda */
 .auth-left {
