@@ -92,9 +92,11 @@ const userReducer = (state = initialState, action) => {
         case "GET_LIKES_BY_USER_SUCCESS":
             return {
                 ...state,
-                loading: false,
-                likeByUser: action.payload
-            }
+                likesByPost: {
+                    ...state.likesByPost,
+                    [action.payload.postId]: action.payload.likes,
+                },
+            };
         // ❤️ LIKES
         case 'ADD_LIKE_REQUEST':
         case 'REMOVE_LIKE_REQUEST':

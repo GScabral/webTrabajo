@@ -127,20 +127,21 @@ const Home = () => {
     };
 
     const handleLikeToggle = async (postId, e) => {
-        e.preventDefault(); // evita recarga
-        e.stopPropagation(); // evita que se dispare otro evento (por ejemplo, Link)
+        e.preventDefault();
+        e.stopPropagation();
 
         const hasLiked = userLikes[postId];
+
         if (hasLiked) {
             await dispatch(removeLike({ user_id: infoUser.id, post_id: postId }));
+            setLikes(prev => ({ ...prev, [postId]: prev[postId] - 1 }));
         } else {
             await dispatch(addLike({ user_id: infoUser.id, post_id: postId }));
+            setLikes(prev => ({ ...prev, [postId]: (prev[postId] || 0) + 1 }));
         }
 
-        await loadLikes(postId);
-        await checkLikeStatus(postId);
+        setUserLikes(prev => ({ ...prev, [postId]: !hasLiked }));
     };
-
     const handleVerComentarios = (postId) => {
         if (selectedPostId === postId) {
             setSelectedPostId(null);
