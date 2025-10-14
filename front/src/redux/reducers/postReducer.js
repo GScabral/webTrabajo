@@ -9,7 +9,6 @@ const initialState = {
 };
 
 const postReducer = (state = initialState, action) => {
-    console.log("🌀 Reducer ejecutado:", action.type);
 
     switch (action.type) {
         case "GET_ALLPOST_REQUEST":
