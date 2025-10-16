@@ -176,7 +176,6 @@ const Home = () => {
         );
     }
 
-    console.log("🔄 Home renderizado");
 
 
     return (

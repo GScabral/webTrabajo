@@ -38,21 +38,24 @@ export const getCalificacion = (trabajador_id) => async (dispatch) => {
 
 
 export const postView = (profile_id) => async (dispatch) => {
-    dispatch({ type: 'POST_NEWVIEW_REQUEST' })
+    dispatch({ type: 'POST_NEWVIEW_REQUEST' });
 
     try {
-        const response = await API.post(`/trabajador/views`, profile_id);
+        const response = await API.post(`/trabajador/views`, {
+            profile_id, // 👈 debe ir dentro de un objeto
+        });
+
         dispatch({
             type: 'POST_NEWVIEW_SUCCESS',
-            payload: response.data.post
-        })
+            payload: response.data.message, // tu backend devuelve { message: "Vista registrada correctamente" }
+        });
     } catch (error) {
         dispatch({
             type: 'POST_NEWVIEW_FAIL',
-            payload: error.response?.data.error || error.message
-        })
+            payload: error.response?.data?.error || error.message,
+        });
     }
-}
+};
 
 
 export const totalContactos = (trabajador_id) => async (dispatch) => {

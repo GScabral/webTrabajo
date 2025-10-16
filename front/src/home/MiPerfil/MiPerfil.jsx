@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
-import { allStats } from "../../redux/action/trabajadorAction";
+import { allStats, postView } from "../../redux/action/trabajadorAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
@@ -39,7 +39,8 @@ const MiPerfil = () => {
 
 
 
-  console.log("versiFunciona:",allStats)
+  console.log("versiFunciona:", allStats)
+
 
 
   useEffect(() => {
@@ -108,7 +109,9 @@ const MiPerfil = () => {
   };
 
 
-
+  useEffect(() => {
+    profile(profile.id, currentUser?.id);
+  }, [profile.id]);
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
@@ -273,6 +276,10 @@ const MiPerfil = () => {
                   <p><strong>Valoración:</strong> ⭐ {infoUser.Trabajador.Servicios[0]?.promedio_valoracion}</p>
                 </div>
               )}
+              <div className="profile-stats">
+                <span>{formatNumber(allStats.views)} visitas</span>
+                <span>{formatNumber(allStats.contacts)} contactos</span>
+              </div>
 
               <div className="perfil-botones">
                 <button className="btn editar" onClick={() => setModoEdicion(true)}>
