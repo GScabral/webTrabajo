@@ -53,7 +53,10 @@ if (models) {
         Like,
         ActiveToken,
         Report,
-        Notification
+        Notification,
+        ProfileView,
+        ContactRequest,
+        ProfileStat
     } = models;
 
     // Relaciones User -> Trabajador y Cliente
@@ -125,7 +128,15 @@ if (models) {
     Notification.belongsTo(models.User, { as: "actor", foreignKey: "actor_id" });
     Notification.belongsTo(models.Post, { as: "post", foreignKey: "post_id" });
     Notification.belongsTo(models.Comment, { as: "comment", foreignKey: "comment_id" });
-    
+
+
+    ProfileView.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
+    ProfileView.belongsTo(models.User, { as: "viewer", foreignKey: "viewer_id" });
+
+    ContactRequest.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
+    ContactRequest.belongsTo(models.User, { as: "solicitante", foreignKey: "requester_id" });
+
+    ProfileStat.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
 
 }
 

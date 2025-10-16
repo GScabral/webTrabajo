@@ -35,3 +35,57 @@ export const getCalificacion = (trabajador_id) => async (dispatch) => {
         });
     }
 };
+
+
+export const postView = (profile_id) => async (dispatch) => {
+    dispatch({ type: 'POST_NEWVIEW_REQUEST' })
+
+    try {
+        const response = await API.post(`/trabajador/views`, profile_id);
+        dispatch({
+            type: 'POST_NEWVIEW_SUCCESS',
+            payload: response.data.post
+        })
+    } catch (error) {
+        dispatch({
+            type: 'POST_NEWVIEW_FAIL',
+            payload: error.response?.data.error || error.message
+        })
+    }
+}
+
+
+export const totalContactos = (trabajador_id) => async (dispatch) => {
+    dispatch({ type: 'GET_CONTACTOSTOTAL_REQUEST' })
+
+    try {
+        const response = await API.get(`/trabajador/contacts/${trabajador_id}`);
+        dispatch({
+            type: 'GET_CONTACTOSTOTAL_SUCCESS',
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch({
+            type: 'GET_CONTACTOSTOTAL_FAIL',
+            payload: error.response?.data?.error || error.message
+        });
+    }
+};
+
+export const allStats = (trabajador_id) => async (dispatch) => {
+    dispatch({ type: 'GET_ALLSTATSTRABAJO_REQUEST' })
+
+    try {
+        const response = await API.get(`/trabajador/stats/${trabajador_id}`);
+        dispatch({
+            type: 'GET_ALLSTATSTRABAJO_SUCCESS',
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch({
+            type: 'GET_ALLSTATSTRABAJO_FAIL',
+            payload: error.response?.data?.error || error.message
+        });
+    }
+};
+

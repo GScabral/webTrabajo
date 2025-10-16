@@ -189,6 +189,24 @@ const Home = () => {
                     </button>
                 </header>
 
+
+
+                {/* Publicar post */}
+                {infoUser.tipo === "trabajador" && showPostForm && (
+                    <PostForm userId={infoUser?.id} />
+                )}
+                <div className="top5-section">
+                    <h3>🏆 Mejores calificados del mes</h3>
+                    <ul>
+                        {top5Trabajadores.map((trabajador, index) => (
+                            <li key={trabajador.id} className="top-item">
+                                <strong>#{index + 1}</strong> {trabajador.nombre}
+                                — ⭐ {Number(trabajador.Trabajador.promedio_valoracion).toFixed(2)}
+                                ({trabajador.Trabajador.numero_valoraciones} votos)
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 {/* Filtro de profesionales */}
                 <div className="filtro-categoria">
                     <label>Filtrar por categoría: </label>
@@ -211,23 +229,6 @@ const Home = () => {
                             <option key={i} value={ubi}>{ubi}</option>
                         ))}
                     </select>
-                </div>
-
-                {/* Publicar post */}
-                {infoUser.tipo === "trabajador" && showPostForm && (
-                    <PostForm userId={infoUser?.id} />
-                )}
-                <div className="top5-section">
-                    <h3>🏆 Mejores calificados del mes</h3>
-                    <ul>
-                        {top5Trabajadores.map((trabajador, index) => (
-                            <li key={trabajador.id} className="top-item">
-                                <strong>#{index + 1}</strong> {trabajador.nombre}
-                                — ⭐ {Number(trabajador.Trabajador.promedio_valoracion).toFixed(2)}
-                                ({trabajador.Trabajador.numero_valoraciones} votos)
-                            </li>
-                        ))}
-                    </ul>
                 </div>
                 {/* Profesionales */}
                 <div className="profesionales-section">

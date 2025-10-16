@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const obtenerCalificacionesLogic = require('../controller/trabajador/viewRatings');
 const crearCalificacionLogic = require('../controller/cliente/qualyWorker');
-
+const { newViews, allContacts, allStats, addContact } = require('../controller/trabajador/AllStats')
 const router = Router();
 
 // Ruta para crear una calificación (cliente → trabajador)
@@ -27,4 +27,9 @@ router.get('/calificaciones/:trabajador_id', async (req, res) => {
     }
 });
 
+//falta modificar para que el controller solo maneje logica y no estados
+router.post("/views", newViews);
+router.post("/addContact", addContact);
+router.get("/contacts/:id", allContacts);
+router.get("/stats", allStats);
 module.exports = router;
