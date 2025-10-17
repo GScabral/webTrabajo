@@ -6,7 +6,7 @@ function InfoIcon() {
         <div>
             <span id="info" style={{ cursor: "pointer" }}>❗</span>
             <Tooltip anchorSelect="#info" place="top">
-                Esto es una aclaración o información adicional.
+                Las visitas se miden por la cantidad de veces que un usuario entra al perfil , puede que un mismo usuario entre varias veces
             </Tooltip>
         </div>
     );

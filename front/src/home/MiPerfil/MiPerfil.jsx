@@ -4,7 +4,7 @@ import { getUserById, updateUser, changePassword, getLikesByUser } from "../../r
 import { getByPostUser } from "../../redux/action/postAction";
 import { allStats } from "../../redux/action/trabajadorAction";
 import { Link } from "react-router-dom";
-import { InfoIcon } from "../../utils/infoIcon/infoIcon"
+import InfoIcon from "../../utils/infoIcon/infoIcon"
 import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
 import { useParams } from "react-router-dom";
