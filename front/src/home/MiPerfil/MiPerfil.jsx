@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
-import { allStats, postView } from "../../redux/action/trabajadorAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
@@ -15,7 +14,6 @@ const MiPerfil = () => {
   const { id } = useParams();
   const { darkMode } = useDarkMode();
 
-  const stats = useSelector((state) => state.trabajoState.allStats)
 
   const postByUser = useSelector((state) => state.postState.postByUser);
 
@@ -109,29 +107,7 @@ const MiPerfil = () => {
   };
 
 
-  useEffect(() => {
-    const registrarVista = async () => {
-      if (!id) return;
 
-      try {
-        // 🔹 Obtener IP pública del visitante
-        const res = await fetch("https://api.ipify.org?format=json");
-        const { ip } = await res.json();
-
-        // 🔹 Despachar la acción Redux
-        dispatch(postView(
-          id,                        // profile_id
-          infoUser?.id || null,      // viewer_id (si está logueado)
-          ip,                        // viewer_ip
-          navigator.userAgent        // user_agent
-        ));
-      } catch (error) {
-        console.error("Error al registrar vista:", error);
-      }
-    };
-
-    registrarVista();
-  }, [dispatch, id, infoUser]);
 
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>

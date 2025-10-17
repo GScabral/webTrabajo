@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../redux/action/usersAction";
-import { createCalificacion, getCalificacion } from "../../redux/action/trabajadorAction";
+import { createCalificacion, getCalificacion, postView, allStats } from "../../redux/action/trabajadorAction";
 import StarRating from "./StarRating";
 import "./Perfil.css";
 
@@ -13,6 +13,8 @@ const Perfil = () => {
   const loading = useSelector(state => state.userState.loading);
   const calificaciones = useSelector(state => state.trabajoState.calificaciones || []);
   const infoLogin = useSelector(state => state.userState.infoLogin);
+  const stats = useSelector((state) => state.trabajoState.allStats)
+
 
   const [comentario, setComentario] = useState("");
   const [puntuacion, setPuntuacion] = useState(0);
@@ -21,7 +23,35 @@ const Perfil = () => {
   useEffect(() => {
     dispatch(getUserById(id));
     dispatch(getCalificacion(id));
-  }, [dispatch, id]);
+
+    // 👇 Registrar la vista del perfil
+    const registrarVista = async () => {
+      try {
+        if (infoLogin?.id === Number(id)) return;
+        if (sessionStorage.getItem(`viewed_${id}`)) return; // evita duplicar vista
+        // 🔹 Obtener IP pública del visitante
+        const res = await fetch("https://api.ipify.org?format=json");
+        const { ip } = await res.json();
+
+        // 🔹 Evitar registrar vista si el usuario ve su propio perfil
+        if (infoLogin?.id === Number(id)) return;
+
+        // 🔹 Registrar vista en el backend
+        dispatch(
+          postView(
+            id,                        // profile_id
+            infoLogin?.id || null,     // viewer_id
+            ip,                        // viewer_ip
+            navigator.userAgent        // user_agent
+          )
+        );
+      } catch (error) {
+        console.error("❌ Error al registrar vista:", error);
+      }
+    };
+
+    registrarVista();
+  }, [dispatch, id, infoLogin]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
