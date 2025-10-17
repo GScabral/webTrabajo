@@ -61,6 +61,30 @@ export const postView = (profile_id, viewer_id, viewer_ip, user_agent) => async 
     }
 };
 
+export const postContact = (profile_id, requester_id, method, metadata) => async (dispatch) => {
+    dispatch({ type: "POST_NEWVIEW_REQUEST" });
+
+    console.log("lo que se esta mandando:", profile_id, requester_id, method, metadata)
+    try {
+        const response = await API.post(`/trabajador/addContact`, {
+            profile_id,
+            requester_id,
+            method,
+            metadata,
+        });
+
+        dispatch({
+            type: "POST_NEWVIEW_SUCCESS",
+            payload: response.data.message,
+        });
+    } catch (error) {
+        dispatch({
+            type: "POST_NEWVIEW_FAIL",
+            payload: error.response?.data?.error || error.message,
+        });
+    }
+};
+
 
 export const totalContactos = (trabajador_id) => async (dispatch) => {
     dispatch({ type: 'GET_CONTACTOSTOTAL_REQUEST' })

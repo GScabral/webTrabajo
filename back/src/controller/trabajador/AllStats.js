@@ -28,21 +28,27 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
     return { success: true };
 };
 // ➕ Registrar nuevo contacto
-const registrarContactoLogic = async ({ profile_id, user_id, mensaje }) => {
-    if (!profile_id || !user_id) throw new Error('profile_id y user_id son obligatorios');
+const registrarContactoLogic = async ({ profile_id, requester_id, mensaje, method = 'in-app', metadata = {} }) => {
+    if (!profile_id || !requester_id) throw new Error('profile_id y requester_id son obligatorios');
 
+    // Guardar la solicitud de contacto usando los campos que define tu modelo (requester_id, method, metadata)
     const nuevoContacto = await ContactRequest.create({
         profile_id,
-        user_id,
-        mensaje: mensaje || null,
+        requester_id,
+        method,
+        metadata: { ...metadata, message: mensaje || null },
     });
 
-    // Opcional: actualizar contador de contactos
-    await ProfileStat.upsert({
-        profile_id,
-        contacts: Sequelize.literal('contacts + 1'),
-        updated_at: new Date(),
+    // Actualizar (o crear) contador de contactos de forma segura usando el modelo ProfileStat
+    const [stat, created] = await ProfileStat.findOrCreate({
+        where: { profile_id },
+        defaults: { profile_id, views: 0, contacts: 1 }
     });
+
+    if (!created) {
+        await ProfileStat.increment('contacts', { by: 1, where: { profile_id } });
+        await stat.reload();
+    }
 
     return nuevoContacto;
 };

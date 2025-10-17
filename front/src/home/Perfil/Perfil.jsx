@@ -5,6 +5,7 @@ import { getUserById } from "../../redux/action/usersAction";
 import { createCalificacion, getCalificacion, postView, allStats } from "../../redux/action/trabajadorAction";
 import StarRating from "./StarRating";
 import "./Perfil.css";
+import ContactModal from "./modalContacto";
 
 const Perfil = () => {
   const { id } = useParams();
@@ -18,6 +19,7 @@ const Perfil = () => {
 
   const [comentario, setComentario] = useState("");
   const [puntuacion, setPuntuacion] = useState(0);
+  const [openContact, setOpenContac] = useState(false)
   console.log(usuario)
 
   useEffect(() => {
@@ -87,9 +89,14 @@ const Perfil = () => {
             />
           )}          <h2 className="nombre">{usuario.nombre}</h2>
           <p className="ubicacion">📍 {usuario.ubicacion}</p>
-          <button className="contact-btn">📨 Contactar</button>
+          <button className="contact-btn" onClick={() => setOpenContac(true)}>📨 Contactar</button>
         </div>
-
+        <ContactModal
+          open={openContact}
+          onClose={() => setOpenContac(false)}
+          profileId={infoUser?.id}
+          requesterId={loggedUser?.id}
+        />
         {/* Datos principales */}
         <div className="info-detalle">
           <p><strong>Email:</strong> {usuario.email}</p>
