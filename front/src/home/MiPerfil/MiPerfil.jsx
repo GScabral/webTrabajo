@@ -278,7 +278,7 @@ const MiPerfil = () => {
                   <p><strong>Tarifa:</strong> ${infoUser.Trabajador.tarifa_minima} - ${infoUser.Trabajador.tarifa_maxima}</p>
                   <p><strong>Disponibilidad:</strong> {infoUser.Trabajador.disponibilidad}</p>
                   <p><strong>Valoración:</strong> ⭐ {infoUser.Trabajador.Servicios[0]?.promedio_valoracion}</p>
-                  <p> <span>{stats?.views || 0} visitas{InfoIcon}</span></p>
+                  <p><span>{stats?.views || 0} visitas al perfil <InfoIcon /></span></p>
                   <p><span>{contactos || 0} contactos</span></p>
                 </div>
               )}
