@@ -14,8 +14,8 @@ const Perfil = () => {
   const loading = useSelector(state => state.userState.loading);
   const calificaciones = useSelector(state => state.trabajoState.calificaciones || []);
   const infoLogin = useSelector(state => state.userState.infoLogin);
-  const stats = useSelector((state) => state.trabajoState.allStats)
-
+  const infoUser = useSelector((state) => state.userState.infoLogin);
+  const loggedUser = useSelector((state) => state.userState.infoLogin);
 
   const [comentario, setComentario] = useState("");
   const [puntuacion, setPuntuacion] = useState(0);
