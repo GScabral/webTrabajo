@@ -6,21 +6,24 @@ const { Sequelize } = require('sequelize');
 const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agent }) => {
     if (!profile_id) throw new Error('profile_id es obligatorio');
 
+    // guardo el registro de la vista
     await ProfileView.create({
         profile_id,
         viewer_id: viewer_id || null,
-        viewer_ip,
-        user_agent,
+        viewer_ip: viewer_ip || null,
+        user_agent: user_agent || null
     });
 
-    // Usa query SQL nativa para incrementar views
-    await sequelize.query(`
-    INSERT INTO profile_stats (profile_id, views, updated_at)
-    VALUES (:profile_id, 1, NOW())
-    ON CONFLICT (profile_id)
-    DO UPDATE SET views = profile_stats.views + 1,
-                  updated_at = NOW();
-  `, { replacements: { profile_id } });
+    // incremento (o creo) el contador de vistas usando el modelo ProfileStat
+    const [stat, created] = await ProfileStat.findOrCreate({
+        where: { profile_id },
+        defaults: { profile_id, views: 1, contacts: 0 }
+    });
+
+    if (!created) {
+        await ProfileStat.increment('views', { by: 1, where: { profile_id } });
+        await stat.reload();
+    }
 
     return { success: true };
 };
