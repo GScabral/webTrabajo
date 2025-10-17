@@ -37,21 +37,24 @@ export const getCalificacion = (trabajador_id) => async (dispatch) => {
 };
 
 
-export const postView = (profile_id) => async (dispatch) => {
-    dispatch({ type: 'POST_NEWVIEW_REQUEST' });
+export const postView = (profile_id, viewer_id, viewer_ip, user_agent) => async (dispatch) => {
+    dispatch({ type: "POST_NEWVIEW_REQUEST" });
 
     try {
         const response = await API.post(`/trabajador/views`, {
-            profile_id, // 👈 debe ir dentro de un objeto
+            profile_id,
+            viewer_id,
+            viewer_ip,
+            user_agent,
         });
 
         dispatch({
-            type: 'POST_NEWVIEW_SUCCESS',
-            payload: response.data.message, // tu backend devuelve { message: "Vista registrada correctamente" }
+            type: "POST_NEWVIEW_SUCCESS",
+            payload: response.data.message,
         });
     } catch (error) {
         dispatch({
-            type: 'POST_NEWVIEW_FAIL',
+            type: "POST_NEWVIEW_FAIL",
             payload: error.response?.data?.error || error.message,
         });
     }
