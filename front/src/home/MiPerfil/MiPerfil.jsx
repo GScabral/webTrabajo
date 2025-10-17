@@ -13,6 +13,8 @@ const MiPerfil = () => {
   const likeUser = useSelector((state) => state.userState.likeByUser);
   const { id } = useParams();
   const { darkMode } = useDarkMode();
+  const stats = useSelector(state => state.trabajoState.allStats);
+  const contactos = useSelector(state => state.trabajoState.totalContactos);
 
 
   const postByUser = useSelector((state) => state.postState.postByUser);
@@ -272,10 +274,10 @@ const MiPerfil = () => {
                   <p><strong>Valoración:</strong> ⭐ {infoUser.Trabajador.Servicios[0]?.promedio_valoracion}</p>
                 </div>
               )}
-              {/* <div className="profile-stats">
-                <span>{formatNumber(allStats.views)} visitas</span>
-                <span>{formatNumber(allStats.contacts)} contactos</span>
-              </div> */}
+              <div className="profile-stats">
+                <span>{stats?.views || 0} visitas</span>
+                <span>{contactos || 0} contactos</span>
+              </div>
 
               <div className="perfil-botones">
                 <button className="btn editar" onClick={() => setModoEdicion(true)}>
