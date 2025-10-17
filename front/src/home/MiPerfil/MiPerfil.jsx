@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
 import { getByPostUser } from "../../redux/action/postAction";
+import { allStats } from "../../redux/action/trabajadorAction";
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
@@ -41,6 +42,11 @@ const MiPerfil = () => {
 
   console.log("versiFunciona:", stats)
 
+  useEffect(() => {
+    if (id) {
+      dispatch(allStats(id))
+    }
+  }, [dispatch, id])
 
 
   useEffect(() => {

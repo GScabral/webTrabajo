@@ -40,7 +40,7 @@ export const getCalificacion = (trabajador_id) => async (dispatch) => {
 export const postView = (profile_id, viewer_id, viewer_ip, user_agent) => async (dispatch) => {
     dispatch({ type: "POST_NEWVIEW_REQUEST" });
 
-    console.log("lo que se esta mandando:",profile_id, viewer_id, viewer_ip, user_agent)
+    console.log("lo que se esta mandando:", profile_id, viewer_id, viewer_ip, user_agent)
     try {
         const response = await API.post(`/trabajador/views`, {
             profile_id,
@@ -81,7 +81,6 @@ export const totalContactos = (trabajador_id) => async (dispatch) => {
 
 export const allStats = (trabajador_id) => async (dispatch) => {
     dispatch({ type: 'GET_ALLSTATSTRABAJO_REQUEST' })
-
     try {
         const response = await API.get(`/trabajador/stats/${trabajador_id}`);
         dispatch({
