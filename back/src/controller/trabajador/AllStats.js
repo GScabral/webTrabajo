@@ -3,7 +3,6 @@ const { Sequelize } = require('sequelize');
 
 
 
-
 const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agent }) => {
     if (!profile_id) throw new Error('profile_id es obligatorio');
 
@@ -14,15 +13,17 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
         user_agent,
     });
 
-    await ProfileStat.upsert({
-        profile_id,
-        views: Sequelize.literal('views + 1'),
-        updated_at: new Date(),
-    });
+    // Usa query SQL nativa para incrementar views
+    await sequelize.query(`
+    INSERT INTO profile_stats (profile_id, views, updated_at)
+    VALUES (:profile_id, 1, NOW())
+    ON CONFLICT (profile_id)
+    DO UPDATE SET views = profile_stats.views + 1,
+                  updated_at = NOW();
+  `, { replacements: { profile_id } });
 
     return { success: true };
 };
-
 // ➕ Registrar nuevo contacto
 const registrarContactoLogic = async ({ profile_id, user_id, mensaje }) => {
     if (!profile_id || !user_id) throw new Error('profile_id y user_id son obligatorios');
