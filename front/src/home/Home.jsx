@@ -13,7 +13,7 @@ import { SocketContext } from "../context/SocketContext";
 import useComments from "./post/comentarios/comentarios";
 import PostForm from "./post/Postear";
 import { useDarkMode } from "../context/darkMode";
-
+import FavHandling from "../utils/fav/addFav";
 import "./Home.css";
 
 // 🏠 COMPONENTE PRINCIPAL
@@ -377,6 +377,7 @@ const Home = () => {
                                         >
                                             {userLikes[post.id] ? '💖 Quitar Like' : '🤍 Me gusta'} ({likes[post.id] || 0})
                                         </button>
+                                        <FavHandling></FavHandling>
 
                                         <button
                                             className="comments-toggle-btn"

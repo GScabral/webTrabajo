@@ -56,7 +56,8 @@ if (models) {
         Notification,
         ProfileView,
         ContactRequest,
-        ProfileStat
+        ProfileStat,
+        Favorite
     } = models;
 
     // Relaciones User -> Trabajador y Cliente
@@ -137,6 +138,10 @@ if (models) {
     ContactRequest.belongsTo(models.User, { as: "solicitante", foreignKey: "requester_id" });
 
     ProfileStat.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
+
+    Favorite.belongsTo(models.User, { foreignKey: "user_id" })
+    Favorite.belongsTo(models.Post, { foreignKey: "target_id", constraints: false, as: "post", scope: { target_type: "post" } });
+    Favorite.belongsTo(models.Trabajador, { foreignKey: "target_id", constraints: false, as: "trabajador", scope: { target_type: "trabajador" } });
 
 }
 

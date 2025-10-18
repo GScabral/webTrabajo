@@ -5,7 +5,7 @@ import postReducer from "./postReducer"
 import trabajadorReducer from "./trabajadorReducer"
 import mensajeReducer from "./mensajeReducer"
 import notificationReducer from './notificationReducer';
-
+import favReduce from "./favReducer"
 
 const rootReducer = combineReducers({
     adminState: adminReducer,
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
     trabajoState:trabajadorReducer,
     mensajeState:mensajeReducer,
     notificationState:notificationReducer,
+    favState:favReduce,
 })
 
 
