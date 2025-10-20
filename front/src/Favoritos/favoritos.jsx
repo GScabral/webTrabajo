@@ -7,7 +7,7 @@ import { allFavPost, allFavTrabajador } from "../redux/action/favoriteAction";
 
 
 const Favoritos = () => {
-    const { id } = useParams(id)
+    const { id } = useParams()
     const dispatch = useDispatch();
     const allTabrajadorFav = useSelector((state) => state.favState.favTrabajador)
     const allPostFav = useSelector((state) => state.favState.favPost)
