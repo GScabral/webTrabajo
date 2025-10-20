@@ -1,36 +1,35 @@
-module.exports = (sequelize, DataType) => {
+module.exports = (sequelize, DataTypes) => {
     const Favorite = sequelize.define('Favorite', {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         user_id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-
         target_type: {
-            type: DataType.ENUM("post", "trabajador"),
-            allowNull: false,
+            type: DataTypes.ENUM('post', 'trabajador'),
+            allowNull: false
         },
         target_id: {
-            type: DataType.INTEGER,
-            allowNull: false,
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         created_at: {
-            type: DataType.DATE,
-            defaultValue: DataType.NOW
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         }
     }, {
-        tableName: "favorites",
+        tableName: 'favorites',
         timestamps: false,
-        indexe: [
-            { fields: ["user_id"] },
-            { fields: ["target_type", "target_id"] },
-            { unique: true, fields: ["user_id", "taget_type", "target_id"] }
+        indexes: [
+            { fields: ['user_id'] },
+            { fields: ['target_type', 'target_id'] },
+            { unique: true, fields: ['user_id', 'target_type', 'target_id'] }
         ]
-    })
+    });
 
     return Favorite;
-}
+};
