@@ -27,10 +27,10 @@ const Favoritos = () => {
     console.log(allTabrajadorFav)
     console.log(allPostFav)
 
-    
+
     return (
         <div>
-            Favoritos
+            <h1>Favoritos</h1>
         </div>
     )
 }
