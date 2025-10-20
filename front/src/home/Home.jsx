@@ -377,7 +377,7 @@ const Home = () => {
                                         >
                                             {userLikes[post.id] ? '💖 Quitar Like' : '🤍 Me gusta'} ({likes[post.id] || 0})
                                         </button>
-                                        <FavHandling></FavHandling>
+                                        <FavHandling postId={post.id}></FavHandling>
 
                                         <button
                                             className="comments-toggle-btn"
