@@ -38,6 +38,7 @@ export const allFavTrabajador = (user_id) => async (dispatch) => {
 
 export const newFav = (favData) => async (dispatch) => {
     dispatch({ type: "POST_FAV_REQUEST" })
+    console.log(favData)
     try {
         const response = await API.post("/fav/addFav", favData)
         dispatch({
