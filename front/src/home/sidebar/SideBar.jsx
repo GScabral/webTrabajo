@@ -47,7 +47,8 @@ const Sidebar = ({ user, togglePostForm }) => {
 
     const menuItems = [
         { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/home") },
-        { icon: <FiUser />, label: "Mi Perfil", onClick: () => navigate(`/MiPerfil/${user.id}`) }
+        { icon: <FiUser />, label: "Mi Perfil", onClick: () => navigate(`/MiPerfil/${user.id}`) },
+        { icon: <FiUser />, label: "Favoritos", onClick: () => navigate(`/favoritos/${user.id}`) }
     ];
 
     if (user.tipo === "trabajador") {
