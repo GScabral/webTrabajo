@@ -10,8 +10,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         target_type: {
-            type: DataTypes.ENUM('post', 'trabajador'),
-            allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isIn: [['post', 'trabajador']]
+            }
         },
         target_id: {
             type: DataTypes.INTEGER,
