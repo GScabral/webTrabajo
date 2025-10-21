@@ -12,6 +12,7 @@ const Favoritos = () => {
     const allTabrajadorFav = useSelector((state) => state.favState.favTrabajador)
     const allPostFav = useSelector((state) => state.favState.favPost)
 
+    console.log(id)
 
 
 

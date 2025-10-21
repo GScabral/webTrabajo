@@ -35,6 +35,8 @@ router.post("/addFav", async (req, res) => {
 
 router.get("/getPostFav/:user_id", async (req, res) => {
     try {
+        console.log(req.params)
+
         const user_id = req.params.user_id;
         if (!user_id) return res.status(400).json({ error: "user_id requerido" });
         const postFav = await getPostFav(user_id);
@@ -46,7 +48,10 @@ router.get("/getPostFav/:user_id", async (req, res) => {
 })
 router.get("/getTrabajadoresFav/:user_id", async (req, res) => {
     try {
+
+        console.log(req.params)
         const user_id = req.params.user_id;
+
         if (!user_id) return res.status(400).json({ error: "user_id requerido" });
         const trabajadorFav = await getTrabajadorFav(user_id);
         res.status(200).json(trabajadorFav);
