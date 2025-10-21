@@ -10,7 +10,7 @@ const getPostFav = async (user_id) => {
         },
         include: [{
             model: Post,
-            as: "post",
+            as: "user",
             required: false
         }],
         order: [["created_at", "DESC"]]
