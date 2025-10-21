@@ -4,10 +4,11 @@ import API from "../../Api/axios";
 
 export const allFavPost = (user_id) => async (dispatch) => {
     dispatch({ type: "GET_FAVPOST_REQUEST" });
-        console.log(response)
 
     try {
         const response = await API.get(`/fav/getPostFav/${user_id}`)
+        console.log(response)
+
         dispatch({
             type: "GET_FAVPOST_SUCCESS",
             payload: response.data
