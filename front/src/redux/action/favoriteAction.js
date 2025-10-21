@@ -4,7 +4,7 @@ import API from "../../Api/axios";
 
 export const allFavPost = (user_id) => async (dispatch) => {
     dispatch({ type: "GET_FAVPOST_REQUEST" });
-    console.log(user_id)
+        console.log(response)
 
     try {
         const response = await API.get(`/fav/getPostFav/${user_id}`)
@@ -23,7 +23,6 @@ export const allFavPost = (user_id) => async (dispatch) => {
 
 export const allFavTrabajador = (user_id) => async (dispatch) => {
     dispatch({ type: "GET_FAVTRABAJADOR_REQUEST" });
-    console.log(user_id)
 
     try {
         const response = await API.get(`/fav/getTrabajadoresFav/${user_id}`)

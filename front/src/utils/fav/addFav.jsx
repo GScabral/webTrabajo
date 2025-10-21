@@ -9,7 +9,6 @@ const FavHandling = ({ postId, initialCount = 0, initiallyFavorited = false, onT
     const [isFavorited, setIsFavorited] = useState(initiallyFavorited);
     const [loading, setLoading] = useState(false);
 
-    console.log("esto tiene que llegar:", postId)
 
     useEffect(() => {
         setFavCount(initialCount);
