@@ -10,6 +10,13 @@ const router = Router()
 router.post("/addFav", async (req, res) => {
     try {
         const { user_id, target_type, target_id, metadata } = req.body
+
+        console.log(user_id)
+        console.log(target_type)
+        console.log(target_id)
+        console.log(metadata)
+
+
         if (!user_id || !target_type || !target_id) {
             return res.status(400).json({ error: "Faltan campos: user_id, target_type o target_id" });
         }
