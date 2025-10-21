@@ -15,14 +15,18 @@ const Favoritos = () => {
     console.log(id)
 
 
+    useEffect(() => {
+        if (id) {
+            dispatch(allFavPost(id));
+        }
+    }, [dispatch, id]);
 
-    useEffect((id) => {
-        dispatch(allFavPost(id))
-    }, [dispatch, id])
+    useEffect(() => {
+        if (id) {
+            dispatch(allFavTrabajador(id));
+        }
+    }, [dispatch, id]);
 
-    useEffect((id) => {
-        dispatch(allFavTrabajador(id))
-    }, [dispatch, id])
 
 
     console.log(allTabrajadorFav)
