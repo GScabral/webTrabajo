@@ -25,6 +25,7 @@ export const allFavTrabajador = (user_id) => async (dispatch) => {
 
     try {
         const response = await API.get(`/fav/getTrabajadoresFav/${user_id}`)
+        console.log(response)
         dispatch({
             type: "GET_FAVTRABAJADOR_SUCCESS",
             payload: response.data
