@@ -1,14 +1,12 @@
 const { Favorite, User } = require("../../db")
 
 const getTrabajadorFav = async (user_id) => {
-    if (!user_id) throw new Error("user_id es obligatorio");
-    const favsTrabajador = await Favorite.findAll({
+    const favs = await Favorite.findAll({
         where: { user_id, target_type: "trabajador" },
         include: [{ model: User, as: "user", required: false }],
         order: [["created_at", "DESC"]],
     });
-    return favsTrabajador;
-}
+    return favs;
+};
 
-
-module.exports = getTrabajadorFav
+module.exports = getTrabajadorFav;
