@@ -140,7 +140,7 @@ if (models) {
     ProfileStat.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
 
     Favorite.belongsTo(models.User, { foreignKey: "user_id" })
-    Favorite.belongsTo(models.Post, { foreignKey: "target_id", constraints: false, as: "post", scope: { target_type: "post" } });
+    Favorite.belongsTo(models.Post, { foreignKey: "target_id", as: "post",  });
     Favorite.belongsTo(models.Trabajador, { foreignKey: "target_id", constraints: false, as: "trabajador", scope: { target_type: "trabajador" } });
 
 }

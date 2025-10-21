@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         target_type: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isIn: [['post', 'trabajador']]
-            }
         },
         target_id: {
             type: DataTypes.INTEGER,
@@ -27,11 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: 'favorites',
         timestamps: false,
-        indexes: [
-            { fields: ['user_id'] },
-            { fields: ['target_type', 'target_id'] },
-            { unique: true, fields: ['user_id', 'target_type', 'target_id'] }
-        ]
+
     });
 
     return Favorite;
