@@ -21,8 +21,6 @@ const FavHandling = ({ postId, initialCount = 0, initiallyFavorited = false, onT
 
     const commonMeta = {
         page: window.location.pathname,
-        postTitle: post.titulo,
-        postImage: post.imagen_url,
         addedAt: new Date().toISOString(),
         userAgent: navigator.userAgent
     };
