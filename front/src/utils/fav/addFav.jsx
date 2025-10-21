@@ -9,7 +9,7 @@ const FavHandling = ({ postId, initialCount = 0, initiallyFavorited = false, onT
     const [isFavorited, setIsFavorited] = useState(initiallyFavorited);
     const [loading, setLoading] = useState(false);
 
-    console.log("esto tiene que llegar:",postId)
+    console.log("esto tiene que llegar:", postId)
 
     useEffect(() => {
         setFavCount(initialCount);
@@ -18,6 +18,15 @@ const FavHandling = ({ postId, initialCount = 0, initiallyFavorited = false, onT
     useEffect(() => {
         setIsFavorited(initiallyFavorited);
     }, [initiallyFavorited]);
+
+    const commonMeta = {
+        page: window.location.pathname,
+        postTitle: post.titulo,
+        postImage: post.imagen_url,
+        addedAt: new Date().toISOString(),
+        userAgent: navigator.userAgent
+    };
+
 
     const handleFavToggle = async (e) => {
         e.preventDefault();
@@ -39,7 +48,7 @@ const FavHandling = ({ postId, initialCount = 0, initiallyFavorited = false, onT
                 onToggle?.({ action: "removed", postId });
             } else {
                 // add favorite
-                await dispatch(newFav({ user_id: infoUser.id, target_type: "post", target_id: postId }));
+                await dispatch(newFav({ user_id: infoUser.id, target_type: "post", target_id: postId, metadata: commonMeta }));
                 setFavCount((c) => c + 1);
                 setIsFavorited(true);
                 onToggle?.({ action: "added", postId });
