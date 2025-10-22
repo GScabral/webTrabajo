@@ -11,19 +11,19 @@ const favReducer = (state = initialState, action) => {
 
     switch (action.type) {
         // GET ALL POSTS FAVORITES
-        case "ALL_FAV_POST_REQUEST":
+        case "GET_FAVPOST_REQUESTT":
             return { ...state, loading: true, error: null };
-        case "ALL_FAV_POST_SUCCESS":
+        case "GET_FAVPOST_SUCCESS":
             return { ...state, loading: false, favPost: Array.isArray(action.payload) ? action.payload : [], error: null };
-        case "ALL_FAV_POST_FAIL":
+        case "GET_FAVPOST_FAILL":
             return { ...state, loading: false, error: action.payload || "Error al obtener favoritos de posts" };
 
         // GET ALL TRABAJADOR FAVORITES
-        case "ALL_FAV_TRABAJADOR_REQUEST":
+        case "GET_FAVTRABAJADOR_REQUEST":
             return { ...state, loading: true, error: null };
-        case "ALL_FAV_TRABAJADOR_SUCCESS":
+        case "GET_FAVTRABAJADOR_SUCCESS":
             return { ...state, loading: false, favTrabajador: Array.isArray(action.payload) ? action.payload : [], error: null };
-        case "ALL_FAV_TRABAJADOR_FAIL":
+        case "GET_FAVTRABAJADOR_FAIL":
             return { ...state, loading: false, error: action.payload || "Error al obtener favoritos de trabajadores" };
 
         // ADD FAVORITE (toggle / create)
