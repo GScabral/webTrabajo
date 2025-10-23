@@ -3,7 +3,7 @@ const { Favorite } = require("../../db");
 const addFav = async ({ user_id, target_type, target_id,metadata }) => {
     try {
         if (!user_id || !target_id || !target_type) {
-            throw new error("informacion insuficeientes falta campos")
+            throw new Error("informacion insuficeientes falta campos")
         }
         if (!["post", "trabajador"].includes(target_type)) {
             throw new Error("target_type inválido");
