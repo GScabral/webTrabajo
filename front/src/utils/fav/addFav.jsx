@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newFav, removeFavAcc } from "../../redux/action/favoriteAction";
 
-const FavHandling = ({ target_id, initialCount = 0, target_Type = "post" || "trabajador", initiallyFavorited = false, onToggle }) => {
+const FavHandling = ({ target_id, initialCount = 0, target_Type, initiallyFavorited = false, onToggle }) => {
     const dispatch = useDispatch();
     const infoUser = useSelector((state) => state.userState.infoLogin);
     const [favCount, setFavCount] = useState(initialCount);
