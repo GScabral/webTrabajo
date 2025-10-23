@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newFav, removeFavAcc } from "../../redux/action/favoriteAction";
 
-const FavHandling = ({ target_id, initialCount = 0, targetType = "post" || "trabajador", initiallyFavorited = false, onToggle }) => {
+const FavHandling = ({ target_id, initialCount = 0, target_Type = "post" || "trabajador", initiallyFavorited = false, onToggle }) => {
     const dispatch = useDispatch();
     const infoUser = useSelector((state) => state.userState.infoLogin);
     const [favCount, setFavCount] = useState(initialCount);
@@ -39,16 +39,16 @@ const FavHandling = ({ target_id, initialCount = 0, targetType = "post" || "trab
         try {
             if (isFavorited) {
                 // remove favorite
-                await dispatch(removeFavAcc(infoUser.id, targetType, target_id));
+                await dispatch(removeFavAcc(infoUser.id, target_Type, target_id));
                 setFavCount((c) => Math.max(0, c - 1));
                 setIsFavorited(false);
-                onToggle?.({ action: "removed", target_id, targetType });
+                onToggle?.({ action: "removed", target_id, target_Type });
             } else {
                 // add favorite
-                await dispatch(newFav({ user_id: infoUser.id, targetType, target_id, metadata: commonMeta }));
+                await dispatch(newFav({ user_id: infoUser.id, target_Type, target_id, metadata: commonMeta }));
                 setFavCount((c) => c + 1);
                 setIsFavorited(true);
-                onToggle?.({ action: "added", target_id, targetType });
+                onToggle?.({ action: "added", target_id, target_Type });
             }
         } catch (err) {
             console.error("Fav toggle error:", err);
