@@ -6,27 +6,57 @@ const getTrabajadorFav = require("../controller/Fav/getFavTrabajador")
 
 
 const router = Router()
-
 router.post("/addFav", async (req, res) => {
     try {
-        const { user_id, target_type, target_id, metadata } = req.body
+        const { user_id, target_type, target_id, metadata } = req.body;
 
+        // Validaciones más claras
+        const missingFields = [];
+        if (!user_id) missingFields.push("user_id");
+        if (!target_type) missingFields.push("target_type");
+        if (!target_id) missingFields.push("target_id");
 
-        if (!user_id || !target_type || !target_id) {
-            return res.status(400).json({ error: "Faltan campos: user_id, target_type o target_id" });
+        if (missingFields.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: `Faltan campos obligatorios: ${missingFields.join(", ")}`,
+            });
         }
-        const response = await addFav({ user_id, target_type, target_id, metadata })
+
+        // Validación del tipo de favorito
+        const allowedTypes = ["post", "worker"];
+        if (!allowedTypes.includes(target_type)) {
+            return res.status(400).json({
+                success: false,
+                message: `Tipo de favorito no válido. Usa uno de: ${allowedTypes.join(", ")}`,
+            });
+        }
+
+        // Llamada al servicio
+        const response = await addFav({ user_id, target_type, target_id, metadata });
 
         if (response.error) {
-            return res.status(400).json({ error: response.error });
+            return res.status(400).json({
+                success: false,
+                message: response.error,
+            });
         }
 
-        res.status(201).json(response)
+        res.status(201).json({
+            success: true,
+            message: "Favorito agregado correctamente",
+            data: response,
+        });
     } catch (error) {
-        console.error("erro en POSt /addFav", error)
-        res.status(500).json({ error: error.message || 'errror interno del servidor' })
+        console.error("❌ Error en POST /addFav:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor",
+            details: error.message,
+        });
     }
-})
+});
 
 router.get("/getPostFav/:user_id", async (req, res) => {
     try {
@@ -60,7 +90,7 @@ router.get("/getTrabajadoresFav/:user_id", async (req, res) => {
 router.delete("/removeFav/:user_id/:target_type/:target_id", async (req, res) => {
     try {
         const { user_id, target_type, target_id } = req.params;
-        console.log("lo importante:",target_type)
+        console.log("lo importante:", target_type)
         console.log(user_id)
         console.log(target_id)
         if (!user_id || !target_type || !target_id) {
