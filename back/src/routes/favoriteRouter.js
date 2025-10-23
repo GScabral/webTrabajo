@@ -8,6 +8,8 @@ const getTrabajadorFav = require("../controller/Fav/getFavTrabajador")
 const router = Router()
 router.post("/addFav", async (req, res) => {
     try {
+        console.log("🔎 Body recibido en /addFav:", req.body);
+
         const { user_id, target_type, target_id, metadata } = req.body;
 
         // Validaciones más claras
