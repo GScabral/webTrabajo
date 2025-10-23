@@ -273,6 +273,7 @@ const Home = () => {
                                             >
                                                 Mensaje
                                             </button>
+                                            <FavHandling targetType="trabajador" target_id={trabajador.id}></FavHandling>
                                             <span
                                                 className={`status-indicator ${onlineUsers.includes(trabajador.id) ? 'online' : 'offline'}`}
                                                 title={onlineUsers.includes(trabajador.id) ? '🟢 En línea' : '⚫ Desconectado'}
@@ -377,7 +378,7 @@ const Home = () => {
                                         >
                                             {userLikes[post.id] ? '💖 Quitar Like' : '🤍 Me gusta'} ({likes[post.id] || 0})
                                         </button>
-                                        <FavHandling postId={post.id}></FavHandling>
+                                        <FavHandling targetType="post" target_id={post.id}></FavHandling>
 
                                         <button
                                             className="comments-toggle-btn"
