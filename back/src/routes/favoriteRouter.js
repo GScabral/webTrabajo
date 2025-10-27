@@ -89,8 +89,8 @@ router.get("/getTrabajadoresFav/:user_id", async (req, res) => {
 })
 
 
-router.post("/removeFav", async (req, res) => {
-    const { user_id, target_type, target_id } = req.body;
+router.delete("/removeFav", async (req, res) => {
+    const { user_id, target_type, target_id } = req.query;
     try {
         if (!user_id || !target_type || !target_id) {
             return res.status(400).json({ error: "user_id, target_type y target_id son requeridos" });
