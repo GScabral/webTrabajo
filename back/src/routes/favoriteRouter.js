@@ -90,18 +90,33 @@ router.get("/getTrabajadoresFav/:user_id", async (req, res) => {
 
 
 router.delete("/removeFav", async (req, res) => {
-    const { user_id, target_type, target_id } = req.query;
     try {
+        const { user_id, target_type, target_id } = req.query;
+
+        console.log("🧩 Query recibido:", req.query);
+
         if (!user_id || !target_type || !target_id) {
-            return res.status(400).json({ error: "user_id, target_type y target_id son requeridos" });
+            return res.status(400).json({ error: "Faltan datos" });
         }
-        const remove = await removeFav(user_id, target_type, target_id)
-        res.status(200).json(remove)
+
+        const removeItem = await Favorite.destroy({
+            where: {
+                user_id: parseInt(user_id),
+                target_id: parseInt(target_id),
+                target_type,
+            },
+        });
+
+        if (removeItem === 0) {
+            return res.status(404).json({ error: "No se encontró este favorito" });
+        }
+
+        return res.json({ message: "Favorito eliminado correctamente" });
     } catch (error) {
-        console.error("Error en al ruta delete:", error);
-        res.status(500).json({ error: "error al remover Fav" })
+        console.error("Error en la ruta delete:", error);
+        return res.status(500).json({ error: error.message });
     }
-})
+});
 
 
 module.exports = router;
