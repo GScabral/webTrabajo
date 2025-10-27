@@ -7,7 +7,7 @@ export const allFavPost = (user_id) => async (dispatch) => {
 
     try {
         const response = await API.get(`/fav/getPostFav/${user_id}`)
-        console.log(response)
+
 
         dispatch({
             type: "GET_FAVPOST_SUCCESS",
@@ -27,7 +27,7 @@ export const allFavTrabajador = (user_id) => async (dispatch) => {
 
     try {
         const response = await API.get(`/fav/getTrabajadoresFav/${user_id}`)
-        console.log(response)
+
         dispatch({
             type: "GET_FAVTRABAJADOR_SUCCESS",
             payload: response.data
@@ -41,7 +41,6 @@ export const allFavTrabajador = (user_id) => async (dispatch) => {
 
 export const newFav = (favData) => async (dispatch) => {
     dispatch({ type: "POST_FAV_REQUEST" })
-    console.log(favData)
     try {
         const response = await API.post("/fav/addFav", favData)
         dispatch({
@@ -54,11 +53,11 @@ export const newFav = (favData) => async (dispatch) => {
 }
 
 
-export const removeFavAcc = (user_id,target_type, target_id) => async (dispatch) => {
+export const removeFavAcc = (user_id, target_type, target_id) => async (dispatch) => {
     dispatch({ type: "DELETE_FAV_REQUEST" });
 
     console.log(user_id)
-    console.log("el importante:",target_type)
+    console.log("el importante:", target_type)
     console.log(target_id)
     try {
         const response = await API.delete(`/fav/removeFav/${user_id}/${target_type}/${target_id}`);

@@ -28,6 +28,7 @@ const Favoritos = () => {
         }
     };
 
+    console.log(allTrabajadorFav)
     return (
         <div className="favoritos-container">
             <h1 className="favoritos-title">Post Favoritos</h1>
@@ -61,14 +62,15 @@ const Favoritos = () => {
             <div className="favoritos-grid">
                 {Array.isArray(allTrabajadorFav) &&
                     allTrabajadorFav.map((trab) => (
-                        <div key={trab.id} className="card">
+                        <div key={trab.user.id} className="card">
                             <img
-                                src={trab.trabajador?.imagen_perfil}
-                                alt={trab.trabajador?.nombre}
+                                src={trab.user?.foto_perfil}
+                                alt={trab.user?.nombre}
                             />
                             <div className="card-content">
-                                <h2>{trab.trabajador?.nombre}</h2>
-                                <p>{trab.trabajador?.descripcion}</p>
+                                <h2>{trab.user?.nombre}</h2>
+                                <p>{trab.user.email}</p>
+                                <p>{trab.user?.descripcion}</p>
                                 <small>Profesión: {trab.trabajador?.profesion}</small>
                             </div>
                         </div>
