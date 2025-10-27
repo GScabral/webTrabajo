@@ -56,11 +56,10 @@ export const newFav = (favData) => async (dispatch) => {
 export const removeFavAcc = (user_id, target_type, target_id) => async (dispatch) => {
     dispatch({ type: "DELETE_FAV_REQUEST" });
 
-    console.log(user_id)
-    console.log("el importante:", target_type)
-    console.log(target_id)
+
     try {
-        const response = await API.delete(`/fav/removeFav/${user_id}/${target_type}/${target_id}`);
+        const response = await API.delete("/fav/removeFav", { user_id, target_type, target_id });
+
         dispatch({
             type: "DELETE_FAV_SUCCESS",
             payload: { user_id, target_type, target_id, server: response.data }
