@@ -9,7 +9,7 @@ const Favoritos = () => {
     const dispatch = useDispatch();
     const allTrabajadorFav = useSelector((state) => state.favState.favTrabajador);
     const allPostFav = useSelector((state) => state.favState.favPost);
-    const infoUser = useSelector((state) => state.userState.user); // <-- asegúrate de tener esto en Redux
+    const infoUser = useSelector((state) => state.userState.infoLogin); // <-- asegúrate de tener esto en Redux
 
     useEffect(() => {
         if (id) {
@@ -17,6 +17,8 @@ const Favoritos = () => {
             dispatch(allFavTrabajador(id));
         }
     }, [dispatch, id]);
+
+    console.log(infoUser)
 
     const handleRemove = async (postId) => {
         try {
