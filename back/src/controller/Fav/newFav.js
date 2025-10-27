@@ -1,6 +1,11 @@
 const { Favorite } = require("../../db");
 
-const addFav = async ({ user_id, target_type, target_id,metadata }) => {
+const addFav = async ({ user_id, target_type, target_id, metadata }) => {
+
+    console.log("controller:", user_id)
+    console.log("controller:", target_type)
+    console.log("controller:", target_id)
+    console.log("controller:", metadata)
     try {
         if (!user_id || !target_id || !target_type) {
             throw new Error("informacion insuficeientes falta campos")
