@@ -26,7 +26,7 @@ router.post("/addFav", async (req, res) => {
         }
 
         // Validación del tipo de favorito
-        const allowedTypes = ["post", "worker"];
+        const allowedTypes = ["post", "trabajador"];
         if (!allowedTypes.includes(target_type)) {
             return res.status(400).json({
                 success: false,
