@@ -140,9 +140,17 @@ if (models) {
     ProfileStat.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
 
     Favorite.belongsTo(models.User, { as: 'user', foreignKey: 'user_id' });
-    Favorite.belongsTo(models.Post, { as: 'post', foreignKey: 'target_id' });
-    Favorite.belongsTo(models.Trabajador, { foreignKey: "target_id", as: "trabajador" });
+    Favorite.belongsTo(models.Post, {
+        as: 'post',
+        foreignKey: 'target_id',
+        constraints: false
+    });
 
+    Favorite.belongsTo(models.Trabajador, {
+        as: 'trabajador',
+        foreignKey: 'target_id',
+        constraints: false
+    });
 }
 
 module.exports = {

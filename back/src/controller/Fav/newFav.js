@@ -1,34 +1,44 @@
 const { Favorite } = require("../../db");
 
 const addFav = async ({ user_id, target_type, target_id, metadata }) => {
-
-    console.log("controller:", user_id)
-    console.log("controller:", target_type)
-    console.log("controller:", target_id)
-    console.log("controller:", metadata)
     try {
-        if (!user_id || !target_id || !target_type) {
-            throw new Error("informacion insuficeientes falta campos")
-        }
-        if (!["post", "trabajador"].includes(target_type)) {
-            throw new Error("target_type inválido");
+        // 1️⃣ Validaciones básicas
+        if (!user_id || !target_type || !target_id) {
+            throw new Error("Información insuficiente: faltan campos obligatorios");
         }
 
+        // 2️⃣ Validar tipo permitido
+        const allowedTypes = ["post", "trabajador"];
+        if (!allowedTypes.includes(target_type)) {
+            throw new Error(`target_type inválido. Usa uno de: ${allowedTypes.join(", ")}`);
+        }
+
+        // 3️⃣ Construir los datos que se guardarán
+        const favData = {
+            user_id,
+            target_type,
+            target_id,
+            metadata: metadata || {},
+            created_at: new Date()
+        };
+
+        // 4️⃣ Buscar o crear el favorito
         const [fav, created] = await Favorite.findOrCreate({
             where: { user_id, target_type, target_id },
-            defaults: { metadata, created_at: new Date() },
+            defaults: favData
         });
 
+        // 5️⃣ Respuesta final
         if (!created) {
-            return { message: `${target_type} ya estaba en favoritos` };
+            return { success: false, message: `${target_type} ya estaba en favoritos`, fav };
         }
 
-        return { message: `${target_type} agregado a favoritos correctamente`, fav };
+        return { success: true, message: `${target_type} agregado a favoritos correctamente`, fav };
+
     } catch (error) {
-        console.error("error al agregar a favorito:", error);
-        throw error;
+        console.error("❌ Error al agregar a favorito:", error);
+        throw new Error(error.message || "Error desconocido al agregar a favorito");
     }
 };
-
 
 module.exports = addFav;
