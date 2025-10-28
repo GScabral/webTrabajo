@@ -71,7 +71,7 @@ const Favoritos = () => {
                             />
                             <div className="card-content">
                                 <h2>{trab.user?.nombre}</h2>
-                                <p>{trab.user.email}</p>
+                                <p>{trab.user?.email}</p>
                                 <p>{trab.user?.descripcion}</p>
                                 <small>Profesión: {trab.trabajador?.profesion}</small>
                             </div>
