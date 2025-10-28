@@ -64,7 +64,7 @@ const Favoritos = () => {
             <div className="favoritos-grid">
                 {Array.isArray(allTrabajadorFav) &&
                     allTrabajadorFav.map((trab) => (
-                        <div key={trab.user.id} className="card">
+                        <div key={trab.user?.id} className="card">
                             <img
                                 src={trab.user?.foto_perfil}
                                 alt={trab.user?.nombre}
