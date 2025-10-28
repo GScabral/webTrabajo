@@ -65,15 +65,9 @@ const Favoritos = () => {
                 {Array.isArray(allTrabajadorFav) &&
                     allTrabajadorFav.map((trab) => (
                         <div key={trab.id} className="card">
-                            <img
-                                src={trab.trabajador.foto_perfil}
-                                alt={trab.trabjador.nombre}
-                            />
                             <div className="card-content">
-                                <h2>{trab.trabajador.nombre}</h2>
-                                <p>{trab.trabajador.email}</p>
                                 <p>{trab.trabajador.descripcion}</p>
-                                <small>Profesión: {trab.trabajador.profesion}</small>
+                                <small>Profesión: {trab.trabajador.disponibilidad}</small>
                             </div>
                         </div>
                     ))}
