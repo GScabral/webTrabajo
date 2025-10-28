@@ -64,16 +64,16 @@ const Favoritos = () => {
             <div className="favoritos-grid">
                 {Array.isArray(allTrabajadorFav) &&
                     allTrabajadorFav.map((trab) => (
-                        <div key={trab.user.id} className="card">
+                        <div key={trab.id} className="card">
                             <img
-                                src={trab.user?.foto_perfil}
-                                alt={trab.user?.nombre}
+                                src={trab.foto_perfil}
+                                alt={trab.nombre}
                             />
                             <div className="card-content">
-                                <h2>{trab.user?.nombre}</h2>
-                                <p>{trab.user?.email}</p>
-                                <p>{trab.user?.descripcion}</p>
-                                <small>Profesión: {trab.trabajador?.profesion}</small>
+                                <h2>{trab.nombre}</h2>
+                                <p>{trab.email}</p>
+                                <p>{trab.descripcion}</p>
+                                <small>Profesión: {trab.profesion}</small>
                             </div>
                         </div>
                     ))}
