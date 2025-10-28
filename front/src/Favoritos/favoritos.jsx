@@ -66,14 +66,14 @@ const Favoritos = () => {
                     allTrabajadorFav.map((trab) => (
                         <div key={trab.id} className="card">
                             <img
-                                src={trab.foto_perfil}
-                                alt={trab.nombre}
+                                src={trab.trabjador.foto_perfil}
+                                alt={trab.trabjador.nombre}
                             />
                             <div className="card-content">
-                                <h2>{trab.nombre}</h2>
-                                <p>{trab.email}</p>
-                                <p>{trab.descripcion}</p>
-                                <small>Profesión: {trab.profesion}</small>
+                                <h2>{trab.trabjador.nombre}</h2>
+                                <p>{trab.trabjador.email}</p>
+                                <p>{trab.trabjador.descripcion}</p>
+                                <small>Profesión: {trab.trabjador.profesion}</small>
                             </div>
                         </div>
                     ))}
