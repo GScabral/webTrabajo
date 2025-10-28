@@ -1,4 +1,4 @@
-const { Favorite, Trabajador,User } = require("../../db");
+const { Favorite, Trabajador, User } = require("../../db");
 
 const getTrabajadorFav = async (user_id) => {
     const favs = await Favorite.findAll({
@@ -6,16 +6,20 @@ const getTrabajadorFav = async (user_id) => {
         include: [
             {
                 model: Trabajador,
-                as: "trabajador", // 👈 este alias debe coincidir con el definido en tu asociación
+                as: "trabajador",
                 required: false,
+                include: [
+                    {
+                        model: User,
+                        as: "usuario", // 👈 este alias debe coincidir con la relación del modelo
+                        attributes: ["id", "nombre", "email", "foto_perfil", "telefono"],
+                    },
+                ],
             },
-            {
-                model:User,
-                attributes:['email', 'foto_perfil','nombre','telefono']
-            }
         ],
         order: [["created_at", "DESC"]],
     });
+
     return favs;
 };
 

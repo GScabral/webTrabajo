@@ -139,6 +139,15 @@ if (models) {
 
     ProfileStat.belongsTo(models.User, { as: "perfil", foreignKey: "user_id" });
 
+
+    Trabajador.belongsTo(models.User, {
+        as: "usuario",        // alias del dueño del perfil
+        foreignKey: "user_id" // campo que conecta con User
+    });
+    models.User.hasOne(models.Trabajador, {
+        as: "trabajadorPerfil", // alias opcional inverso
+        foreignKey: "user_id"
+    });
     Favorite.belongsTo(models.User, { as: 'user', foreignKey: 'user_id' });
     Favorite.belongsTo(models.Post, {
         as: 'post',
