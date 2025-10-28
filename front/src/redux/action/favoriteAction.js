@@ -5,6 +5,7 @@ import API from "../../Api/axios";
 export const allFavPost = (user_id) => async (dispatch) => {
     dispatch({ type: "GET_FAVPOST_REQUEST" });
 
+
     try {
         const response = await API.get(`/fav/getPostFav/${user_id}`)
 
@@ -41,6 +42,7 @@ export const allFavTrabajador = (user_id) => async (dispatch) => {
 
 export const newFav = (favData) => async (dispatch) => {
     dispatch({ type: "POST_FAV_REQUEST" })
+    console.log(favData)
     try {
         const response = await API.post("/fav/addFav", favData)
         dispatch({
@@ -55,6 +57,7 @@ export const newFav = (favData) => async (dispatch) => {
 
 export const removeFavAcc = (user_id, target_type, target_id) => async (dispatch) => {
     dispatch({ type: "DELETE_FAV_REQUEST" });
+
 
     try {
         const response = await API.delete("/fav/removeFav", {
