@@ -10,7 +10,6 @@ const FavHandling = ({ target_id, initialCount = 0, target_type, initiallyFavori
     const [loading, setLoading] = useState(false);
 
 
-    console.log(target_id)
 
     useEffect(() => {
         setFavCount(initialCount);

@@ -88,14 +88,18 @@ const userReducer = (state = initialState, action) => {
         case "UPDATE_PASSWORD_SUCCESS":
             return { ...state, loading: false, message: action.payload };
 
-
         case "GET_LIKES_BY_USER_SUCCESS":
+            const likesByPost = action.payload.reduce((acc, like) => {
+                const postId = like.postId;
+                if (!acc[postId]) acc[postId] = [];
+                acc[postId].push(like);
+                return acc;
+            }, {});
+
             return {
                 ...state,
-                likesByPost: {
-                    ...state.likesByPost,
-                    [action.payload.postId]: action.payload.likes,
-                },
+                likeByUser: action.payload,
+                likesByPost,
             };
         // ❤️ LIKES
         case 'ADD_LIKE_REQUEST':

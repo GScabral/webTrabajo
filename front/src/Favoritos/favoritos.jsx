@@ -18,7 +18,6 @@ const Favoritos = () => {
         }
     }, [dispatch, id]);
 
-    console.log(infoUser)
 
     const handleRemove = async (postId) => {
         try {
@@ -30,7 +29,6 @@ const Favoritos = () => {
         }
     };
 
-    console.log(allTrabajadorFav)
     return (
         <div className="favoritos-container">
             <h1 className="favoritos-title">Post Favoritos</h1>

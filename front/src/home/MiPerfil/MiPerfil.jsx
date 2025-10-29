@@ -116,7 +116,7 @@ const MiPerfil = () => {
 
 
 
-
+console.log(likeUser)
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
       <h1 className="perfil-titulo">👤 Mi Perfil</h1>
