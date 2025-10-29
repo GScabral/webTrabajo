@@ -51,7 +51,9 @@ const Home = () => {
         setOpenMenuPostId(openMenuPostId === postId ? null : postId);
     };
 
-
+    useEffect(() => {
+        setServicioSeleccionado("Todas");
+    }, [categoriaSeleccionada]);
 
     const top5Trabajadores = Array.isArray(allUser)
         ? allUser
@@ -163,9 +165,27 @@ const Home = () => {
     };
 
     // 📌 Listas únicas para los select
-    const categoriasUnicas = ["Todas", ...new Set(allService.map(s => s.categoria).filter(Boolean))];
-    const serviciosUnicos = ["Todas", ...new Set(allService.map(s => s.nombre).filter(Boolean))];
-    const ubicacionesUnicas = ["Todas", ...new Set((Array.isArray(allUser) ? allUser : []).map(u => u.ubicacion).filter(Boolean))];
+    // 📌 Listas únicas para los select
+    const categoriasUnicas = [
+        "Todas",
+        ...new Set(allService.map(s => s.categoria).filter(Boolean))
+    ];
+
+    // Si se selecciona una categoría, solo muestra los servicios de esa categoría
+    const serviciosFiltrados = categoriaSeleccionada === "Todas"
+        ? allService
+        : allService.filter(s => s.categoria === categoriaSeleccionada);
+
+    const serviciosUnicos = [
+        "Todas",
+        ...new Set(serviciosFiltrados.map(s => s.nombre).filter(Boolean))
+    ];
+
+    const ubicacionesUnicas = [
+        "Todas",
+        ...new Set((Array.isArray(allUser) ? allUser : []).map(u => u.ubicacion).filter(Boolean))
+    ];
+
 
     if (loading) {
         return (
