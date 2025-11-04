@@ -57,7 +57,9 @@ if (models) {
         ProfileView,
         ContactRequest,
         ProfileStat,
-        Favorite
+        Favorite,
+        UserBadges,
+        Badges
     } = models;
 
     // Relaciones User -> Trabajador y Cliente
@@ -160,6 +162,21 @@ if (models) {
         foreignKey: 'target_id',
         constraints: false
     });
+    User.belongsToMany(models.Badge, {
+        through: models.UserBadge,
+        foreignKey: 'user_id',
+        otherKey: 'badge_id',
+        as: 'badges', // usuario.badges -> lista de logros
+    });
+    Badge.belongsToMany(models.User, {
+        through: models.UserBadge,
+        foreignKey: 'badge_id',
+        otherKey: 'user_id',
+        as: 'users', // badge.users -> usuarios que lo tienen
+    });
+    UserBadge.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    UserBadge.belongsTo(models.Badge, { foreignKey: 'badge_id', as: 'badge' });
+
 }
 
 module.exports = {

@@ -8,6 +8,7 @@ const trabajadorRouter = require("./trabajadorRouter")
 const mensajesRouter = require("./mensajesRoute")
 const notificationRouter = require("./notificationRouter")
 const favoriteRouter = require("./favoriteRouter")
+const badgeRouter = require("./badgeRouter")
 const router = Router();
 
 router.use('/user', userRouters);
@@ -18,5 +19,6 @@ router.use('/trabajador', trabajadorRouter)
 router.use('/mensaje', mensajesRouter)
 router.use('/notification', notificationRouter)
 router.use('/fav', favoriteRouter)
+router.use('/badges', badgeRouter)
 
 module.exports = router;
