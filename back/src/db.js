@@ -163,13 +163,13 @@ if (models) {
         constraints: false
     });
     User.belongsToMany(models.Badges, {
-        through: models.UserBadge,
+        through: models.UserBadges,
         foreignKey: 'user_id',
         otherKey: 'badge_id',
         as: 'badges', // usuario.badges -> lista de logros
     });
     Badges.belongsToMany(models.User, {
-        through: models.UserBadge,
+        through: models.UserBadges,
         foreignKey: 'badge_id',
         otherKey: 'user_id',
         as: 'users', // badge.users -> usuarios que lo tienen
