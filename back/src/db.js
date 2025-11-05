@@ -168,14 +168,14 @@ if (models) {
         otherKey: 'badge_id',
         as: 'badges', // usuario.badges -> lista de logros
     });
-    Badge.belongsToMany(models.User, {
+    Badges.belongsToMany(models.User, {
         through: models.UserBadge,
         foreignKey: 'badge_id',
         otherKey: 'user_id',
         as: 'users', // badge.users -> usuarios que lo tienen
     });
-    UserBadge.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
-    UserBadge.belongsTo(models.Badge, { foreignKey: 'badge_id', as: 'badge' });
+    UserBadges.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    UserBadges.belongsTo(models.Badges, { foreignKey: 'badge_id', as: 'badge' });
 
 }
 
