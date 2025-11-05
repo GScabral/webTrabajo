@@ -42,7 +42,6 @@ router.post("/assignBadge", async (req, res) => {
 });
 
 
-router.post("/newBadge")
 
 
 router.get("/getBadges", async (req, res) => {
