@@ -162,7 +162,7 @@ if (models) {
         foreignKey: 'target_id',
         constraints: false
     });
-    User.belongsToMany(models.Badge, {
+    User.belongsToMany(models.Badges, {
         through: models.UserBadge,
         foreignKey: 'user_id',
         otherKey: 'badge_id',
