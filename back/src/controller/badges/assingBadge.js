@@ -1,7 +1,7 @@
 const { UserBadges } = require("../../db")
 
 
-const assignBadge = async ({ user_id, badge_id, metadata }) => {
+const assingBadge = async ({ user_id, badge_id, metadata }) => {
     const exists = await UserBadges.findOne({ where: { user_id, badge_id } });
 
     if (exists) return { alreadyAssigned: true, badge: exists };
@@ -12,4 +12,4 @@ const assignBadge = async ({ user_id, badge_id, metadata }) => {
 };
 
 
-module.exports = { assingBadge };
+module.exports =  assingBadge ;

@@ -22,7 +22,7 @@ router.post("/assignBadge", async (req, res) => {
             });
         }
 
-        const response = await assignBadge({ user_id, badge_id, metadata });
+        const response = await assingBadge({ user_id, badge_id, metadata });
 
         res.status(201).json({
             success: true,
