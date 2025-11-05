@@ -54,7 +54,7 @@ router.get("/getBadges", async (req, res) => {
 })
 
 
-outer.get("/getBadgeById/:badgeId", async (req, res) => {
+router.get("/getBadgeById/:badgeId", async (req, res) => {
     try {
         const badgeById = await getBadgeById(req.params.badgeId);
         if (!badgeById)
