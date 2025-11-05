@@ -43,6 +43,41 @@ router.post("/assignBadge", async (req, res) => {
 
 
 
+router.post("/createBadge", async (req, res) => {
+    try {
+        const { code, nombre, descripcion, icon_url, tipo, activo } = req.body;
+
+        // Validación básica
+        if (!code || !nombre || !descripcion || !tipo) {
+            return res.status(400).json({
+                success: false,
+                message: "Campos obligatorios: code, nombre, descripcion y tipo",
+            });
+        }
+
+        const badge = await newBadge({ code, nombre, descripcion, icon_url, tipo, activo });
+
+        if (badge.error) {
+            return res.status(400).json({
+                success: false,
+                message: badge.message,
+            });
+        }
+
+        res.status(201).json({
+            success: true,
+            message: "Badge creada correctamente",
+            data: badge,
+        });
+    } catch (error) {
+        console.error("❌ Error en POST /createBadge:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor",
+            details: error.message,
+        });
+    }
+});
 
 router.get("/getBadges", async (req, res) => {
     try {
