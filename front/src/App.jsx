@@ -19,6 +19,7 @@ import PostAdmin from "./admin/PostAdmin/PostAdmin"
 import StatsAdmin from "./admin/stats/stats";
 import Reports from "./admin/controlUsers/report/reportes"
 import Favoritos from "./Favoritos/favoritos";
+import AllBadges from "./utils/badges/AllBadges";
 import { DarkModeProvider } from "./context/darkMode";
 import "./App.css"
 
@@ -51,6 +52,7 @@ function App() {
           <Route path="postadmin" element={<PostAdmin />} />
           <Route path="stats" element={<StatsAdmin />} />
           <Route path="reportes" element={<Reports />} />
+          <Route path="badges" element={<AllBadges />} />
           <Route path="favoritos/:id" element={<Favoritos />} />
         </Route>
         <Route

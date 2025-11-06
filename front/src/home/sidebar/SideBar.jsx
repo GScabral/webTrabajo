@@ -47,6 +47,7 @@ const Sidebar = ({ user, togglePostForm }) => {
 
     const menuItems = [
         { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/home") },
+        { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/badges") },
         { icon: <FiUser />, label: "Mi Perfil", onClick: () => navigate(`/MiPerfil/${user.id}`) },
         { icon: <FiUser />, label: "Favoritos", onClick: () => navigate(`/favoritos/${user.id}`) }
     ];
