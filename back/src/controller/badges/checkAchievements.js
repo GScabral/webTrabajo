@@ -1,5 +1,5 @@
 const badgeCriteria = require("./badgesCriterios.json");
-const assignBadge = require("./assignBadge");
+const assignBadge = require("./assingBadge");
 const { Badge } = require("../../db");
 
 const checkAchievements = async (user_id, stats) => {
