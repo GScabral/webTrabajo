@@ -1,4 +1,4 @@
-const { User, Trabajador, Servicio, Admin } = require('../../db');
+const { User, Trabajador, Servicio, Admin, UserBadges, Badges } = require('../../db');
 
 const getUserById = async (userId) => {
     try {
@@ -17,6 +17,16 @@ const getUserById = async (userId) => {
                 {
                     model: Admin, // Incluye el rol de admin si existe
                     attributes: ['rol'] // solo traemos el rol
+                },
+                {
+                    model: UserBadges,
+                    include: [
+                        {
+                            model: Badges,
+                            attributes: ["id", "nombre", "descripcion", "icon_url", "code", "tipo"]
+                        },
+                    ],
+                    attributes: ["id", "metadata", "createdAt"],
                 }
             ]
         });

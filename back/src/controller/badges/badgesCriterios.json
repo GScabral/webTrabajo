@@ -1,0 +1,101 @@
+[
+    {
+        "badge_code": "ACHV001",
+        "nombre": "Explorador Inicial",
+        "descripcion": "Otorgado por alcanzar 100 vistas en tu perfil.",
+        "criterio": "views",
+        "valor": 100,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    },
+    {
+        "badge_code": "ACHV002",
+        "nombre": "Popular",
+        "descripcion": "Has conseguido más de 1000 vistas en tu perfil.",
+        "criterio": "views",
+        "valor": 1000,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png"
+    },
+    {
+        "badge_code": "ACHV020",
+        "nombre": "Soy famoso",
+        "descripcion": "Has conseguido más de 2000 vistas en tu perfil.",
+        "criterio": "views",
+        "valor": 2000,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png"
+    },
+    {
+        "badge_code": "ACHV003",
+        "nombre": "Sociable",
+        "descripcion": "Has recibido 10 solicitudes de contacto.",
+        "criterio": "contacts",
+        "valor": 10,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+    },
+    {
+        "badge_code": "ACHV004",
+        "nombre": "Influencer",
+        "descripcion": "500 seguidores o más.",
+        "criterio": "followers",
+        "valor": 500,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1828/1828640.png"
+    },
+    {
+        "badge_code": "ACHV005",
+        "nombre": "Creador",
+        "descripcion": "Publicaste 10 contenidos.",
+        "criterio": "posts",
+        "valor": 10,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+    },
+    {
+        "badge_code": "ACHV006",
+        "nombre": "Creador Experto",
+        "descripcion": "Publicaste 100 contenidos.",
+        "criterio": "posts",
+        "valor": 100,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107955.png"
+    },
+    {
+        "badge_code": "ACHV007",
+        "nombre": "Conversador",
+        "descripcion": "Enviaste 100 mensajes.",
+        "criterio": "messages_sent",
+        "valor": 100,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+    },
+    {
+        "badge_code": "ACHV008",
+        "nombre": "Veterano",
+        "descripcion": "Tu cuenta tiene más de 1 año.",
+        "criterio": "account_age_days",
+        "valor": 365,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/616/616408.png"
+    },
+    {
+        "badge_code": "ACHV009",
+        "nombre": "Curioso",
+        "descripcion": "Visitaste 50 perfiles distintos.",
+        "criterio": "profiles_viewed",
+        "valor": 50,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2204/2204342.png"
+    },
+    {
+        "badge_code": "ACHV010",
+        "nombre": "Conectado",
+        "descripcion": "Te conectaste 7 días seguidos.",
+        "criterio": "login_streak",
+        "valor": 7,
+        "operador": ">=",
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107960.png"
+    }
+]

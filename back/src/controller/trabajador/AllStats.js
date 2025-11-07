@@ -1,5 +1,6 @@
 const { ProfileView, ContactRequest, ProfileStat } = require("../../db")
 const { Sequelize } = require('sequelize');
+import checkAchievements from "../badges/checkAchievements";
 
 
 
@@ -24,6 +25,9 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
         await ProfileStat.increment('views', { by: 1, where: { profile_id } });
         await stat.reload();
     }
+    const updatedStats = await ProfileStat.findOne({ where: { profile_id } })
+
+    await checkAchievements(profile_id, updatedStats.dataValues)
 
     return { success: true };
 };
