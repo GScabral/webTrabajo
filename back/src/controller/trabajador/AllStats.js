@@ -1,6 +1,6 @@
 const { ProfileView, ContactRequest, ProfileStat } = require("../../db")
 const { Sequelize } = require('sequelize');
-import checkAchievements from "../badges/checkAchievements";
+import checkAchievements from "../../controller/badges/checkAchievements";
 
 
 
