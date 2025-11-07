@@ -1,6 +1,6 @@
 const { ProfileView, ContactRequest, ProfileStat } = require("../../db")
 const { Sequelize } = require('sequelize');
-import { checkAchievements } from "../badges/checkAchievements";
+const checkAchievements = require("../badges/checkAchievements");
 
 
 const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agent }) => {
