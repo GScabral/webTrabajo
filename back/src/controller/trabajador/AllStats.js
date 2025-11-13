@@ -1,5 +1,4 @@
-const { ProfileView, ContactRequest, ProfileStat } = require("../../db")
-const { Sequelize } = require('sequelize');
+const { ProfileView, ContactRequest, ProfileStat, Trabajador } = require("../../db")
 const checkAchievements = require("../badges/checkAchievements");
 
 
@@ -26,7 +25,10 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
     }
     const updatedStats = await ProfileStat.findOne({ where: { profile_id } })
 
-    await checkAchievements(profile_id, updatedStats.dataValues)
+    const trabajador = await Trabajador.findByPk(profile_id, { attributes: ['user_id'] })
+    const userId = trabajador ? trabajador.user_id : profile_id;
+
+    await checkAchievements(userId, updatedStats.dataValues)
 
     return { success: true };
 };
@@ -52,6 +54,11 @@ const registrarContactoLogic = async ({ profile_id, requester_id, mensaje, metho
         await ProfileStat.increment('contacts', { by: 1, where: { profile_id } });
         await stat.reload();
     }
+
+    const trabajador = await Trabajador.findOne({ where: { profile_id } });
+    const userId = trabajador ? trabajador.user_id : profile_id;
+
+    await checkAchievements(userId, updatedStats.dataValuess)
 
     return nuevoContacto;
 };
