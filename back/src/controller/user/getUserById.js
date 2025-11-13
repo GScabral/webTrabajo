@@ -21,7 +21,7 @@ const getUserById = async (userId) => {
                     model: Badges,
                     as: 'badges',
                     through: {
-                        attributes: ['metadata', 'createdAt']
+                        attributes: ['metadata', 'created_at']
 
                     },
                     attributes: ['id', 'nombre', 'descripcion', 'icon_url', 'code', 'tipo']
