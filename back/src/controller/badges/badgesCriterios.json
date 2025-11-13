@@ -4,7 +4,7 @@
         "nombre": "Explorador Inicial",
         "descripcion": "Otorgado por alcanzar 100 vistas en tu perfil.",
         "criterio": "views",
-        "valor": 100,
+        "valor": 5,
         "operador": ">=",
         "icon_url": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
     },
