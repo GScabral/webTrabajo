@@ -40,6 +40,7 @@ export const getAllService = () => async (dispatch) => {
 export const getUserById = (id) => async (dispatch) => {
     dispatch({ type: "GETBYID_USER_REQUEST" });
 
+    console.log("esto es lo que se manda al back",id)
     try {
         const response = await API.get(`/user/userById/${id}`);
         dispatch({
