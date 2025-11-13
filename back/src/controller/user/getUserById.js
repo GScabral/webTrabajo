@@ -19,14 +19,10 @@ const getUserById = async (userId) => {
                     attributes: ['rol'] // solo traemos el rol
                 },
                 {
-                    model: UserBadges,
-                    include: [
-                        {
-                            model: Badges,
-                            attributes: ["id", "nombre", "descripcion", "icon_url", "code", "tipo"]
-                        },
-                    ],
-                    attributes: ["id", "metadata", "createdAt"],
+                    model: Badges,
+                    as: 'badges',
+                    through: { attributes: ['metadata', 'createdAt'] },
+                    attributes: ["id", "nombre", "descripcion", "icon_url", "code", "tipo"]
                 }
             ]
         });
