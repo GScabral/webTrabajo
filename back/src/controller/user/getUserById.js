@@ -24,7 +24,7 @@ const getUserById = async (userId) => {
                         attributes: ['metadata', 'createdAt']
 
                     },
-                    attributes: ['id', 'nombre', 'descripcion', 'icon_url', 'badge_code']
+                    attributes: ['id', 'nombre', 'descripcion', 'icon_url', 'code', 'tipo']
                 }
 
             ]
