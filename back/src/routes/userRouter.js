@@ -10,8 +10,8 @@ const createComment = require('../controller/user/comment')
 const updateUser = require('../controller/user/updateUser')
 const sendPasswordResetEmail = require("../utils/resetPasswordEmail")
 const logout = require("../controller/user/logOutUser")
-const getAllUser=require("../controller/user/allUser")
-const { addLike, removeLike, getLikesByPost, checkUserLike,get, getLikeByUser } = require("../controller/Like/newLike")
+const getAllUser = require("../controller/user/allUser")
+const { addLike, removeLike, getLikesByPost, checkUserLike, get, getLikeByUser } = require("../controller/Like/newLike")
 const upload = require("../upload")
 const authMiddleware = require("../middleware/midelware")
 const authenticate = require("../middleware/authenticate")
@@ -38,14 +38,14 @@ router.post('/login', async (req, res) => {
 
 
 router.get('/getAllUser', async (req, res) => {
-        try {
-            const listUser = await getAllUser();
-            res.status(200).json(listUser);
-        } catch (error) {
-            console.log("error al traer los usuarios;", error);
-            res.status(500).json({ error: "Error al traer los usuarios" });
-        }
+    try {
+        const listUser = await getAllUser();
+        res.status(200).json(listUser);
+    } catch (error) {
+        console.log("error al traer los usuarios;", error);
+        res.status(500).json({ error: "Error al traer los usuarios" });
     }
+}
 );
 router.post('/logout', authenticate, logout);
 
@@ -154,6 +154,8 @@ router.patch('/reset-password', async (req, res) => {
 router.get('/userById/:id', async (req, res) => {
     try {
         const user = await getUserById(req.params.id);
+        console.log(user)
+
         if (!user) {
             res.status(404).json({ error: 'Usuario no encontrado' });
         } else {
