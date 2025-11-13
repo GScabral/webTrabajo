@@ -1,6 +1,6 @@
 const badgeCriteria = require("./badgesCriterios.json");
 const assignBadge = require("./assingBadge");
-const { Badge } = require("../../db");
+const { Badges } = require("../../db");
 
 const checkAchievements = async (user_id, stats) => {
     const unlocked = [];
@@ -27,7 +27,7 @@ const checkAchievements = async (user_id, stats) => {
 
         if (meetsCondition) {
             // Busca badge_id en tu tabla Badge (relación con badge_code)
-            const badgeDB = await Badge.findOne({ where: { code: badge_code } });
+            const badgeDB = await Badges.findOne({ where: { code: badge_code } });
 
             if (badgeDB) {
                 const result = await assignBadge({
