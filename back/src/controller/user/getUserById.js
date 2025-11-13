@@ -17,7 +17,15 @@ const getUserById = async (userId) => {
                 {
                     model: Admin, // Incluye el rol de admin si existe
                     attributes: ['rol'] // solo traemos el rol
-                },
+                }, {
+                    model: Badges,
+                    as: 'badges',
+                    through: {
+                        attributes: ['metadata', 'createdAt']
+
+                    },
+                    attributes: ['id', 'nombre', 'descripcion', 'icon_url', 'badge_code']
+                }
 
             ]
         });
