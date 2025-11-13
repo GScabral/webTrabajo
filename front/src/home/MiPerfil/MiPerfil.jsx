@@ -40,6 +40,9 @@ const MiPerfil = () => {
 
 
 
+  console.log(infoUser)
+
+
 
 
   useEffect(() => {
