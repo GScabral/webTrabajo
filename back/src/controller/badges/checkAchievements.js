@@ -2,6 +2,24 @@ const badgeCriteria = require("./badgesCriterios.json");
 const assignBadge = require("./assingBadge");
 const { Badges } = require("../../db");
 
+// 🔥 SINCRONIZAR BADGES AL INICIAR EL SERVIDOR
+(async () => {
+    for (const b of badgeCriteria) {
+        await Badges.findOrCreate({
+            where: { code: b.badge_code },
+            defaults: {
+                nombre: b.nombre,
+                descripcion: b.descripcion,
+                icon_url: b.icon_url,
+                tipo: b.tipo || "general"
+            }
+        });
+    }
+    console.log("✔️ Badges insertadas / actualizadas en la BD");
+})();
+// 🔥 fin de sincronización ---------------------------
+
+
 const checkAchievements = async (user_id, stats) => {
     const unlocked = [];
 
@@ -25,6 +43,7 @@ const checkAchievements = async (user_id, stats) => {
             default:
                 meetsCondition = false;
         }
+
         if (meetsCondition) {
             console.log(`✔️ Condición cumplida para badge '${badge_code}' (criterio ${criterio}: ${userValue} ${operador} ${valor})`);
 
