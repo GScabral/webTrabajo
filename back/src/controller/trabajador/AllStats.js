@@ -29,7 +29,7 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
     const updatedStats = await ProfileStat.findOne({ where: { profile_id } })
 
     const trabajador = await Trabajador.findByPk(profile_id, { attributes: ['user_id'] })
-    const user_id = trabajador ? trabajador.user_id : profile_id;
+    const user_id = profile_id;
 
     await checkAchievements(user_id, updatedStats.dataValues)
 
