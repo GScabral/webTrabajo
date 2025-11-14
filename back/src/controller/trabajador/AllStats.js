@@ -5,6 +5,9 @@ const checkAchievements = require("../badges/checkAchievements");
 const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agent }) => {
     if (!profile_id) throw new Error('profile_id es obligatorio');
 
+    console.log("stats profile:", profile_id)
+    console.log("stats agent:", user_agent)
+    console.log("stats distinto:", viewer_id)
     // guardo el registro de la vista
     await ProfileView.create({
         profile_id,
