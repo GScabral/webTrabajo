@@ -54,17 +54,14 @@ router.post('/logout', authenticate, logout);
 router.post('/register', upload.single('foto_perfil'), async (req, res) => {
     try {
         // Ver la información del archivo subido
-        console.log("Archivo recibido en req.file:", req.file);
 
         // Ver el body enviado en la petición
-        console.log("Datos recibidos en req.body:", req.body);
 
         // Asegura que la imagen esté disponible en req.file
         const foto_perfil = req.file?.path || "";
         req.body.foto_perfil = foto_perfil;
 
         // Ver cómo queda el body con la ruta de la foto añadida
-        console.log("Body final con foto_perfil:", req.body);
 
         const register = await registeredUser(req.body);
 
@@ -154,7 +151,6 @@ router.patch('/reset-password', async (req, res) => {
 router.get('/userById/:id', async (req, res) => {
     try {
         const user = await getUserById(req.params.id);
-        console.log(user)
 
         if (!user) {
             res.status(404).json({ error: 'Usuario no encontrado' });

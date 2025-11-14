@@ -5,6 +5,7 @@ const { Badges } = require("../../db");
 const checkAchievements = async (user_id, stats) => {
     const unlocked = [];
 
+    console.log("checkBAdge:", user_id, stats)
     for (const badge of badgeCriteria) {
         const { badge_code, criterio, valor, operador } = badge;
         const userValue = stats[criterio] || 0;
