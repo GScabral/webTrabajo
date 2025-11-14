@@ -6,7 +6,8 @@
         "criterio": "views",
         "valor": 5,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV002",
@@ -15,7 +16,8 @@
         "criterio": "views",
         "valor": 1000,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV020",
@@ -24,7 +26,8 @@
         "criterio": "views",
         "valor": 2000,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107957.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV003",
@@ -33,7 +36,8 @@
         "criterio": "contacts",
         "valor": 10,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1077/1077114.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV004",
@@ -42,7 +46,8 @@
         "criterio": "followers",
         "valor": 500,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/1828/1828640.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1828/1828640.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV005",
@@ -51,7 +56,8 @@
         "criterio": "posts",
         "valor": 10,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2921/2921222.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV006",
@@ -60,7 +66,8 @@
         "criterio": "posts",
         "valor": 100,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107955.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107955.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV007",
@@ -69,7 +76,8 @@
         "criterio": "messages_sent",
         "valor": 100,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/1380/1380338.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV008",
@@ -78,7 +86,8 @@
         "criterio": "account_age_days",
         "valor": 365,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/616/616408.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV009",
@@ -87,7 +96,8 @@
         "criterio": "profiles_viewed",
         "valor": 50,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2204/2204342.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2204/2204342.png",
+        "tipo": "logro"
     },
     {
         "badge_code": "ACHV010",
@@ -96,6 +106,7 @@
         "criterio": "login_streak",
         "valor": 7,
         "operador": ">=",
-        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107960.png"
+        "icon_url": "https://cdn-icons-png.flaticon.com/512/2107/2107960.png",
+        "tipo": "logro"
     }
 ]
