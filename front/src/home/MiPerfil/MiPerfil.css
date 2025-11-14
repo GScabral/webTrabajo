@@ -228,3 +228,44 @@
   border-radius: 8px;
   margin-top: 0.5rem;
 }
+
+.perfil-badges-container {
+  margin-top: 40px;
+}
+
+.perfil-badges-titulo {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.perfil-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.badge-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.badge-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.badge-info h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.badge-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #666;
+}

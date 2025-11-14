@@ -119,7 +119,7 @@ const MiPerfil = () => {
 
 
 
-console.log(likeUser)
+  console.log(likeUser)
   return (
     <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
       <h1 className="perfil-titulo">👤 Mi Perfil</h1>
@@ -285,7 +285,29 @@ console.log(likeUser)
                   <p><span>{contactos || 0} contactos</span></p>
                 </div>
               )}
+              {infoUser?.badges?.length > 0 && (
+                <div className="perfil-badges-container">
+                  <h2 className="perfil-badges-titulo">🏆 Logros obtenidos</h2>
 
+                  <div className="perfil-badges-grid">
+                    {infoUser.badges.map((badge) => (
+                      <div key={badge.id} className="badge-card">
+                        <img
+                          src={badge.icon_url}
+                          alt={badge.nombre}
+                          className="badge-icon"
+                        />
+
+                        <div className="badge-info">
+                          <h3>{badge.nombre}</h3>
+                          <p>{badge.descripcion}</p>
+                          <small>📅 {new Date(badge.UserBadges.created_at).toLocaleDateString()}</small>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="perfil-botones">
                 <button className="btn editar" onClick={() => setModoEdicion(true)}>
