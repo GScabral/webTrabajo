@@ -122,6 +122,29 @@ const Perfil = () => {
             </ul>
           </div>
         )}
+        {usuario?.badges?.length > 0 && (
+          <div className="perfil-badges-container">
+            <h2 className="perfil-badges-titulo">🏆 Logros obtenidos</h2>
+
+            <div className="perfil-badges-grid">
+              {usuario.badges.map((badge) => (
+                <div key={badge.id} className="badge-card">
+                  <img
+                    src={badge.icon_url}
+                    alt={badge.nombre}
+                    className="badge-icon"
+                  />
+
+                  <div className="badge-info">
+                    <h3>{badge.nombre}</h3>
+                    <p>{badge.descripcion}</p>
+                    <small>📅 {new Date(badge.UserBadges.created_at).toLocaleDateString()}</small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Comentarios */}
         <div className="comentarios-section card-section">
