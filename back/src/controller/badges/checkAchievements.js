@@ -25,22 +25,27 @@ const checkAchievements = async (user_id, stats) => {
             default:
                 meetsCondition = false;
         }
-
         if (meetsCondition) {
-            // Busca badge_id en tu tabla Badge (relación con badge_code)
+            console.log(`✔️ Condición cumplida para badge '${badge_code}' (criterio ${criterio}: ${userValue} ${operador} ${valor})`);
+
             const badgeDB = await Badges.findOne({ where: { code: badge_code } });
 
-            if (badgeDB) {
-                const result = await assignBadge({
-                    user_id,
-                    badge_id: badgeDB.id,
-                    metadata: { achieved_at: new Date(), criterio, valor }
-                });
+            if (!badgeDB) {
+                console.log(`❌ Badge '${badge_code}' no encontrada en la BD`);
+                continue;
+            }
 
-                if (!result.alreadyAssigned) {
-                    unlocked.push(badge);
-                    console.log(`🏅 ${badge.nombre} asignado a usuario ${user_id}`);
-                }
+            const result = await assignBadge({
+                user_id,
+                badge_id: badgeDB.id,
+                metadata: { achieved_at: new Date(), criterio, valor }
+            });
+
+            if (!result.alreadyAssigned) {
+                unlocked.push(badge);
+                console.log(`🏅 Badge '${badge.nombre}' asignada correctamente al usuario ${user_id}`);
+            } else {
+                console.log(`ℹ️ Badge '${badge.nombre}' ya estaba asignada al usuario ${user_id}`);
             }
         }
     }
