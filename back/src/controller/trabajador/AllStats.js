@@ -26,9 +26,9 @@ const registrarVistaLogic = async ({ profile_id, viewer_id, viewer_ip, user_agen
     const updatedStats = await ProfileStat.findOne({ where: { profile_id } })
 
     const trabajador = await Trabajador.findByPk(profile_id, { attributes: ['user_id'] })
-    const userId = trabajador ? trabajador.user_id : profile_id;
+    const user_id = trabajador ? trabajador.user_id : profile_id;
 
-    await checkAchievements(userId, updatedStats.dataValues)
+    await checkAchievements(user_id, updatedStats.dataValues)
 
     return { success: true };
 };
@@ -56,9 +56,9 @@ const registrarContactoLogic = async ({ profile_id, requester_id, mensaje, metho
     }
 
     const trabajador = await Trabajador.findOne({ where: { profile_id } });
-    const userId = trabajador ? trabajador.user_id : profile_id;
+    const user_id = trabajador ? trabajador.user_id : profile_id;
 
-    await checkAchievements(userId, updatedStats.dataValuess)
+    await checkAchievements(user_id, updatedStats.dataValuess)
 
     return nuevoContacto;
 };
