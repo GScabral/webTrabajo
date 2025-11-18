@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserById,
-  getCalificacion,
-  createCalificacion,
-  postView,
-} from "../../redux/action/trabajadorAction";
-
+import { getUserById } from "../../redux/action/usersAction";
+import { createCalificacion, getCalificacion, postView } from "../../redux/action/trabajadorAction";
 import StarRating from "./StarRating";
 import ContactModal from "./modalContacto";
 import "./Perfil.css";
@@ -48,7 +43,7 @@ const Perfil = () => {
         );
 
         sessionStorage.setItem(`viewed_${id}`, "true");
-      } catch (error) {}
+      } catch (error) { }
     };
 
     registrarVista();
