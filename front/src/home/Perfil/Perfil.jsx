@@ -1,185 +1,218 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../../redux/action/usersAction";
-import { createCalificacion, getCalificacion, postView, allStats } from "../../redux/action/trabajadorAction";
+import {
+  getUserById,
+  getCalificacion,
+  createCalificacion,
+  postView,
+} from "../../redux/action/trabajadorAction";
+
 import StarRating from "./StarRating";
-import "./Perfil.css";
 import ContactModal from "./modalContacto";
+import "./Perfil.css";
 
 const Perfil = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const usuario = useSelector(state => state.userState.userById);
-  const loading = useSelector(state => state.userState.loading);
-  const calificaciones = useSelector(state => state.trabajoState.calificaciones || []);
-  const infoLogin = useSelector(state => state.userState.infoLogin);
-  const infoUser = useSelector((state) => state.userState.infoLogin);
-  const loggedUser = useSelector((state) => state.userState.infoLogin);
 
+  const usuario = useSelector((state) => state.userState.userById);
+  const calificaciones = useSelector((state) => state.trabajoState.calificaciones || []);
+  const infoLogin = useSelector((state) => state.userState.infoLogin);
+
+  const [tab, setTab] = useState("info");
   const [comentario, setComentario] = useState("");
   const [puntuacion, setPuntuacion] = useState(0);
-  const [openContact, setOpenContac] = useState(false)
-  console.log(usuario)
+  const [openContact, setOpenContact] = useState(false);
 
   useEffect(() => {
     dispatch(getUserById(id));
     dispatch(getCalificacion(id));
 
-    // 👇 Registrar la vista del perfil
+    // Registrar vista (solo 1 vez)
     const registrarVista = async () => {
+      if (infoLogin?.id === Number(id)) return;
+      if (sessionStorage.getItem(`viewed_${id}`)) return;
+
       try {
-        if (infoLogin?.id === Number(id)) return;
-        if (sessionStorage.getItem(`viewed_${id}`)) return; // evita duplicar vista
-        // 🔹 Obtener IP pública del visitante
         const res = await fetch("https://api.ipify.org?format=json");
         const { ip } = await res.json();
 
-        // 🔹 Evitar registrar vista si el usuario ve su propio perfil
-        if (infoLogin?.id === Number(id)) return;
-
-        // 🔹 Registrar vista en el backend
         dispatch(
           postView(
-            id,                        // profile_id
-            infoLogin?.id || null,     // viewer_id
-            ip,                        // viewer_ip
-            navigator.userAgent        // user_agent
+            id,
+            infoLogin?.id || null,
+            ip,
+            navigator.userAgent
           )
         );
-      } catch (error) {
-        console.error("❌ Error al registrar vista:", error);
-      }
+
+        sessionStorage.setItem(`viewed_${id}`, "true");
+      } catch (error) {}
     };
 
     registrarVista();
   }, [dispatch, id, infoLogin]);
 
+  const trabajador = usuario?.Trabajador;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCalificacion({
-      puntuacion,
-      comentario,
-      trabajador_id: id,
-      cliente_id: infoLogin.id
-    }));
+    dispatch(
+      createCalificacion({
+        puntuacion,
+        comentario,
+        trabajador_id: id,
+        cliente_id: infoLogin.id,
+      })
+    );
     setComentario("");
-    setPuntuacion(5);
+    setPuntuacion(0);
   };
 
-  if (loading || !usuario) return <p className="loading">Cargando perfil...</p>;
-
-  console.log(calificaciones)
-
-  const trabajador = usuario.Trabajador;
+  if (!usuario) return <p>Cargando...</p>;
 
   return (
-    <div className="perfil-wrapper">
-      <div className="perfil-card">
+    <div className="dashboard-wrapper">
 
-        {/* Encabezado con imagen y datos */}
-        <div className="perfil-header">
-          {usuario.foto_perfil && usuario.foto_perfil.trim() !== "" ? (
-            <img src={usuario.foto_perfil} alt={usuario.nombre} className="avatar" />
-          ) : (
-            <img
-              src="https://res.cloudinary.com/doauxswrl/image/upload/v1756478176/download_j9pkwx.png"
-              alt="avatar por defecto"
-              className="avatar"
-            />
-          )}          <h2 className="nombre">{usuario.nombre}</h2>
-          <p className="ubicacion">📍 {usuario.ubicacion}</p>
-          <button className="contact-btn" onClick={() => setOpenContac(true)}>📨 Contactar</button>
-        </div>
-        <ContactModal
-          open={openContact}
-          onClose={() => setOpenContac(false)}
-          profileId={infoUser?.id}
-          requesterId={loggedUser?.id}
-        />
-        {/* Datos principales */}
-        <div className="info-detalle">
-          <p><strong>Email:</strong> {usuario.email}</p>
-          <p><strong>Teléfono:</strong> {usuario.telefono}</p>
+      {/* SIDEBAR */}
+      <aside className="sidebar">
+        <div className="sidebar-user">
+          <img
+            src={
+              usuario.foto_perfil
+                ? usuario.foto_perfil
+                : "https://res.cloudinary.com/doauxswrl/image/upload/v1756478176/download_j9pkwx.png"
+            }
+            className="sidebar-avatar"
+            alt=""
+          />
+          <h3>{usuario.nombre}</h3>
+          <p className="side-loc">{usuario.ubicacion}</p>
 
-          {usuario.tipo === "trabajador" && trabajador && (
-            <>
-              <p><strong>Descripción:</strong> {trabajador.descripcion}</p>
-              <p><strong>Tarifa:</strong> ${trabajador.tarifa_minima} - ${trabajador.tarifa_maxima}</p>
-              <p><strong>Disponibilidad:</strong> {trabajador.disponibilidad}</p>
-              <p><strong>Valoración:</strong> ⭐ {trabajador.promedio_valoracion ? Number(trabajador.promedio_valoracion).toFixed(2) : "Sin valoraciones"}</p>            </>
-          )}
+          <button className="contact-btn" onClick={() => setOpenContact(true)}>
+            📩 Contactar
+          </button>
         </div>
+
+        <div className="sidebar-menu">
+          <button className={tab === "info" ? "active" : ""} onClick={() => setTab("info")}>
+            Información
+          </button>
+          <button className={tab === "servicios" ? "active" : ""} onClick={() => setTab("servicios")}>
+            Servicios ofrecidos
+          </button>
+          <button className={tab === "badges" ? "active" : ""} onClick={() => setTab("badges")}>
+            Logros
+          </button>
+          <button className={tab === "comentarios" ? "active" : ""} onClick={() => setTab("comentarios")}>
+            Comentarios
+          </button>
+        </div>
+      </aside>
+
+      {/* CONTENIDO */}
+      <main className="perfil-content">
+
+        {/* Información */}
+        {tab === "info" && (
+          <section className="card fade">
+            <h2 className="card-title">Información</h2>
+
+            <div className="info-grid">
+              <p><strong>Email:</strong> {usuario.email}</p>
+              <p><strong>Teléfono:</strong> {usuario.telefono}</p>
+
+              {trabajador && (
+                <>
+                  <p><strong>Descripción:</strong> {trabajador.descripcion}</p>
+                  <p><strong>Tarifa:</strong> ${trabajador.tarifa_minima} - ${trabajador.tarifa_maxima}</p>
+                  <p><strong>Disponibilidad:</strong> {trabajador.disponibilidad}</p>
+                  <p><strong>Valoración:</strong> ⭐ {trabajador.promedio_valoracion || 0}</p>
+                </>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* Servicios */}
-        {trabajador?.Servicios?.length > 0 && (
-          <div className="servicios card-section">
-            <h3>🛠️ Servicios ofrecidos</h3>
-            <ul>
-              {trabajador.Servicios.map(s => (
-                <li key={s.id}>✔ {s.nombre} <span className="categoria">({s.categoria})</span></li>
+        {tab === "servicios" && trabajador?.Servicios?.length > 0 && (
+          <section className="card fade">
+            <h2 className="card-title">Servicios ofrecidos</h2>
+
+            <div className="servicios-grid">
+              {trabajador.Servicios.map((s) => (
+                <div className="servicio-item" key={s.id}>
+                  <h4>{s.nombre}</h4>
+                  <p className="categoria">{s.categoria}</p>
+                </div>
               ))}
-            </ul>
-          </div>
+            </div>
+          </section>
         )}
-        {usuario?.badges?.length > 0 && (
-          <div className="perfil-badges-container">
-            <h2 className="perfil-badges-titulo">🏆 Logros obtenidos</h2>
 
-            <div className="perfil-badges-grid">
+        {/* Badges */}
+        {tab === "badges" && usuario?.badges?.length > 0 && (
+          <section className="card fade">
+            <h2 className="card-title">Logros obtenidos</h2>
+
+            <div className="badges-row">
               {usuario.badges.map((badge) => (
-                <div key={badge.id} className="badge-card">
-                  <img
-                    src={badge.icon_url}
-                    alt={badge.nombre}
-                    className="badge-icon"
-                  />
-
-                  <div className="badge-info">
-                    <h3>{badge.nombre}</h3>
-                    <p>{badge.descripcion}</p>
-                    <small>📅 {new Date(badge.UserBadges.created_at).toLocaleDateString()}</small>
+                <div key={badge.id} className="badge-item">
+                  <img src={badge.icon_url} className="badge-icon" />
+                  <div>
+                    <p className="badge-name">{badge.nombre}</p>
+                    <p className="badge-desc">{badge.descripcion}</p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
         {/* Comentarios */}
-        <div className="comentarios-section card-section">
-          <h3>💬 Dejá tu comentario</h3>
-          <form onSubmit={handleSubmit}>
-            <label>Puntuación:</label>
-            <StarRating puntuacion={puntuacion} setPuntuacion={setPuntuacion} />
-            <textarea
-              value={comentario}
-              onChange={(e) => setComentario(e.target.value)}
-              placeholder="Escribe tu comentario..."
-              required
-              rows={4}
-            />
-            <button type="submit" className="enviar-btn">Enviar calificación</button>
-          </form>
-        </div>
+        {tab === "comentarios" && (
+          <section className="card fade">
+            <h2 className="card-title">Dejá tu comentario</h2>
 
-        {/* Reseñas */}
-        {calificaciones.length > 0 && (
-          <div className="reseñas card-section">
-            <h3>🗨️ Reseñas de clientes</h3>
-            {calificaciones
-              .filter(c => c && typeof c.puntuacion !== "undefined")
-              .map(c => (
-                <div key={c.id} className="comentario-burbuja">
-                  <div className="comentario-top">
-                    <strong>⭐ {c.puntuacion}</strong>
-                  </div>
+            <form onSubmit={handleSubmit} className="comentario-form">
+              <label>Puntuación:</label>
+              <StarRating puntuacion={puntuacion} setPuntuacion={setPuntuacion} />
+
+              <textarea
+                rows={5}
+                value={comentario}
+                onChange={(e) => setComentario(e.target.value)}
+                placeholder="Escribe tu comentario..."
+                required
+              />
+
+              <button className="submit-btn">Enviar</button>
+            </form>
+
+            <h3 className="card-subtitle">Comentarios anteriores</h3>
+
+            {calificaciones.length > 0 ? (
+              calificaciones.map((c) => (
+                <div className="review-item" key={c.id}>
+                  <div className="review-author">⭐ {c.puntuacion}</div>
                   <p>{c.comentario}</p>
                 </div>
-              ))}
-          </div>
+              ))
+            ) : (
+              <p>No hay comentarios aún.</p>
+            )}
+          </section>
         )}
-      </div>
+      </main>
+
+      {/* MODAL */}
+      <ContactModal
+        open={openContact}
+        onClose={() => setOpenContact(false)}
+        profileId={infoLogin?.id}
+        requesterId={infoLogin?.id}
+      />
     </div>
   );
 };

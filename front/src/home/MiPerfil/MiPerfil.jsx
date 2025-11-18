@@ -1,400 +1,377 @@
+// MiPerfil.jsx (Rediseñado - Dashboard style)
+
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserById, updateUser, changePassword, getLikesByUser } from "../../redux/action/usersAction"
+import { Link, useParams } from "react-router-dom";
+import {
+  getUserById,
+  updateUser,
+  changePassword,
+  getLikesByUser,
+} from "../../redux/action/usersAction";
 import { getByPostUser } from "../../redux/action/postAction";
 import { allStats } from "../../redux/action/trabajadorAction";
-import { Link } from "react-router-dom";
-import InfoIcon from "../../utils/infoIcon/infoIcon"
+import InfoIcon from "../../utils/infoIcon/infoIcon";
 import { useDarkMode } from "../../context/darkMode";
 import "./MiPerfil.css";
-import { useParams } from "react-router-dom";
 
 const MiPerfil = () => {
   const dispatch = useDispatch();
-  const infoUser = useSelector((state) => state.userState.infoLogin);
-  const likeUser = useSelector((state) => state.userState.likeByUser);
   const { id } = useParams();
   const { darkMode } = useDarkMode();
-  const stats = useSelector(state => state.trabajoState.allStats);
-  const contactos = useSelector(state => state.trabajoState.totalContactos);
 
+  // global state
+  const infoUser = useSelector((s) => s.userState.infoLogin) || null;
+  const likeUser = useSelector((s) => s.userState.likeByUser) || [];
+  const postByUser = useSelector((s) => s.postState.postByUser) || [];
+  const stats = useSelector((s) => s.trabajoState.allStats) || {};
+  const contactos = useSelector((s) => s.trabajoState.totalContactos) || 0;
 
-  const postByUser = useSelector((state) => state.postState.postByUser);
+  // local UI state (form / edit mode)
+  const [editing, setEditing] = useState(false);
+  const [preview, setPreview] = useState("");
+  const [avatarFile, setAvatarFile] = useState(null);
 
-  const [modoEdicion, setModoEdicion] = useState(false);
+  // form fields (kept in a single object)
+  const [form, setForm] = useState({
+    nombre: "",
+    email: "",
+    ubicacion: "",
+    telefono: "",
+    descripcion: "",
+    tarifaMinima: "",
+    tarifaMaxima: "",
+    disponibilidad: "",
+  });
 
-  const [nombre, setNombre] = useState(infoUser?.nombre || "");
-  const [email, setEmail] = useState(infoUser?.email || "");
-  const [ubicacion, setUbicacion] = useState(infoUser?.ubicacion || "");
-  const [telefono, setTelefono] = useState(infoUser?.telefono || "");
-  const [descripcion, setDescripcion] = useState(infoUser.Trabajador?.descripcion || "");
-  const [tarifaMinima, setTarifaMinima] = useState(infoUser.Trabajador?.tarifa_minima || "");
-  const [tarifaMaxima, setTarifaMaxima] = useState(infoUser.Trabajador?.tarifa_maxima || "");
-  const [disponibilidad, setDisponibilidad] = useState(infoUser.Trabajador?.disponibilidad || "");
-  const [fotoArchivo, setFotoArchivo] = useState(null);
-  const [fotoPerfil, setFotoPerfil] = useState(infoUser?.foto_perfil || "");
-  const [mostrarCambioPassword, setMostrarCambioPassword] = useState(false);
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // password change
+  const [showPwd, setShowPwd] = useState(false);
+  const [pwd, setPwd] = useState({ oldPassword: "", newPassword: "", confirm: "" });
 
-
-
-  console.log(infoUser)
-
-
-
-
+  // keep local form in sync when infoUser loads/changes
   useEffect(() => {
-    if (id) {
-      dispatch(allStats(id))
+    if (infoUser) {
+      setForm((f) => ({
+        ...f,
+        nombre: infoUser.nombre || "",
+        email: infoUser.email || "",
+        ubicacion: infoUser.ubicacion || "",
+        telefono: infoUser.telefono || "",
+        descripcion: infoUser.Trabajador?.descripcion || "",
+        tarifaMinima: infoUser.Trabajador?.tarifa_minima || "",
+        tarifaMaxima: infoUser.Trabajador?.tarifa_maxima || "",
+        disponibilidad: infoUser.Trabajador?.disponibilidad || "",
+      }));
+      setPreview(infoUser.foto_perfil || "");
     }
-  }, [dispatch, id])
+  }, [infoUser]);
 
-
+  // fetch data for the profile (stats / posts / likes)
   useEffect(() => {
-    if (id) {
-      dispatch(getLikesByUser(id))
-    }
-  }, [dispatch, id])
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getByPostUser(id));
-    }
+    if (!id) return;
+    dispatch(allStats(id));
+    dispatch(getByPostUser(id));
+    dispatch(getLikesByUser(id));
   }, [dispatch, id]);
 
-  const handleGuardar = async () => {
+  // handlers
+  const onChangeField = (key) => (e) => setForm({ ...form, [key]: e.target.value });
+
+  const onPickAvatar = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const handleSave = async () => {
+    if (!infoUser) return;
     const formData = new FormData();
 
-    if (nombre !== infoUser.nombre) formData.append("nombre", nombre);
-    if (email !== infoUser.email) formData.append("email", email);
-    if (ubicacion !== infoUser.ubicacion) formData.append("ubicacion", ubicacion);
-    if (telefono !== infoUser.telefono) formData.append("telefono", telefono);
-    if (fotoArchivo) formData.append("foto_perfil", fotoArchivo); // nombre debe coincidir con upload.single('imagen')
+    // append only changed values (simple comparison)
+    if (form.nombre !== infoUser.nombre) formData.append("nombre", form.nombre);
+    if (form.email !== infoUser.email) formData.append("email", form.email);
+    if (form.ubicacion !== infoUser.ubicacion) formData.append("ubicacion", form.ubicacion);
+    if (form.telefono !== infoUser.telefono) formData.append("telefono", form.telefono);
+    if (avatarFile) formData.append("foto_perfil", avatarFile);
 
     if (infoUser.tipo === "trabajador") {
-      if (descripcion !== infoUser.Trabajador.descripcion)
-        formData.append("descripcion", descripcion);
-      if (tarifaMinima !== infoUser.Trabajador.tarifa_minima)
-        formData.append("tarifa_minima", tarifaMinima);
-      if (tarifaMaxima !== infoUser.Trabajador.tarifa_maxima)
-        formData.append("tarifa_maxima", tarifaMaxima);
-      if (disponibilidad !== infoUser.Trabajador.disponibilidad)
-        formData.append("disponibilidad", disponibilidad);
+      if (form.descripcion !== infoUser.Trabajador?.descripcion)
+        formData.append("descripcion", form.descripcion);
+      if (String(form.tarifaMinima) !== String(infoUser.Trabajador?.tarifa_minima))
+        formData.append("tarifa_minima", form.tarifaMinima);
+      if (String(form.tarifaMaxima) !== String(infoUser.Trabajador?.tarifa_maxima))
+        formData.append("tarifa_maxima", form.tarifaMaxima);
+      if (form.disponibilidad !== infoUser.Trabajador?.disponibilidad)
+        formData.append("disponibilidad", form.disponibilidad);
     }
 
     try {
-      await dispatch(updateUser(infoUser.id, formData)); // 🟢 importante: pasar FormData
+      await dispatch(updateUser(infoUser.id, formData));
       await dispatch(getUserById(infoUser.id));
-      alert("✅ Cambios guardados correctamente");
-      setModoEdicion(false);
-    } catch (error) {
-      console.error(error);
-      alert("❌ Error al actualizar perfil");
+      setEditing(false);
+      alert("✅ Cambios guardados");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error al guardar");
     }
   };
 
-  const handleChangePassword = async () => {
-    if (!oldPassword || !newPassword || !confirmPassword) {
-      return alert("⚠️ Completa todos los campos.");
+  const handlePasswordChange = async () => {
+    if (!pwd.oldPassword || !pwd.newPassword || !pwd.confirm) {
+      return alert("⚠️ Completa todos los campos");
     }
-
-    if (newPassword !== confirmPassword) {
-      return alert("❌ Las contraseñas nuevas no coinciden.");
-    }
-
+    if (pwd.newPassword !== pwd.confirm) return alert("❌ Las contraseñas no coinciden");
     try {
-      await dispatch(changePassword(oldPassword, newPassword));
-      alert("✅ Contraseña actualizada correctamente.");
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setMostrarCambioPassword(false);
-    } catch (error) {
-      console.error(error);
-      alert("❌ Error al cambiar la contraseña.");
+      await dispatch(changePassword(pwd.oldPassword, pwd.newPassword));
+      setPwd({ oldPassword: "", newPassword: "", confirm: "" });
+      setShowPwd(false);
+      alert("✅ Contraseña cambiada");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error al cambiar contraseña");
     }
   };
 
-
-
-  console.log(likeUser)
-  return (
-    <div className={`perfil-container  ${darkMode ? "dark-mode" : ""}`}>
-      <h1 className="perfil-titulo">👤 Mi Perfil</h1>
-
-      {infoUser ? (
-        <div className="perfil-card">
-          <div className="perfil-header">
-            <img
-              src={infoUser.foto_perfil}
-              alt={infoUser.nombre}
-              className="perfil-imagen"
-            />
-            <div>
-              <h2>{infoUser.nombre}</h2>
-              <p className="perfil-id">ID: {infoUser.id}</p>
-            </div>
+  // simple presentational helpers
+  const renderBadges = () => (
+    <div className="badges-compact">
+      {infoUser?.badges?.length ? (
+        infoUser.badges.map((b) => (
+          <div className="badge" key={b.id} title={b.descripcion}>
+            <img src={b.icon_url} alt={b.nombre} />
           </div>
-
-          {modoEdicion ? (
-            <div className="perfil-formulario">
-              <label>
-                ✍️ Nombre:
-                <input
-                  type="text"
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
-                />
-              </label>
-
-              <label>
-                📧 Email:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-              <label>
-                📧 wpp:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-              <label>
-                📧 instagram / facebook:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-
-              <label>
-                📍 Ubicación:
-                <input
-                  type="text"
-                  value={ubicacion}
-                  onChange={(e) => setUbicacion(e.target.value)}
-                />
-              </label>
-
-              <label>
-                📱 Whatsapp:
-                <input
-                  type="text"
-                  value={telefono}
-                  onChange={(e) => setTelefono(e.target.value)}
-                />
-              </label>
-
-              {infoUser.tipo === "trabajador" && (
-                <>
-                  <label>
-                    🧾 Descripción:
-                    <textarea
-                      value={descripcion}
-                      onChange={(e) => setDescripcion(e.target.value)}
-                    />
-                  </label>
-
-                  <label>
-                    💰 Tarifa mínima:
-                    <input
-                      type="number"
-                      value={tarifaMinima}
-                      onChange={(e) => setTarifaMinima(e.target.value)}
-                    />
-                  </label>
-
-                  <label>
-                    💰 Tarifa máxima:
-                    <input
-                      type="number"
-                      value={tarifaMaxima}
-                      onChange={(e) => setTarifaMaxima(e.target.value)}
-                    />
-                  </label>
-
-                  <label>
-                    📆 Disponibilidad:
-                    <input
-                      type="text"
-                      value={disponibilidad}
-                      onChange={(e) => setDisponibilidad(e.target.value)}
-                    />
-                  </label>
-                </>
-              )}
-
-              <div className="perfil-botones">
-                <label>
-                  📷 Foto de perfil:
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const archivo = e.target.files[0];
-                      if (archivo) {
-                        setFotoArchivo(archivo); // ✅ archivo tipo File
-                        setFotoPerfil(URL.createObjectURL(archivo)); // ✅ para vista previa
-                      }
-                    }}
-                  />
-                </label>
-
-                {fotoPerfil && (
-                  <div className="preview-img">
-                    <p>Vista previa:</p>
-                    <img
-                      src={fotoPerfil}
-                      alt="Vista previa"
-                      style={{ width: "120px", borderRadius: "8px", marginTop: "8px" }}
-                    />
-                  </div>
-                )}
-                <button className="btn guardar" onClick={handleGuardar}>
-                  💾 Guardar
-                </button>
-                <button className="btn cancelar" onClick={() => setModoEdicion(false)}>
-                  ❌ Cancelar
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="perfil-datos">
-              <p><strong>📧 Email:</strong> {infoUser.email}</p>
-              <p><strong>👥 Tipo:</strong> {infoUser.tipo}</p>
-              <p><strong>📍 Ubicación:</strong> {infoUser.ubicacion}</p>
-              <p><strong>📱 Teléfono:</strong> {infoUser.telefono}</p>
-              <p><strong>✅ Verificado:</strong> {infoUser.verificado ? "Sí" : "No"}</p>
-
-              {infoUser.tipo === "trabajador" && (
-                <div className="perfil-servicio">
-                  <h3>🛠️ Perfil Profesional</h3>
-                  <p><strong>Servicio:</strong> {infoUser.Trabajador.Servicios[0]?.nombre}</p>
-                  <p><strong>Descripción:</strong> {infoUser.Trabajador.descripcion}</p>
-                  <p><strong>Tarifa:</strong> ${infoUser.Trabajador.tarifa_minima} - ${infoUser.Trabajador.tarifa_maxima}</p>
-                  <p><strong>Disponibilidad:</strong> {infoUser.Trabajador.disponibilidad}</p>
-                  <p><strong>Valoración:</strong> ⭐ {infoUser.Trabajador.Servicios[0]?.promedio_valoracion}</p>
-                  <p><span>{stats?.views || 0} visitas al perfil <InfoIcon /></span></p>
-                  <p><span>{contactos || 0} contactos</span></p>
-                </div>
-              )}
-              {infoUser?.badges?.length > 0 && (
-                <div className="perfil-badges-container">
-                  <h2 className="perfil-badges-titulo">🏆 Logros obtenidos</h2>
-
-                  <div className="perfil-badges-grid">
-                    {infoUser.badges.map((badge) => (
-                      <div key={badge.id} className="badge-card">
-                        <img
-                          src={badge.icon_url}
-                          alt={badge.nombre}
-                          className="badge-icon"
-                        />
-
-                        <div className="badge-info">
-                          <h3>{badge.nombre}</h3>
-                          <p>{badge.descripcion}</p>
-                          <small>📅 {new Date(badge.UserBadges.created_at).toLocaleDateString()}</small>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="perfil-botones">
-                <button className="btn editar" onClick={() => setModoEdicion(true)}>
-                  ✏️ Editar Perfil
-                </button>
-                <button className="btn cambiar-pass" onClick={() => setMostrarCambioPassword(!mostrarCambioPassword)}>
-                  🔐 Cambiar contraseña
-                </button>
-              </div>
-
-              {mostrarCambioPassword && (
-                <div className="perfil-formulario cambio-password">
-                  <h3>🔐 Cambiar contraseña</h3>
-
-                  <label>
-                    Contraseña actual:
-                    <input
-                      type="password"
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
-                    />
-                  </label>
-
-                  <label>
-                    Nueva contraseña:
-                    <input
-                      type="password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                  </label>
-
-                  <label>
-                    Confirmar nueva contraseña:
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </label>
-
-                  <div className="perfil-botones">
-                    <button className="btn guardar" onClick={handleChangePassword}>
-                      💾 Guardar nueva contraseña
-                    </button>
-                    <button className="btn cancelar" onClick={() => setMostrarCambioPassword(false)}>
-                      ❌ Cancelar
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        ))
       ) : (
-        <p className="perfil-alerta">⚠️ No hay información de usuario.</p>
+        <span className="muted">Sin insignias</span>
       )}
+    </div>
+  );
 
-      {postByUser?.length > 0 && (
-        <div className="perfil-posts-container">
-          <h2 className="perfil-posts-titulo">📸 Publicaciones de {infoUser.nombre}</h2>
-          <div className="perfil-posts-grid">
-            {postByUser.map((post) => (
-              <div className="post-card" key={post.id}>
-                <Link to={`/postDetail/${post.id}`}>
-                  <img src={post.imagen_url} alt={post.titulo} className="post-img" />
+  return (
+    <div className={`mi-perfil root ${darkMode ? "dark" : "light"}`}>
+      <div className="container">
+        {/* LEFT COLUMN - SIDEBAR */}
+        <aside className="side">
+          <div className="card profile-card">
+            <div className="avatar-wrap">
+              <img src={preview || "/default-avatar.png"} alt={form.nombre || "Usuario"} className="avatar" />
+            </div>
+
+            <h2 className="user-name">{infoUser?.nombre || "Usuario"}</h2>
+            <div className="user-meta">{infoUser?.tipo || "-"} · ID {infoUser?.id || "-"}</div>
+
+            <div className="side-actions">
+              <button className="btn primary" onClick={() => setEditing(true)}>✏️ Editar perfil</button>
+              <button className="btn outline" onClick={() => setShowPwd((s) => !s)}>🔐 Cambiar contraseña</button>
+            </div>
+
+            <div className="side-section">
+              <h4>Contactos</h4>
+              <div className="stat-line"><strong>{contactos || 0}</strong><span>Contactos</span></div>
+              <div className="stat-line"><strong>{stats?.views || 0}</strong><span>Visitas</span></div>
+            </div>
+
+            <div className="side-section">
+              <h4>Insignias</h4>
+              {renderBadges()}
+            </div>
+          </div>
+
+          {/* QUICK POSTS (small preview) */}
+          {/* <div className="card quick-posts">
+            <h4>Últimas publicaciones</h4>
+            <div className="posts-list">
+              {postByUser?.slice(0, 4).map((p) => (
+                <Link to={`/postDetail/${p.id}`} className="post-row" key={p.id}>
+                  <img src={p.imagen_url} alt={p.titulo} />
+                  <div>
+                    <div className="post-title">{p.titulo}</div>
+                    <div className="post-date">{new Date(p.fecha_creacion).toLocaleDateString()}</div>
+                  </div>
                 </Link>
-                <h3 className="post-titulo">{post.titulo}</h3>
-                <p className="post-contenido">{post.contenido}</p>
-                <p className="post-fecha">📅 {new Date(post.fecha_creacion).toLocaleDateString()}</p>
+              ))}
+              {!postByUser?.length && <div className="muted">Sin publicaciones</div>}
+            </div>
+          </div> */}
+        </aside>
+
+        {/* RIGHT COLUMN - MAIN */}
+        <main className="main">
+          {/* HEADER ROW */}
+          <div className="header-row">
+            <h1>Mi Perfil</h1>
+            <div className="header-actions">
+              <button className="btn ghost" onClick={() => window.print()}>🖨️ Imprimir</button>
+            </div>
+          </div>
+
+          {/* INFO & EDIT FORM */}
+          <div className="grid two-col">
+            <div className="card info-card">
+              <h3>Información</h3>
+
+              {!editing ? (
+                <div className="info-grid">
+                  <div><strong>Nombre</strong><div className="muted">{infoUser?.nombre || '-'}</div></div>
+                  <div><strong>Email</strong><div className="muted">{infoUser?.email || '-'}</div></div>
+                  <div><strong>Ubicación</strong><div className="muted">{infoUser?.ubicacion || '-'}</div></div>
+                  <div><strong>Teléfono</strong><div className="muted">{infoUser?.telefono || '-'}</div></div>
+
+                  {infoUser?.tipo === 'trabajador' && (
+                    <>
+                      <div className="full"><strong>Servicio</strong><div className="muted">{infoUser.Trabajador?.Servicios?.[0]?.nombre || '-'}</div></div>
+                      <div className="full"><strong>Descripción</strong><div className="muted">{infoUser.Trabajador?.descripcion || '-'}</div></div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="form-grid">
+                  <label>
+                    Nombre
+                    <input value={form.nombre} onChange={onChangeField('nombre')} />
+                  </label>
+
+                  <label>
+                    Email
+                    <input value={form.email} onChange={onChangeField('email')} />
+                  </label>
+
+                  <label>
+                    Ubicación
+                    <input value={form.ubicacion} onChange={onChangeField('ubicacion')} />
+                  </label>
+
+                  <label>
+                    Teléfono
+                    <input value={form.telefono} onChange={onChangeField('telefono')} />
+                  </label>
+
+                  {infoUser?.tipo === 'trabajador' && (
+                    <>
+                      <label className="full">
+                        Descripción
+                        <textarea value={form.descripcion} onChange={onChangeField('descripcion')} />
+                      </label>
+
+                      <label>
+                        Tarifa mínima
+                        <input type="number" value={form.tarifaMinima} onChange={onChangeField('tarifaMinima')} />
+                      </label>
+
+                      <label>
+                        Tarifa máxima
+                        <input type="number" value={form.tarifaMaxima} onChange={onChangeField('tarifaMaxima')} />
+                      </label>
+
+                      <label>
+                        Disponibilidad
+                        <input value={form.disponibilidad} onChange={onChangeField('disponibilidad')} />
+                      </label>
+                    </>
+                  )}
+
+                  <label className="full">
+                    Foto de perfil
+                    <input type="file" accept="image/*" onChange={onPickAvatar} />
+                    {preview && <img src={preview} alt="preview" className="preview-img" />}
+                  </label>
+
+                  <div className="form-actions">
+                    <button className="btn primary" onClick={handleSave}>💾 Guardar</button>
+                    <button className="btn outline" onClick={() => { setEditing(false); setPreview(infoUser?.foto_perfil || ''); }}>Cancelar</button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* PASSWORD & STATS */}
+            <div className="card pwd-stats-card">
+              {/* Cambiar password */}
+              <div className="pwd-section">
+                <h3>Cambiar contraseña</h3>
+                {showPwd ? (
+                  <div className="pwd-form">
+                    <label>
+                      Actual
+                      <input type="password" value={pwd.oldPassword} onChange={(e) => setPwd({ ...pwd, oldPassword: e.target.value })} />
+                    </label>
+                    <label>
+                      Nueva
+                      <input type="password" value={pwd.newPassword} onChange={(e) => setPwd({ ...pwd, newPassword: e.target.value })} />
+                    </label>
+                    <label>
+                      Confirmar
+                      <input type="password" value={pwd.confirm} onChange={(e) => setPwd({ ...pwd, confirm: e.target.value })} />
+                    </label>
+
+                    <div className="form-actions">
+                      <button className="btn primary" onClick={handlePasswordChange}>Guardar</button>
+                      <button className="btn outline" onClick={() => setShowPwd(false)}>Cancelar</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="muted">Haz click en "Cambiar contraseña" en la barra lateral para abrir el formulario.</div>
+                )}
+
+                {/* quick stats */}
+                <div className="stats-compact">
+                  <div className="stat-row"><strong>{stats?.views || 0}</strong><span>Visitas</span></div>
+                  <div className="stat-row"><strong>{likeUser?.length || 0}</strong><span>Likes</span></div>
+                  <div className="stat-row"><strong>{postByUser?.length || 0}</strong><span>Publicaciones</span></div>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      )}
-      <h1 className="titulo">ULTIMOS LIKE</h1>
-      <div className="MyLikes">
-        {likeUser.map((likes) => (
-          <div key={likes.id} className="mostrarLikes">
-            <p>{likes.Post.titulo}</p>
-            <p>{likes.Post.contenido}</p>
-            <img src={likes.Post.imagen_url} alt={likes.Post.titulo} />
+
+          {/* POSTS GRID */}
+          <div className="card posts-card">
+            <h3>Publicaciones</h3>
+            <div className="posts-grid">
+              {postByUser?.length ? (
+                postByUser.map((post) => (
+                  <div className="post-card" key={post.id}>
+                    <Link to={`/postDetail/${post.id}`}>
+                      <img src={post.imagen_url} alt={post.titulo} />
+                    </Link>
+                    <div className="post-body">
+                      <div className="post-title">{post.titulo}</div>
+                      <div className="post-excerpt">{post.contenido}</div>
+                      <div className="post-meta">{new Date(post.fecha_creacion).toLocaleDateString()}</div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="muted">No hay publicaciones para mostrar.</div>
+              )}
+            </div>
           </div>
-        ))}
+
+          {/* LIKES */}
+          <div className="card likes-card">
+            <h3>Últimos Likes</h3>
+            <div className="likes-grid">
+              {likeUser?.length ? (
+                likeUser.map((l) => (
+                  <div className="like-item" key={l.id}>
+                    <img src={l.Post?.imagen_url} alt={l.Post?.titulo} />
+                    <div>
+                      <div className="like-title">{l.Post?.titulo}</div>
+                      <div className="muted small">{l.Post?.contenido}</div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="muted">Sin likes recientes</div>
+              )}
+            </div>
+          </div>
+
+        </main>
       </div>
     </div>
   );
 };
 
 export default MiPerfil;
+
