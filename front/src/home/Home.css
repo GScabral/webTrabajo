@@ -244,10 +244,14 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     align-items: stretch;
-    /* 🔑 todas las cards misma altura */
 }
 
+/* ===========================================================
+   🆕 MEJORAS A LAS TARJETAS DE POST
+   =========================================================== */
+
 .post-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -264,6 +268,7 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* TITULOS */
 .post-card h4 {
     font-size: 1.2rem;
     font-weight: 600;
@@ -284,16 +289,15 @@
     margin-bottom: 1rem;
 }
 
+/* IMÁGENES */
 .post-card .img-wrapper {
     width: 100%;
     height: 180px;
     border-radius: 12px;
     overflow: hidden;
-    /* ✅ evita que la imagen agrandada se salga */
     margin-bottom: 1rem;
 }
 
-/* 📸 Imagen */
 .post-card img.post-img {
     width: 100%;
     height: 100%;
@@ -301,10 +305,129 @@
     transition: transform 0.4s ease;
 }
 
-/* ✨ Efecto hover solo sobre la imagen */
 .post-card .img-wrapper:hover img.post-img {
     transform: scale(1.08);
-    /* ✅ se agranda sin mover nada */
+}
+
+/* ===========================================================
+   🆕 MODAL AL HACER HOVER 1s SOBRE LA IMAGEN
+   =========================================================== */
+
+.image-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    animation: fadeIn 0.2s;
+}
+
+.image-modal img {
+    width: 260px;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ===========================================================
+   🆕 BOTÓN ⋮ MENÚ DE OPCIONES
+   =========================================================== */
+
+.post-options {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+}
+
+.menu-button {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.menu-button:hover {
+    background: #ececec;
+}
+
+/* ===========================================================
+   🆕 DROPDOWN DEL MENÚ
+   =========================================================== */
+
+.menu-dropdown {
+    position: absolute;
+    top: 28px;
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    animation: fadeSlide 0.25s ease forwards;
+}
+
+.menu-dropdown button {
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu-dropdown button:hover {
+    background: #f1f1f1;
+}
+
+/* SUBMENÚ REPORTES */
+.report-options {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #ddd;
+}
+
+.report-option-btn {
+    background: #fff4f4;
+    color: #b91c1c;
+    border: 1px solid #e5b3b3;
+    margin-top: 6px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.report-option-btn:hover {
+    background: #ffe1e1;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .fecha-post {
@@ -354,6 +477,7 @@
     margin-bottom: 10px;
     padding: 10px;
     background-color: #f9f9f9;
+    border-left: 4px solid #5a67d8;
     border-radius: 6px;
 }
 
@@ -450,7 +574,6 @@
     justify-content: space-between;
     min-width: 220px;
     min-height: 320px;
-    /* 🔑 misma altura */
     background: white;
     border-radius: 16px;
     padding: 1.2rem;
@@ -497,7 +620,6 @@
 
 .card-profile .form-button {
     margin-top: auto;
-    /* 🔑 botón siempre abajo */
     padding: 0.5rem;
     border-radius: 10px;
     background-color: #5a67d8;
@@ -544,9 +666,7 @@
 
 .filtro-categoria select {
     max-height: 200px;
-    /* 🔹 limita la altura del menú */
     overflow-y: auto;
-    /* 🔹 activa scroll vertical */
     padding: 6px 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -555,7 +675,6 @@
     cursor: pointer;
 }
 
-/* Opcional: cambia el estilo cuando está en foco */
 .filtro-categoria select:focus {
     border-color: var(--color-primary, #5a67d8);
     outline: none;
@@ -586,6 +705,16 @@
     .post-card {
         padding: 1rem;
         min-height: auto;
+    }
+
+    .menu-dropdown {
+        right: -20px;
+        min-width: 130px;
+    }
+
+    .image-modal img {
+        width: 200px;
+        height: auto;
     }
 
     .post-card h4 {
