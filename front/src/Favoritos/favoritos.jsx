@@ -29,6 +29,8 @@ const Favoritos = () => {
         }
     };
 
+
+    console.log(allFavTrabajador)
     return (
         <div className="favoritos-container">
             <h1 className="favoritos-title">Post Favoritos</h1>
