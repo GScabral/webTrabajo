@@ -47,7 +47,6 @@ const Sidebar = ({ user, togglePostForm }) => {
 
     const menuItems = [
         { icon: <FiHome />, label: "Inicio", onClick: () => navigate("/home") },
-        { icon: <FiHome />, label: "Badges", onClick: () => navigate("/badges") },
         { icon: <FiUser />, label: "Mi Perfil", onClick: () => navigate(`/MiPerfil/${user.id}`) },
         { icon: <FiUser />, label: "Favoritos", onClick: () => navigate(`/favoritos/${user.id}`) }
     ];
@@ -60,8 +59,11 @@ const Sidebar = ({ user, togglePostForm }) => {
                 label: "Mis Mensajes",
                 onClick: () => navigate("/chatReciente"),
                 badge: noLeidos
-            }
+            },
+            { icon: <FiHome />, label: "Badges", onClick: () => navigate("/badges") },
+
         );
+
     }
 
     if (user.tipo === "cliente") {
@@ -72,6 +74,7 @@ const Sidebar = ({ user, togglePostForm }) => {
             badge: noLeidos
         });
     }
+
 
     if (user.Admin && user.Admin.rol === "superadmin") {
         menuItems.push(
