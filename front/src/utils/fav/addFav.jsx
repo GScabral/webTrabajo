@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newFav, removeFavAcc } from "../../redux/action/favoriteAction";
-import "addfav.css"
+import "./addfav.css"
 
 const FavHandling = ({ target_id, initialCount = 0, target_type, initiallyFavorited = false, onToggle }) => {
     const dispatch = useDispatch();
