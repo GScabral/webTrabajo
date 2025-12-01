@@ -317,7 +317,6 @@ const Home = () => {
                         </select>
                     </div>
                     <h3 className="section-title">💬 Muro de profesionales</h3>
-
                     <div className="post-list">
                         {allPost
                             .filter((post) => {
@@ -327,6 +326,7 @@ const Home = () => {
                             })
                             .map((post) => (
                                 <div key={post.id} className="post-card">
+
                                     <div className="post-options">
                                         <button className="menu-button" onClick={() => toggleMenu(post.id)}>⋮</button>
 
@@ -361,35 +361,46 @@ const Home = () => {
                                             </div>
                                         )}
                                     </div>
+
                                     <h4>{post.titulo}</h4>
-                                    <h5>Categoria:{post.User?.Trabajador?.Servicios?.[0]?.nombre}</h5>
+                                    <h5>Categoría: {post.User?.Trabajador?.Servicios?.[0]?.nombre}</h5>
                                     <p className="post-author">Autor: {post.User.nombre}</p>
                                     <p>{post.contenido}</p>
-                                    <Link to={`/postDetail/${post.id}`}>
-                                        {post.imagen_url && (
-                                            <>
-                                                <img
-                                                    src={post.imagen_url}
-                                                    alt={post.titulo}
-                                                    className="post-img"
-                                                    onMouseEnter={() => {
-                                                        const timer = setTimeout(() => setHoveredPostId(post.id), 1000); // espera 1s
-                                                        setHoverTimer(timer);
-                                                    }}
-                                                    onMouseLeave={() => {
-                                                        clearTimeout(hoverTimer);
-                                                    }}
-                                                />
 
-                                                {hoveredPostId === post.id && (
-                                                    <div className="image-modal" onMouseLeave={() => setHoveredPostId(null)}>
-                                                        <img src={post.imagen_url} alt={post.titulo} />
-                                                    </div>
-                                                )}
-                                            </>
-                                        )}
-                                    </Link>
-                                    <p className="fecha-post">Publicado el: {new Date(post.fecha_creacion).toLocaleDateString()}</p>
+                                    {/* Imagen SIN Link */}
+                                    {post.imagen_url && (
+                                        <>
+                                            <img
+                                                src={post.imagen_url}
+                                                alt={post.titulo}
+                                                className="post-img"
+                                                onMouseEnter={() => {
+                                                    const timer = setTimeout(() => setHoveredPostId(post.id), 1000);
+                                                    setHoverTimer(timer);
+                                                }}
+                                                onMouseLeave={() => clearTimeout(hoverTimer)}
+                                            />
+
+                                            {hoveredPostId === post.id && (
+                                                <div className="image-modal" onMouseLeave={() => setHoveredPostId(null)}>
+                                                    <img src={post.imagen_url} alt={post.titulo} />
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+
+                                    {/* ✔ Nuevo botón Ver Publicación */}
+                                    <button
+                                        className="ver-publicacion-btn"
+                                        onClick={() => navigate(`/postDetail/${post.id}`)}
+                                    >
+                                        Ver publicación
+                                    </button>
+
+                                    <p className="fecha-post">
+                                        Publicado el: {new Date(post.fecha_creacion).toLocaleDateString()}
+                                    </p>
+
                                     <div className="post-footer">
                                         <button
                                             type="button"
@@ -398,7 +409,8 @@ const Home = () => {
                                         >
                                             {userLikes[post.id] ? '💖 Quitar Like' : '🤍 Me gusta'} ({likes[post.id] || 0})
                                         </button>
-                                        <FavHandling target_type="post" target_id={post.id}></FavHandling>
+
+                                        <FavHandling target_type="post" target_id={post.id} />
 
                                         <button
                                             className="comments-toggle-btn"
@@ -407,13 +419,18 @@ const Home = () => {
                                             {selectedPostId === post.id ? "Ocultar" : "Comentarios"}
                                         </button>
                                     </div>
+
                                     {selectedPostId === post.id && (
                                         <div className="comments-list">
                                             {allComments.length > 0 ? (
                                                 allComments.map((comment) => (
                                                     <div key={comment.id} className="comment">
                                                         <div className="comment-header">
-                                                            <img src={comment.User?.foto_perfil} alt={comment.User?.nombre} className="comment-avatar" />
+                                                            <img
+                                                                src={comment.User?.foto_perfil}
+                                                                alt={comment.User?.nombre}
+                                                                className="comment-avatar"
+                                                            />
                                                             <strong>{comment.User?.nombre}</strong>
                                                         </div>
                                                         <p>{comment.contenido}</p>
