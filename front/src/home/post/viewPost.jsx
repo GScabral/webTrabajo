@@ -21,6 +21,7 @@ const DetailPost = () => {
   } = useComments();
 
   const [usuariosMencionables, setUsuariosMencionables] = useState([]);
+  console.log(infoPost)
 
   // Traer publicación
   useEffect(() => {
