@@ -86,13 +86,13 @@ const DetailPost = () => {
               <div key={comment.id} className="comment-item">
                 <Link to={`/perfil/${comment.user_id}`}>
                   <div className="comment-avatar">
-                    {comment.Usuario?.foto_perfil ? (
+                    {comment.User?.foto_perfil ? (
                       <img
-                        src={comment.Usuario.foto_perfil}
-                        alt={comment.Usuario.nombre}
+                        src={comment.User.foto_perfil}
+                        alt={comment.User.nombre}
                       />
                     ) : (
-                      <span>{comment.Usuario?.nombre?.[0] || "U"}</span>
+                      <span>{comment.User?.nombre?.[0] || "U"}</span>
                     )}
                   </div>
                 </Link>
