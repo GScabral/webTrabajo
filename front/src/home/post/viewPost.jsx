@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById } from "../../redux/action/postAction";
-import { getUserById } from "../../redux/action/usersAction";
 import useComments from "./comentarios/comentarios";
 import { useParams, Link } from "react-router-dom";
 import { MentionsInput, Mention } from "react-mentions";
@@ -14,7 +13,6 @@ const DetailPost = () => {
   const infoPost = useSelector((state) => state.postState.infoPost);
   const currentUser = useSelector((state) => state.userState.infoLogin);
 
-  const comentario=useSelector((state)=>state,userState)
 
 
   const {
